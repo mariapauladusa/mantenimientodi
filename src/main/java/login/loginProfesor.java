@@ -7,6 +7,7 @@ package login;
 
 import com.mycompany.mantenimiento_paula.main;
 
+
 /**
  *
  * @author damA
@@ -36,8 +37,8 @@ public class loginProfesor extends javax.swing.JDialog {
         jtxtPassP = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jbtnVolverP = new javax.swing.JButton();
         jbtnEntrarP = new javax.swing.JButton();
+        jbtnVolverP = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -54,14 +55,14 @@ public class loginProfesor extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MANTENIMIENTO INSTITUTO");
 
+        jbtnEntrarP.setText("ENTRAR");
+
         jbtnVolverP.setText("VOLVER");
         jbtnVolverP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnVolverPActionPerformed(evt);
             }
         });
-
-        jbtnEntrarP.setText("ENTRAR");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,21 +113,17 @@ public class loginProfesor extends javax.swing.JDialog {
                     .addComponent(jtxtPassP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnVolverP)
-                    .addComponent(jbtnEntrarP))
+                    .addComponent(jbtnEntrarP)
+                    .addComponent(jbtnVolverP))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void volver(){
+    private void jbtnVolverPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverPActionPerformed
         this.setVisible(false);
         new main().setVisible(true);
-    }
-    
-    private void jbtnVolverPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverPActionPerformed
-         volver();
     }//GEN-LAST:event_jbtnVolverPActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

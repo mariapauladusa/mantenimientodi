@@ -5,9 +5,8 @@
  */
 package com.mycompany.mantenimiento_paula;
 
-import login.loginProfesor;
 import login.loginRoot;
-import login.loginTecnico;
+
 
 /**
  *
@@ -89,17 +88,17 @@ public class main extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jbtn_salir))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(116, 116, 116)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jbtnRoot, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jbtnProfesor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jbtnTecnico, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(15, 15, 15)))
                         .addGap(0, 116, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbtnTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtnProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtnRoot))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,17 +109,21 @@ public class main extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtnRoot)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jbtnProfesor)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtnTecnico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jbtn_salir)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_salirActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbtn_salirActionPerformed
 
     private void jbtnRootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRootActionPerformed
         loginRoot frm = new loginRoot(new main(), true);
@@ -129,20 +132,16 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnRootActionPerformed
 
     private void jbtnProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnProfesorActionPerformed
-        loginProfesor frm = new loginProfesor(new main(), true);
+        loginRoot frm = new loginRoot(new main(), true);
         this.setVisible(false);
         frm.setVisible(true);
     }//GEN-LAST:event_jbtnProfesorActionPerformed
 
     private void jbtnTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnTecnicoActionPerformed
-       loginTecnico frm = new loginTecnico(new main(), true);
-       this.setVisible(false);
-       frm.setVisible(true);
+        loginRoot frm = new loginRoot(new main(), true);
+        this.setVisible(false);
+        frm.setVisible(true);
     }//GEN-LAST:event_jbtnTecnicoActionPerformed
-
-    private void jbtn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_salirActionPerformed
-        dispose();
-    }//GEN-LAST:event_jbtn_salirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,10 +172,8 @@ public class main extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new main().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new main().setVisible(true);
         });
     }
 

@@ -5,6 +5,8 @@
  */
 package login;
 
+import com.mycompany.mantenimiento_paula.main;
+
 /**
  *
  * @author damA
@@ -53,6 +55,11 @@ public class loginRoot extends javax.swing.JDialog {
         jLabel4.setText("Superusuario");
 
         jbtnEntrarR.setText("ENTRAR");
+        jbtnEntrarR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEntrarRActionPerformed(evt);
+            }
+        });
 
         jbtnVolverR.setText("VOLVER");
         jbtnVolverR.addActionListener(new java.awt.event.ActionListener() {
@@ -120,8 +127,13 @@ public class loginRoot extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnVolverRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverRActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        new main().setVisible(true);
     }//GEN-LAST:event_jbtnVolverRActionPerformed
+
+    private void jbtnEntrarRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarRActionPerformed
+        
+    }//GEN-LAST:event_jbtnEntrarRActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

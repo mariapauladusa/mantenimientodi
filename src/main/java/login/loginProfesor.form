@@ -80,8 +80,8 @@
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jbtnVolverP" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbtnEntrarP" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbtnVolverP" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="46" max="32767" attributes="0"/>
           </Group>
@@ -126,6 +126,11 @@
         <Property name="text" type="java.lang.String" value="MANTENIMIENTO INSTITUTO"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JButton" name="jbtnEntrarP">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ENTRAR"/>
+      </Properties>
+    </Component>
     <Component class="javax.swing.JButton" name="jbtnVolverP">
       <Properties>
         <Property name="text" type="java.lang.String" value="VOLVER"/>
@@ -133,11 +138,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtnVolverPActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jbtnEntrarP">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="ENTRAR"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -5,6 +5,8 @@
  */
 package login;
 
+import com.mycompany.mantenimiento_paula.main;
+
 /**
  *
  * @author damA
@@ -46,6 +48,11 @@ public class loginTecnico extends javax.swing.JDialog {
         jbtnEntrarT.setText("ENTRAR");
 
         jbtnVolverT.setText("VOLVER");
+        jbtnVolverT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnVolverTActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Usuario:");
@@ -112,6 +119,11 @@ public class loginTecnico extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtnVolverTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverTActionPerformed
+        this.setVisible(false);
+        new main().setVisible(true);
+    }//GEN-LAST:event_jbtnVolverTActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
