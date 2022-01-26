@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.mantenimiento_paula;
+package login;
 
 /**
  *
  * @author damA
  */
-public class login_tecnico extends javax.swing.JFrame {
+public class login_profesor extends javax.swing.JFrame {
 
     /**
-     * Creates new form login_tecnico
+     * Creates new form login_profesor
      */
-    public login_tecnico() {
+    public login_profesor() {
         initComponents();
     }
 
@@ -29,12 +29,12 @@ public class login_tecnico extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jtxt_usuario_tecnico = new javax.swing.JTextField();
-        jtxt_contra_tecnico = new javax.swing.JTextField();
+        jtxt_usuario_profesor = new javax.swing.JTextField();
+        jtxt_contra_profesor = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jbtn_entrar_tecnico = new javax.swing.JButton();
-        jbtn_volver_tecnico = new javax.swing.JButton();
+        jbtn_volver_profesor = new javax.swing.JButton();
+        jbtn_entrar_profesor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,25 +45,34 @@ public class login_tecnico extends javax.swing.JFrame {
         jLabel3.setText("Contraseña:");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setText("Técnico");
+        jLabel4.setText("Profesor");
 
         jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MANTENIMIENTO INSTITUTO");
 
-        jbtn_entrar_tecnico.setText("ENTRAR");
+        jbtn_volver_profesor.setText("VOLVER");
 
-        jbtn_volver_tecnico.setText("VOLVER");
+        jbtn_entrar_profesor.setText("ENTRAR");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtn_entrar_profesor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtn_volver_profesor))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -73,19 +82,10 @@ public class login_tecnico extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtxt_usuario_tecnico)
-                            .addComponent(jtxt_contra_tecnico, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbtn_entrar_tecnico)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtn_volver_tecnico)))
+                            .addComponent(jtxt_usuario_profesor)
+                            .addComponent(jtxt_contra_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,30 +96,31 @@ public class login_tecnico extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxt_usuario_tecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxt_usuario_profesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jtxt_contra_tecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtxt_contra_profesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtn_volver_tecnico)
-                    .addComponent(jbtn_entrar_tecnico))
+                    .addComponent(jbtn_volver_profesor)
+                    .addComponent(jbtn_entrar_profesor))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JButton jbtn_entrar_tecnico;
-    private javax.swing.JButton jbtn_volver_tecnico;
-    private javax.swing.JTextField jtxt_contra_tecnico;
-    private javax.swing.JTextField jtxt_usuario_tecnico;
+    private javax.swing.JButton jbtn_entrar_profesor;
+    private javax.swing.JButton jbtn_volver_profesor;
+    private javax.swing.JTextField jtxt_contra_profesor;
+    private javax.swing.JTextField jtxt_usuario_profesor;
     // End of variables declaration//GEN-END:variables
 }
