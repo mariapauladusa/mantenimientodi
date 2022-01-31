@@ -40,8 +40,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jtxtUsuarioT" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jtxtPassT" alignment="0" pref="150" max="32767" attributes="0"/>
+                          <Component id="jtxtUsuarioT" pref="150" max="32767" attributes="0"/>
+                          <Component id="jpassTecnico" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -73,17 +73,17 @@
                   <Component id="jtxtUsuarioT" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jtxtPassT" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jpassTecnico" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jbtnEntrarT" min="-2" max="-2" attributes="0"/>
                   <Component id="jbtnVolverT" min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="46" max="32767" attributes="0"/>
+              <EmptySpace pref="47" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -129,14 +129,17 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jtxtUsuarioT">
     </Component>
-    <Component class="javax.swing.JTextField" name="jtxtPassT">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="T&#xe9;cnico"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="jpassTecnico">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
       </Properties>
     </Component>
   </SubComponents>

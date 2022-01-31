@@ -5,7 +5,9 @@
  */
 package com.mycompany.mantenimiento_paula;
 
+import login.loginProfesor;
 import login.loginRoot;
+import login.loginTecnico;
 
 
 /**
@@ -132,13 +134,13 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnRootActionPerformed
 
     private void jbtnProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnProfesorActionPerformed
-        loginRoot frm = new loginRoot(new main(), true);
+        loginProfesor frm = new loginProfesor(new main(), true);
         this.setVisible(false);
         frm.setVisible(true);
     }//GEN-LAST:event_jbtnProfesorActionPerformed
 
     private void jbtnTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnTecnicoActionPerformed
-        loginRoot frm = new loginRoot(new main(), true);
+        loginTecnico frm = new loginTecnico(new main(), true);
         this.setVisible(false);
         frm.setVisible(true);
     }//GEN-LAST:event_jbtnTecnicoActionPerformed

@@ -1,4 +1,4 @@
-package com.mycompany.examenpaula;
+package com.mycompany.mantenimiento_paula;
 
 
 import java.sql.Connection;

@@ -5,7 +5,14 @@
  */
 package login;
 
+import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import mainUsuarios.mainProfesor;
 
 
 /**
@@ -13,15 +20,56 @@ import com.mycompany.mantenimiento_paula.main;
  * @author damA
  */
 public class loginProfesor extends javax.swing.JDialog {
+    Conectar conectar = null;
 
     /**
      * Creates new form jd_login_profesor
      */
     public loginProfesor(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        
+        conectar = new Conectar();
+        
         initComponents();
     }
 
+    public void loginProfesor(){
+        Connection cn = conectar.getConexion();
+        
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        String user = jtxtUsuarioP.getText();
+        String pass = String.valueOf(jpassProfesor.getPassword());
+        
+        if (user.equals("") || pass.equals("")) {
+          
+            JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacìos.");
+            
+        }else{
+            
+            try {
+               
+                ps = cn.prepareStatement("Select login, password from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password ='" + pass + "'");
+                rs = ps.executeQuery();
+                
+                if (rs.next()) {
+                    
+                    this.dispose();
+                    System.out.print("Has entrado");
+                    
+                }else{
+                    
+                    JOptionPane.showConfirmDialog(this, "Los datos introducidos son incorrectos.");
+                }
+                 
+            } catch (SQLException e) {
+                System.err.println(e.toString());
+                JOptionPane.showConfirmDialog(this, "Ha ocurrido un error");
+                
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,11 +82,11 @@ public class loginProfesor extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jtxtUsuarioP = new javax.swing.JTextField();
-        jtxtPassP = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jbtnEntrarP = new javax.swing.JButton();
         jbtnVolverP = new javax.swing.JButton();
+        jpassProfesor = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -56,6 +104,11 @@ public class loginProfesor extends javax.swing.JDialog {
         jLabel1.setText("MANTENIMIENTO INSTITUTO");
 
         jbtnEntrarP.setText("ENTRAR");
+        jbtnEntrarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEntrarPActionPerformed(evt);
+            }
+        });
 
         jbtnVolverP.setText("VOLVER");
         jbtnVolverP.addActionListener(new java.awt.event.ActionListener() {
@@ -91,8 +144,8 @@ public class loginProfesor extends javax.swing.JDialog {
                             .addComponent(jLabel3))
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtxtUsuarioP)
-                            .addComponent(jtxtPassP, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                            .addComponent(jtxtUsuarioP, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(jpassProfesor))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -107,15 +160,15 @@ public class loginProfesor extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtxtUsuarioP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(38, 38, 38)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jtxtPassP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpassProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnEntrarP)
                     .addComponent(jbtnVolverP))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,6 +179,12 @@ public class loginProfesor extends javax.swing.JDialog {
         new main().setVisible(true);
     }//GEN-LAST:event_jbtnVolverPActionPerformed
 
+    private void jbtnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarPActionPerformed
+       loginProfesor();
+    }//GEN-LAST:event_jbtnEntrarPActionPerformed
+
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -133,7 +192,7 @@ public class loginProfesor extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JButton jbtnEntrarP;
     private javax.swing.JButton jbtnVolverP;
-    private javax.swing.JTextField jtxtPassP;
+    private javax.swing.JPasswordField jpassProfesor;
     private javax.swing.JTextField jtxtUsuarioP;
     // End of variables declaration//GEN-END:variables
 }
