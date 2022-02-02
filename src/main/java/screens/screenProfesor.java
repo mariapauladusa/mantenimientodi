@@ -4,20 +4,21 @@
  * and open the template in the editor.
  */
 
-package mainUsuarios;
+package screens;
 
 /**
  *
  * @author damA
  */
-public class mainProfesor extends javax.swing.JDialog {
+public class screenProfesor extends javax.swing.JDialog {
 
-    /** Creates new form jd_mainProfesor */
-    public mainProfesor(java.awt.Frame parent, boolean modal) {
+    /** Creates new form jd_mainProfesor
+     * @param <error> */
+    public screenProfesor(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is

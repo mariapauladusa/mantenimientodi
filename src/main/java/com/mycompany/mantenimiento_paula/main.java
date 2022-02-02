@@ -128,19 +128,19 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtn_salirActionPerformed
 
     private void jbtnRootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRootActionPerformed
-        loginRoot frm = new loginRoot(new main(), true);
+        loginRoot frm = new loginRoot(this, true);
         this.setVisible(false);
         frm.setVisible(true);
     }//GEN-LAST:event_jbtnRootActionPerformed
 
     private void jbtnProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnProfesorActionPerformed
-        loginProfesor frm = new loginProfesor(new main(), true);
+        loginProfesor frm = new loginProfesor(this, true);
         this.setVisible(false);
         frm.setVisible(true);
     }//GEN-LAST:event_jbtnProfesorActionPerformed
 
     private void jbtnTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnTecnicoActionPerformed
-        loginTecnico frm = new loginTecnico(new main(), true);
+        loginTecnico frm = new loginTecnico(this, true);
         this.setVisible(false);
         frm.setVisible(true);
     }//GEN-LAST:event_jbtnTecnicoActionPerformed
