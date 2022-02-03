@@ -5,27 +5,19 @@
  */
 package login;
 
-import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import screens.screenTecnico;
 
 /**
  *
  * @author damA
  */
 public class loginTecnico extends javax.swing.JDialog {
-     Conectar conectar = new Conectar();
 
     /**
-     * Creates new form jdlt
+     * Creates new form loginTecnico
      */
     public loginTecnico(java.awt.Frame parent, boolean modal) {
-        conectar.getConexion();
+        super(parent, modal);
         initComponents();
     }
 
@@ -38,27 +30,29 @@ public class loginTecnico extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jcbMostrarOcultar = new javax.swing.JCheckBox();
-        jtxtUsuarioT = new javax.swing.JTextField();
+        jcbMostrarOcultar1 = new javax.swing.JCheckBox();
+        jtxtUsuarioA = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jbtnEntrarP = new javax.swing.JButton();
         jbtnVolverP = new javax.swing.JButton();
-        jpassTecnico = new javax.swing.JPasswordField();
+        jpassAdmin = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(375, 260));
+        setPreferredSize(new java.awt.Dimension(375, 244));
+        setSize(new java.awt.Dimension(377, 244));
 
-        jcbMostrarOcultar.setText("Ver");
-        jcbMostrarOcultar.addActionListener(new java.awt.event.ActionListener() {
+        jcbMostrarOcultar1.setText("Ver");
+        jcbMostrarOcultar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbMostrarOcultarActionPerformed(evt);
+                jcbMostrarOcultar1ActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Técnico");
 
         jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 18)); // NOI18N
@@ -79,75 +73,78 @@ public class loginTecnico extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Users\\damA\\Documents\\NetBeansProjects\\mantenimiento_paula\\src\\main\\java\\iconos\\usuario.png")); // NOI18N
-
-        jLabel3.setIcon(new javax.swing.ImageIcon("D:\\Users\\damA\\Documents\\NetBeansProjects\\mantenimiento_paula\\src\\main\\java\\iconos\\padlock.png")); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jbtnEntrarP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnVolverP))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtxtUsuarioT, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                            .addComponent(jpassTecnico))
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(10, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbMostrarOcultar)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jtxtUsuarioA, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jpassAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jcbMostrarOcultar1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jbtnEntrarP)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbtnVolverP)))
+                        .addGap(15, 15, 15)))
+                .addContainerGap())
+            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtxtUsuarioT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jpassTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jcbMostrarOcultar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jtxtUsuarioA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnVolverP)
-                    .addComponent(jbtnEntrarP))
-                .addGap(30, 30, 30))
+                    .addComponent(jpassAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbMostrarOcultar1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnEntrarP)
+                    .addComponent(jbtnVolverP))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jcbMostrarOcultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMostrarOcultarActionPerformed
+    private void jcbMostrarOcultar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMostrarOcultar1ActionPerformed
 
         if (jcbMostrarOcultar.isSelected()) {
-            jpassTecnico.setEchoChar((char)0);
+            jpassAdmin.setEchoChar((char)0);
         }else{
-            jpassTecnico.setEchoChar('*');
+            jpassAdmin.setEchoChar('*');
         }
-    }//GEN-LAST:event_jcbMostrarOcultarActionPerformed
+    }//GEN-LAST:event_jcbMostrarOcultar1ActionPerformed
 
     private void jbtnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarPActionPerformed
         loginT();
@@ -158,6 +155,7 @@ public class loginTecnico extends javax.swing.JDialog {
         new main().setVisible(true);
     }//GEN-LAST:event_jbtnVolverPActionPerformed
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -166,58 +164,12 @@ public class loginTecnico extends javax.swing.JDialog {
     private javax.swing.JButton jbtnEntrarP;
     private javax.swing.JButton jbtnVolverP;
     private javax.swing.JCheckBox jcbMostrarOcultar;
-    private javax.swing.JPasswordField jpassTecnico;
-    private javax.swing.JTextField jtxtUsuarioT;
+    private javax.swing.JCheckBox jcbMostrarOcultar1;
+    private javax.swing.JPasswordField jpassAdmin;
+    private javax.swing.JTextField jtxtUsuarioA;
     // End of variables declaration//GEN-END:variables
 
     private void loginT() {
-         
-        Connection cn = conectar.getConexion();
-        
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
-        String user = jtxtUsuarioT.getText();
-        String pass = String.valueOf(jpassTecnico.getPassword());
-        
-        int rol = 2;
-        
-        if (user.equals("") || pass.equals("")) {
-          
-            JOptionPane.showMessageDialog(this, "Si quieres entrar no dejes los campos vacios :( .", "Campos vacíos", 0);
-            
-        }else{
-            
-            try {
-               
-                ps = cn.prepareStatement("Select login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "' and id_rol = '" + rol + "'");
-                
-                if (rol==2) {
-                    
-                    rs = ps.executeQuery();
-                
-                    if (rs.next()) {
-                    
-                        screenTecnico sa = new screenTecnico(this,true);
-                        sa.setVisible(true);
-                    
-                    }else{
-                        
-                        JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como técnico.", "Usuario Incorrecto", 0);
-                    }
-                    
-                }else{
-                    
-                    JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como superusuario.", "Usuario Incorrecto", 0);
-                }
-                
-                 
-            } catch (SQLException e) {
-                
-                System.err.println(e.toString());
-                JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);
-                
-            }
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

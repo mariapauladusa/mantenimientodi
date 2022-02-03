@@ -5,32 +5,33 @@
  */
 package com.mycompany.mantenimiento_paula;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import javax.imageio.ImageIO;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 import login.loginProfesor;
 import login.loginRoot;
 import login.loginTecnico;
-
 
 /**
  *
  * @author damA
  */
 public class main extends javax.swing.JFrame {
-    
-    
 
     /**
      * Creates new form Main
      */
     public main() {
-        
+
         initComponents();
-        
+
+        //crea un ImageIcon y define la ruta de tu imagen
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        //define el icon a tu JFrame
+        this.setIconImage(img.getImage());
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,7 +49,7 @@ public class main extends javax.swing.JFrame {
         jbtnTecnico = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setIconImages(getIconImages());
+        setResizable(false);
 
         jLabel2.setFont(new java.awt.Font("Leelawadee UI", 1, 14)); // NOI18N
         jLabel2.setText("Entrar como...");

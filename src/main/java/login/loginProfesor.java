@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 
@@ -28,7 +29,24 @@ public class loginProfesor extends javax.swing.JDialog {
      */
     public loginProfesor(java.awt.Frame parent, boolean modal) {
         conectar.getConexion();
+        
         initComponents();
+        
+        iconosLabel();
+        iconoPrograma();
+        
+    }
+    
+    public void iconoPrograma(){
+        //crea un ImageIcon y define la ruta de tu imagen
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        //define el icon a tu JFrame
+        this.setIconImage(img.getImage());
+    }
+    
+    public void iconosLabel(){
+        jLabel2.setIcon(new ImageIcon("src\\main\\java\\resources\\usuario.png"));
+        jLabel3.setIcon(new ImageIcon("src\\main\\java\\resources\\padlock.png"));
     }
 
     public void loginP(){
@@ -103,8 +121,15 @@ public class loginProfesor extends javax.swing.JDialog {
         jcbMostrarOcultar = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconImage(null);
+        setPreferredSize(new java.awt.Dimension(377, 244));
+        setResizable(false);
+        setSize(new java.awt.Dimension(377, 244));
+
+        jtxtUsuarioP.setText("prueba");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Profesor");
 
         jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 18)); // NOI18N
@@ -125,9 +150,7 @@ public class loginProfesor extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Users\\damA\\Documents\\NetBeansProjects\\mantenimiento_paula\\src\\main\\java\\iconos\\usuario.png")); // NOI18N
-
-        jLabel3.setIcon(new javax.swing.ImageIcon("D:\\Users\\damA\\Documents\\NetBeansProjects\\mantenimiento_paula\\src\\main\\java\\iconos\\padlock.png")); // NOI18N
+        jpassProfesor.setText("prueba");
 
         jcbMostrarOcultar.setText("Ver");
         jcbMostrarOcultar.addActionListener(new java.awt.event.ActionListener() {
@@ -142,9 +165,8 @@ public class loginProfesor extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(141, 141, 141)
+                        .addContainerGap()
                         .addComponent(jbtnEntrarP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtnVolverP))
@@ -159,11 +181,9 @@ public class loginProfesor extends javax.swing.JDialog {
                             .addComponent(jpassProfesor))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbMostrarOcultar)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(155, 155, 155)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 18, Short.MAX_VALUE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
