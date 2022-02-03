@@ -5,19 +5,27 @@
  */
 package login;
 
+import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import screens.screenTecnico;
 
 /**
  *
  * @author damA
  */
 public class loginTecnico extends javax.swing.JDialog {
+     Conectar conectar = new Conectar();
 
     /**
      * Creates new form jdlt
      */
     public loginTecnico(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        conectar.getConexion();
         initComponents();
     }
 
@@ -30,68 +38,75 @@ public class loginTecnico extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jbtnEntrarT = new javax.swing.JButton();
-        jbtnVolverT = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jcbMostrarOcultar = new javax.swing.JCheckBox();
         jtxtUsuarioT = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jbtnEntrarP = new javax.swing.JButton();
+        jbtnVolverP = new javax.swing.JButton();
         jpassTecnico = new javax.swing.JPasswordField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(375, 260));
+
+        jcbMostrarOcultar.setText("Ver");
+        jcbMostrarOcultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbMostrarOcultarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setText("Técnico");
 
         jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MANTENIMIENTO INSTITUTO");
 
-        jbtnEntrarT.setText("ENTRAR");
-
-        jbtnVolverT.setText("VOLVER");
-        jbtnVolverT.addActionListener(new java.awt.event.ActionListener() {
+        jbtnEntrarP.setText("ENTRAR");
+        jbtnEntrarP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnVolverTActionPerformed(evt);
+                jbtnEntrarPActionPerformed(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Usuario:");
+        jbtnVolverP.setText("VOLVER");
+        jbtnVolverP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnVolverPActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setText("Contraseña:");
+        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Users\\damA\\Documents\\NetBeansProjects\\mantenimiento_paula\\src\\main\\java\\iconos\\usuario.png")); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setText("Técnico");
-
-        jpassTecnico.setText("jPasswordField1");
+        jLabel3.setIcon(new javax.swing.ImageIcon("D:\\Users\\damA\\Documents\\NetBeansProjects\\mantenimiento_paula\\src\\main\\java\\iconos\\padlock.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel2))
-                            .addComponent(jLabel3))
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtxtUsuarioT, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(jpassTecnico))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbtnEntrarT)
+                        .addContainerGap()
+                        .addComponent(jbtnEntrarP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnVolverT)))
-                .addContainerGap())
+                        .addComponent(jbtnVolverP))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtxtUsuarioT, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                            .addComponent(jpassTecnico))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcbMostrarOcultar)))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(160, 160, 160)
                 .addComponent(jLabel4)
@@ -104,37 +119,105 @@ public class loginTecnico extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtUsuarioT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jpassTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtxtUsuarioT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbtnEntrarT)
-                    .addComponent(jbtnVolverT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jpassTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcbMostrarOcultar)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnVolverP)
+                    .addComponent(jbtnEntrarP))
+                .addGap(30, 30, 30))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtnVolverTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverTActionPerformed
+    private void jcbMostrarOcultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMostrarOcultarActionPerformed
+
+        if (jcbMostrarOcultar.isSelected()) {
+            jpassTecnico.setEchoChar((char)0);
+        }else{
+            jpassTecnico.setEchoChar('*');
+        }
+    }//GEN-LAST:event_jcbMostrarOcultarActionPerformed
+
+    private void jbtnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarPActionPerformed
+        loginT();
+    }//GEN-LAST:event_jbtnEntrarPActionPerformed
+
+    private void jbtnVolverPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverPActionPerformed
         this.setVisible(false);
         new main().setVisible(true);
-    }//GEN-LAST:event_jbtnVolverTActionPerformed
+    }//GEN-LAST:event_jbtnVolverPActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JButton jbtnEntrarT;
-    private javax.swing.JButton jbtnVolverT;
+    private javax.swing.JButton jbtnEntrarP;
+    private javax.swing.JButton jbtnVolverP;
+    private javax.swing.JCheckBox jcbMostrarOcultar;
     private javax.swing.JPasswordField jpassTecnico;
     private javax.swing.JTextField jtxtUsuarioT;
     // End of variables declaration//GEN-END:variables
+
+    private void loginT() {
+         
+        Connection cn = conectar.getConexion();
+        
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        String user = jtxtUsuarioT.getText();
+        String pass = String.valueOf(jpassTecnico.getPassword());
+        
+        int rol = 2;
+        
+        if (user.equals("") || pass.equals("")) {
+          
+            JOptionPane.showMessageDialog(this, "Si quieres entrar no dejes los campos vacios :( .", "Campos vacíos", 0);
+            
+        }else{
+            
+            try {
+               
+                ps = cn.prepareStatement("Select login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "' and id_rol = '" + rol + "'");
+                
+                if (rol==2) {
+                    
+                    rs = ps.executeQuery();
+                
+                    if (rs.next()) {
+                    
+                        screenTecnico sa = new screenTecnico(this,true);
+                        sa.setVisible(true);
+                    
+                    }else{
+                        
+                        JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como técnico.", "Usuario Incorrecto", 0);
+                    }
+                    
+                }else{
+                    
+                    JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como superusuario.", "Usuario Incorrecto", 0);
+                }
+                
+                 
+            } catch (SQLException e) {
+                
+                System.err.println(e.toString());
+                JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);
+                
+            }
+        }
+    }
 }

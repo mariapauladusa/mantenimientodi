@@ -5,6 +5,10 @@
  */
 package com.mycompany.mantenimiento_paula;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
 import login.loginProfesor;
 import login.loginRoot;
 import login.loginTecnico;
@@ -15,14 +19,18 @@ import login.loginTecnico;
  * @author damA
  */
 public class main extends javax.swing.JFrame {
+    
+    
 
     /**
      * Creates new form Main
      */
     public main() {
+        
         initComponents();
+        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,6 +48,7 @@ public class main extends javax.swing.JFrame {
         jbtnTecnico = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImages(getIconImages());
 
         jLabel2.setFont(new java.awt.Font("Leelawadee UI", 1, 14)); // NOI18N
         jLabel2.setText("Entrar como...");
@@ -121,6 +130,7 @@ public class main extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_salirActionPerformed
