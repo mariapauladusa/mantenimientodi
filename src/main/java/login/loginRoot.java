@@ -31,7 +31,9 @@ public class loginRoot extends javax.swing.JDialog {
         initComponents();
         
         iconoPrograma();
-        iconosLabel();
+        //iconosLabel();
+        
+         setSize(400,250);
     }
     
     public void iconoPrograma(){
@@ -41,10 +43,10 @@ public class loginRoot extends javax.swing.JDialog {
         this.setIconImage(img.getImage());
     }
     
-    public void iconosLabel(){
-        jLabel2.setIcon(new ImageIcon("src\\main\\java\\resources\\usuario.png"));
-        jLabel3.setIcon(new ImageIcon("src\\main\\java\\resources\\padlock.png"));
-    }
+    //public void iconosLabel(){
+    //    jLabel2.setIcon(new ImageIcon("src\\main\\java\\resources\\usuario.png"));
+    //    jLabel3.setIcon(new ImageIcon("src\\main\\java\\resources\\padlock.png"));
+    //}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,13 +64,12 @@ public class loginRoot extends javax.swing.JDialog {
         jbtnEntrarP = new javax.swing.JButton();
         jbtnVolverP = new javax.swing.JButton();
         jpassAdmin = new javax.swing.JPasswordField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(377, 244));
+        setIconImage(null);
+        setPreferredSize(new java.awt.Dimension(400, 250));
         setResizable(false);
-        setSize(new java.awt.Dimension(377, 244));
+        setSize(new java.awt.Dimension(400, 250));
 
         jcbMostrarOcultar.setText("Ver");
         jcbMostrarOcultar.addActionListener(new java.awt.event.ActionListener() {
@@ -79,7 +80,7 @@ public class loginRoot extends javax.swing.JDialog {
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Superusuario");
+        jLabel4.setText("Administrador");
 
         jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -104,25 +105,19 @@ public class loginRoot extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbtnEntrarP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnVolverP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addComponent(jbtnVolverP))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtxtUsuarioA, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                            .addComponent(jpassAdmin))
+                            .addComponent(jtxtUsuarioA)
+                            .addComponent(jpassAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbMostrarOcultar)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+                        .addComponent(jcbMostrarOcultar))))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -130,23 +125,19 @@ public class loginRoot extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtxtUsuarioA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jtxtUsuarioA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jpassAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jcbMostrarOcultar)))
-                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnEntrarP)
-                    .addComponent(jbtnVolverP))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(jpassAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbMostrarOcultar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnVolverP)
+                    .addComponent(jbtnEntrarP))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -173,8 +164,6 @@ public class loginRoot extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JButton jbtnEntrarP;
     private javax.swing.JButton jbtnVolverP;
@@ -205,7 +194,7 @@ public class loginRoot extends javax.swing.JDialog {
                
                 ps = cn.prepareStatement("Select login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "' and id_rol = '" + rol + "'");
                 
-                if (rol==1) {
+                if (rol==rol) {
                     
                     rs = ps.executeQuery();
                 
@@ -216,12 +205,12 @@ public class loginRoot extends javax.swing.JDialog {
                     
                     }else{
                         
-                        JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como superusuario.", "Usuario Incorrecto", 0);
+                        //JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Administración.", "Usuario Incorrecto", 0);
                     }
                     
                 }else{
                     
-                    JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como superusuario.", "Usuario Incorrecto", 0);
+                    JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Administración.", "Usuario Incorrecto", 0);
                 }
                 
                  

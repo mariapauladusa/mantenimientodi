@@ -19,10 +19,13 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author damA
- */
+ */     
 public class loginProfesor extends javax.swing.JDialog {
     
-    Conectar conectar = new Conectar();;
+    Conectar conectar = new Conectar();
+    
+    public String user;
+    public String pass;
     
     /**
      * Creates new form jd_login_profesor
@@ -32,8 +35,10 @@ public class loginProfesor extends javax.swing.JDialog {
         
         initComponents();
         
-        iconosLabel();
+        //iconosLabel();
         iconoPrograma();
+        
+        setSize(400,250);
         
     }
     
@@ -44,22 +49,23 @@ public class loginProfesor extends javax.swing.JDialog {
         this.setIconImage(img.getImage());
     }
     
-    public void iconosLabel(){
-        jLabel2.setIcon(new ImageIcon("src\\main\\java\\resources\\usuario.png"));
-        jLabel3.setIcon(new ImageIcon("src\\main\\java\\resources\\padlock.png"));
-    }
+    //public void iconosLabel(){
+    //    jLabel2.setIcon(new ImageIcon("src\\main\\java\\resources\\usuario.png"));
+    //    jLabel3.setIcon(new ImageIcon("src\\main\\java\\resources\\padlock.png"));
+    //}
 
     public void loginP(){
         
         Connection cn = conectar.getConexion();
         
+        user = jtxtUsuarioP.getText();
+        pass = String.valueOf(jpassProfesor.getPassword());
+        
         PreparedStatement ps = null;
         ResultSet rs = null;
         
-        String user = jtxtUsuarioP.getText();
-        String pass = String.valueOf(jpassProfesor.getPassword());
-        
         int rol = 3;
+        int iduser =1;
         
         if (user.equals("") || pass.equals("")) {
           
@@ -68,26 +74,26 @@ public class loginProfesor extends javax.swing.JDialog {
         }else{
             
             try {
-               
+                
                 ps = cn.prepareStatement("Select login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "' and id_rol = '" + rol + "'");
                 
-                if (rol==3) {
+                if (rol==rol) {
                     
                     rs = ps.executeQuery();
                 
                     if (rs.next()) {
                     
-                        screenProfesor mp = new screenProfesor(this,true);
+                        screenProfesor mp = new screenProfesor(this, true, iduser);
                         mp.setVisible(true);
                     
                     }else{
                         
-                        JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como profesor.", "Usuario Incorrecto", 0);
+                        //JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Profesor.", "Usuario Incorrecto", 0);
                     }
                     
                 }else{
                     
-                    JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como profesor.", "Usuario Incorrecto", 0);
+                    JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Profesor.", "Usuario Incorrecto", 0);
                 }
                 
                  
@@ -116,17 +122,13 @@ public class loginProfesor extends javax.swing.JDialog {
         jbtnEntrarP = new javax.swing.JButton();
         jbtnVolverP = new javax.swing.JButton();
         jpassProfesor = new javax.swing.JPasswordField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jcbMostrarOcultar = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(null);
-        setPreferredSize(new java.awt.Dimension(377, 244));
+        setPreferredSize(new java.awt.Dimension(400, 250));
         setResizable(false);
-        setSize(new java.awt.Dimension(377, 244));
-
-        jtxtUsuarioP.setText("prueba");
+        setSize(new java.awt.Dimension(400, 250));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -150,7 +152,11 @@ public class loginProfesor extends javax.swing.JDialog {
             }
         });
 
-        jpassProfesor.setText("prueba");
+        jpassProfesor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jpassProfesorActionPerformed(evt);
+            }
+        });
 
         jcbMostrarOcultar.setText("Ver");
         jcbMostrarOcultar.addActionListener(new java.awt.event.ActionListener() {
@@ -164,49 +170,41 @@ public class loginProfesor extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnEntrarP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtnVolverP))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(0, 79, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtxtUsuarioP, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                            .addComponent(jpassProfesor))
+                            .addComponent(jtxtUsuarioP)
+                            .addComponent(jpassProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbMostrarOcultar)))
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(7, 7, 7)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtxtUsuarioP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jpassProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jcbMostrarOcultar)))
-                .addGap(21, 21, 21)
+                .addGap(39, 39, 39)
+                .addComponent(jtxtUsuarioP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jpassProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbMostrarOcultar, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbtnVolverP)
                     .addComponent(jbtnEntrarP))
-                .addGap(30, 30, 30))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -231,12 +229,15 @@ public class loginProfesor extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jcbMostrarOcultarActionPerformed
 
+    // BORRAR ESTO
+    private void jpassProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpassProfesorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jpassProfesorActionPerformed
+
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JButton jbtnEntrarP;
     private javax.swing.JButton jbtnVolverP;

@@ -6,19 +6,37 @@
 
 package screens;
 
+import com.mycompany.mantenimiento_paula.Conectar;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import javax.swing.table.DefaultTableModel;
+import java.util.logging.Logger;
+
 /**
  *
  * @author damA
  */
 public class screenProfesor extends javax.swing.JDialog {
+    
+     Conectar conectar = new Conectar();
+     int iduser;
 
     /** Creates new form jd_mainProfesor
      * @param <error> */
-    public screenProfesor(javax.swing.JDialog parent, boolean modal) {
-        super(parent, modal);
+    public screenProfesor(javax.swing.JDialog parent, boolean modal, int iduser) {
+        conectar.getConexion();
+        
+        iduser=iduser;
+        
         initComponents();
+        
+        verIncidencias();
     }
-    
+
+       
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -39,6 +57,11 @@ public class screenProfesor extends javax.swing.JDialog {
         setResizable(false);
 
         jbtnFiltrarP.setText("Filtrar por...");
+        jbtnFiltrarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnFiltrarPActionPerformed(evt);
+            }
+        });
 
         jt_profesor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,22 +96,21 @@ public class screenProfesor extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbtnFiltrarP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxtFiltrarP, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
                         .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnSalirP)
@@ -105,6 +127,58 @@ public class screenProfesor extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jbtnSalirPActionPerformed
 
+    private void jbtnFiltrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFiltrarPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnFiltrarPActionPerformed
+
+    // METODO PARA LAS PELICULAS
+    public void verIncidencias() {
+        
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.setColumnIdentifiers(new String[]{"Descripción","Fecha","Ubicación","Observaciones"});
+        
+        String[] a = new String[4];
+        
+        conectar = new Conectar();
+        Connection conexion = conectar.getConexion();
+        
+        try {
+            
+            PreparedStatement ps = conexion.prepareStatement("select p.id_profesor, m.descripcion, m.fecha, u.ubicacion, m.observaciones \n" +
+                                                             "from man_incidencias as m \n" +
+                                                             "inner join man_ubicacion as u\n" +
+                                                             "on u.ubicacion = m.id_ubicacion\n" +
+                                                             "inner join fp_profesor as p\n" +
+                                                             "on p.id_profesor = m.id_profesor_crea\n" +
+                                                             " where p.id_profesor = '" +iduser+ "';");
+            
+            
+            ResultSet rs = ps.executeQuery();
+           System.out.println("hola");
+            String descripcion = null;
+            String fecha = null;
+            String ubicacion = null;
+            String observaciones = null;
+            
+            while (rs.next()) {
+                 System.out.println("hola"+rs.getString(1));
+                a[0] = rs.getString(1);
+                a[1] = rs.getString(2);
+                a[2] = rs.getString(3);
+                a[3] = rs.getString(4);
+                
+                dtm.addRow(a);
+            }
+            System.out.println("hola22");
+            jt_profesor.setModel(dtm);
+            System.out.println("hola22");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
