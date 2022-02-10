@@ -22,18 +22,21 @@ import java.util.logging.Logger;
 public class screenProfesor extends javax.swing.JDialog {
     
      Conectar conectar = new Conectar();
-     int iduser;
+     String usuario;
+     String id;
 
     /** Creates new form jd_mainProfesor
      * @param <error> */
-    public screenProfesor(javax.swing.JDialog parent, boolean modal, int iduser) {
+    public screenProfesor(javax.swing.JDialog parent, boolean modal, String user) {
         conectar.getConexion();
-        
-        iduser=iduser;
         
         initComponents();
         
+        usuario = user;
+        
         verIncidencias();
+        
+        saberId();
     }
 
        
@@ -150,11 +153,10 @@ public class screenProfesor extends javax.swing.JDialog {
                                                              "on u.ubicacion = m.id_ubicacion\n" +
                                                              "inner join fp_profesor as p\n" +
                                                              "on p.id_profesor = m.id_profesor_crea\n" +
-                                                             " where p.id_profesor = '" +iduser+ "';");
+                                                             " where p.id_profesor = m.id_profesor_crea;");
             
             
             ResultSet rs = ps.executeQuery();
-           System.out.println("hola");
             String descripcion = null;
             String fecha = null;
             String ubicacion = null;
@@ -187,5 +189,26 @@ public class screenProfesor extends javax.swing.JDialog {
     private javax.swing.JTable jt_profesor;
     private javax.swing.JTextField jtxtFiltrarP;
     // End of variables declaration//GEN-END:variables
+
+    private void saberId() {
+         conectar = new Conectar();
+        Connection conexion = conectar.getConexion();
+        
+        try {
+            
+            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login= '"+usuario+"';");
+            
+            
+            ResultSet rs = ps.executeQuery();
+
+            
+            while (rs.next()) {
+                 id= rs.getString(1);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

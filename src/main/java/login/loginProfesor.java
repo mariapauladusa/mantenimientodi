@@ -65,7 +65,6 @@ public class loginProfesor extends javax.swing.JDialog {
         ResultSet rs = null;
         
         int rol = 3;
-        int iduser =1;
         
         if (user.equals("") || pass.equals("")) {
           
@@ -75,20 +74,21 @@ public class loginProfesor extends javax.swing.JDialog {
             
             try {
                 
-                ps = cn.prepareStatement("Select login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "' and id_rol = '" + rol + "'");
+                ps = cn.prepareStatement("Select id_profesor, login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "';");
                 
                 if (rol==rol) {
                     
                     rs = ps.executeQuery();
-                
+                    
+                    
                     if (rs.next()) {
                     
-                        screenProfesor mp = new screenProfesor(this, true, iduser);
+                        screenProfesor mp = new screenProfesor(this, true, user);
                         mp.setVisible(true);
                     
                     }else{
                         
-                        //JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Profesor.", "Usuario Incorrecto", 0);
+                        JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Profesor.", "Usuario Incorrecto", 0);
                     }
                     
                 }else{

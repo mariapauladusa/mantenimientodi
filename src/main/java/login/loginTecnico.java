@@ -204,8 +204,8 @@ public class loginTecnico extends javax.swing.JDialog {
                 
                     if (rs.next()) {
                     
-                        screenProfesor mp = new screenProfesor(this,true);
-                        mp.setVisible(true);
+                        //screenProfesor mp = new screenProfesor(this,true);
+                        //mp.setVisible(true);
                     
                     }else{
                         
