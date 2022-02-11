@@ -13,14 +13,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import screens.screenAdmin;
+import screens.screenRoot;
 
 /**
  *
  * @author damA
  */
 public class loginRoot extends javax.swing.JDialog {
+    
     Conectar conectar = new Conectar();
+    
+    public String user;
+    public String pass;
 
     /**
      * Creates new form jdlr
@@ -32,8 +36,7 @@ public class loginRoot extends javax.swing.JDialog {
         
         iconoPrograma();
         //iconosLabel();
-        
-         setSize(400,250);
+     
     }
     
     public void iconoPrograma(){
@@ -179,8 +182,8 @@ public class loginRoot extends javax.swing.JDialog {
         PreparedStatement ps = null;
         ResultSet rs = null;
         
-        String user = jtxtUsuarioA.getText();
-        String pass = String.valueOf(jpassAdmin.getPassword());
+        user = jtxtUsuarioA.getText();
+        pass = String.valueOf(jpassAdmin.getPassword());
         
         int rol = 1;
         
@@ -200,12 +203,12 @@ public class loginRoot extends javax.swing.JDialog {
                 
                     if (rs.next()) {
                     
-                        screenAdmin sa = new screenAdmin(this,true);
+                        screenRoot sa = new screenRoot(this,true,user);
                         sa.setVisible(true);
                     
                     }else{
                         
-                        //JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Administración.", "Usuario Incorrecto", 0);
+                        JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Administración.", "Usuario Incorrecto", 0);
                     }
                     
                 }else{

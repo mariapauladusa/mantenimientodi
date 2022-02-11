@@ -17,7 +17,8 @@ import java.util.logging.Logger;
  * @author dama
  */
 public class Conectar {
-    public static final String URL = "jdbc:mysql://servidorifc.iesch.org:3306/mantenimiento_dusa_p";
+    public static final String URL = "jdbc:mysql://servidorifc.iesch.org:8882/mantenimiento_dusa_p";
+    //3306
     public static final String USER = "2_dusa_p";
     public static final String PASS = "fw7e4";
     

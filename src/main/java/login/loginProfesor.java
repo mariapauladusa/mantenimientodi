@@ -31,14 +31,13 @@ public class loginProfesor extends javax.swing.JDialog {
      * Creates new form jd_login_profesor
      */
     public loginProfesor(java.awt.Frame parent, boolean modal) {
+        
         conectar.getConexion();
         
         initComponents();
         
         //iconosLabel();
         iconoPrograma();
-        
-        setSize(400,250);
         
     }
     
