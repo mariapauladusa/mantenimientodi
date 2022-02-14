@@ -53,22 +53,18 @@ public class screenProfesor extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jbtnFiltrarP = new javax.swing.JButton();
-        jtxtFiltrarP = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jsp_profesor = new javax.swing.JScrollPane();
         jt_profesor = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jbtnSalirP = new javax.swing.JButton();
+        jmb_profesor = new javax.swing.JMenuBar();
+        jmi_mas = new javax.swing.JMenu();
+        jmi_verProfesores = new javax.swing.JMenuItem();
+        jmi_correoP = new javax.swing.JMenuItem();
+        jmi_add = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
-
-        jbtnFiltrarP.setText("Filtrar por...");
-        jbtnFiltrarP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnFiltrarPActionPerformed(evt);
-            }
-        });
 
         jt_profesor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,7 +77,7 @@ public class screenProfesor extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jt_profesor);
+        jsp_profesor.setViewportView(jt_profesor);
 
         jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -95,6 +91,22 @@ public class screenProfesor extends javax.swing.JDialog {
             }
         });
 
+        jmi_mas.setText("Más...");
+        jmi_mas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        jmi_verProfesores.setText("Ver Profesorado");
+        jmi_mas.add(jmi_verProfesores);
+
+        jmi_correoP.setText("Enviar Correo");
+        jmi_mas.add(jmi_correoP);
+
+        jmi_add.setText("Nueva Incidencia");
+        jmi_mas.add(jmi_add);
+
+        jmb_profesor.add(jmi_mas);
+
+        setJMenuBar(jmb_profesor);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,12 +114,9 @@ public class screenProfesor extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jbtnFiltrarP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtFiltrarP, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -117,13 +126,10 @@ public class screenProfesor extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jsp_profesor, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnSalirP)
-                    .addComponent(jbtnFiltrarP)
-                    .addComponent(jtxtFiltrarP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addComponent(jbtnSalirP)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -133,10 +139,6 @@ public class screenProfesor extends javax.swing.JDialog {
     private void jbtnSalirPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSalirPActionPerformed
         dispose();
     }//GEN-LAST:event_jbtnSalirPActionPerformed
-
-    private void jbtnFiltrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFiltrarPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtnFiltrarPActionPerformed
 
     // MOSTRAR INCIDENCIAS EN EL JTABLE
     public void verIncidencias() {
@@ -184,11 +186,14 @@ public class screenProfesor extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbtnFiltrarP;
     private javax.swing.JButton jbtnSalirP;
+    private javax.swing.JMenuBar jmb_profesor;
+    private javax.swing.JMenuItem jmi_add;
+    private javax.swing.JMenuItem jmi_correoP;
+    private javax.swing.JMenu jmi_mas;
+    private javax.swing.JMenuItem jmi_verProfesores;
+    private javax.swing.JScrollPane jsp_profesor;
     private javax.swing.JTable jt_profesor;
-    private javax.swing.JTextField jtxtFiltrarP;
     // End of variables declaration//GEN-END:variables
 
     private void saberId() {

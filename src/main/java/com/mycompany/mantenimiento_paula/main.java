@@ -23,13 +23,12 @@ public class main extends javax.swing.JFrame {
 
         initComponents();
 
-        //crea un ImageIcon y define la ruta de tu imagen
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        //define el icon a tu JFrame
-        this.setIconImage(img.getImage());
+        // ICONO DEL PROGRAMA
+        iconoPrograma();
 
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -132,22 +131,34 @@ public class main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // METODO PARA PONER ICONO AL PROGRAMA
+    public void iconoPrograma(){
+        //crea un ImageIcon y define la ruta de tu imagen
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        //define el icon a tu JFrame
+        this.setIconImage(img.getImage());
+    }
+
+    // BOTON PARA SALIR
     private void jbtn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_salirActionPerformed
         dispose();
     }//GEN-LAST:event_jbtn_salirActionPerformed
 
+    // BOTON PARA EL USUARIO ROOT
     private void jbtnRootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRootActionPerformed
         loginRoot frm = new loginRoot(this, true);
         this.setVisible(false);
         frm.setVisible(true);
     }//GEN-LAST:event_jbtnRootActionPerformed
 
+    // BOTON PARA EL USUARIO PROFESOR
     private void jbtnProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnProfesorActionPerformed
         loginProfesor frm = new loginProfesor(this, true);
         this.setVisible(false);
         frm.setVisible(true);
     }//GEN-LAST:event_jbtnProfesorActionPerformed
 
+    // BOTON PARA EL USUARIO TECNICO
     private void jbtnTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnTecnicoActionPerformed
         loginTecnico frm = new loginTecnico(this, true);
         this.setVisible(false);
