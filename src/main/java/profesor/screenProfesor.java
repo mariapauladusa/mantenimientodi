@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package screens;
+package profesor;
 
 import com.mycompany.mantenimiento_paula.Conectar;
+import com.mycompany.mantenimiento_paula.main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,10 +41,18 @@ public class screenProfesor extends javax.swing.JDialog {
 
         saberId();
         verIncidencias();
+        
+        icono();
 
         
     }
 
+    // METODO QUE HE CREADO EN LA PANTALLA PRINCIPAL PARA EL ICONO Y LO LLAMO AQUI.
+    public void icono(){
+        main m = new main();
+        m.iconoPrograma();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,12 +104,22 @@ public class screenProfesor extends javax.swing.JDialog {
         jmi_mas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
         jmi_verProfesores.setText("Ver Profesorado");
+        jmi_verProfesores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_verProfesoresActionPerformed(evt);
+            }
+        });
         jmi_mas.add(jmi_verProfesores);
 
         jmi_correoP.setText("Enviar Correo");
         jmi_mas.add(jmi_correoP);
 
         jmi_add.setText("Nueva Incidencia");
+        jmi_add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_addActionPerformed(evt);
+            }
+        });
         jmi_mas.add(jmi_add);
 
         jmb_profesor.add(jmi_mas);
@@ -115,9 +134,7 @@ public class screenProfesor extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jbtnSalirP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -136,17 +153,32 @@ public class screenProfesor extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // BOTON PARA SALIR
     private void jbtnSalirPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSalirPActionPerformed
         dispose();
     }//GEN-LAST:event_jbtnSalirPActionPerformed
+    
+    // OPCION DE MENU BAR PARA AÑADIR UNA NUEVA INCIDENCIA
+    private void jmi_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_addActionPerformed
+       add_incidencia add = new add_incidencia(this, true, usuario);
+       add.setVisible(true);
+       
+       verIncidencias();
+    }//GEN-LAST:event_jmi_addActionPerformed
+
+    // OPCION DEL MENU BAR PARA VER LOS PROFESORES
+    private void jmi_verProfesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_verProfesoresActionPerformed
+        verProfesores vp = new verProfesores(this, true);
+        vp.setVisible(true);
+    }//GEN-LAST:event_jmi_verProfesoresActionPerformed
 
     // MOSTRAR INCIDENCIAS EN EL JTABLE
     public void verIncidencias() {
 
         DefaultTableModel dtm = new DefaultTableModel();
-        dtm.setColumnIdentifiers(new String[]{"Descripción", "Fecha", "Ubicación", "Observaciones"});
+        dtm.setColumnIdentifiers(new String[]{"Nombre", "Descripción", "Fecha", "Ubicación", "Observaciones"});
 
-        String[] a = new String[4];
+        String[] a = new String[5];
 
         conectar = new Conectar();
         Connection conexion = conectar.getConexion();
@@ -160,6 +192,7 @@ public class screenProfesor extends javax.swing.JDialog {
 
             ResultSet rs = ps.executeQuery();
             
+            String nombre = null;
             String descripcion = null;
             String fecha = null;
             String ubicacion = null;
@@ -171,6 +204,7 @@ public class screenProfesor extends javax.swing.JDialog {
                 a[1] = rs.getString(2);
                 a[2] = rs.getString(3);
                 a[3] = rs.getString(4);
+                a[4] = rs.getString(5);
 
                 dtm.addRow(a);
             }
@@ -196,6 +230,7 @@ public class screenProfesor extends javax.swing.JDialog {
     private javax.swing.JTable jt_profesor;
     // End of variables declaration//GEN-END:variables
 
+    // METODO PARA AVERIGUAR EL ID 
     private void saberId() {
         
         conectar = new Conectar();
@@ -203,7 +238,7 @@ public class screenProfesor extends javax.swing.JDialog {
 
         try {
 
-            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login= '" + usuario + "';");
+            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login = '" + usuario + "';");
 
             ResultSet rs = ps.executeQuery();
 

@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package screens;
+package administrador;
 
+import profesor.screenProfesor;
 import com.mycompany.mantenimiento_paula.Conectar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,7 +58,6 @@ public class screenRoot extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("screenRoot"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(832, 555));
         setSize(new java.awt.Dimension(832, 555));
 
         jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 24)); // NOI18N
