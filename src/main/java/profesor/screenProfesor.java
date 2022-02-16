@@ -7,6 +7,11 @@ package profesor;
 
 import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +19,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.table.DefaultTableModel;
 import java.util.logging.Logger;
+import javax.swing.JMenuItem;
 
 /**
  *
@@ -25,7 +31,33 @@ public class screenProfesor extends javax.swing.JDialog {
     
     String usuario;
     String id;
-
+    
+    DefaultTableModel dtm = new DefaultTableModel();
+   
+    
+    
+    private void popmenu(){
+        
+       JMenuItem modificar = new JMenuItem ("Modificar incidencia");
+       jppm.add(modificar);
+       
+       jt_profesor.setComponentPopupMenu(jppm);
+       
+       modificar.addActionListener(new ActionListener() { 
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               
+               //String descripcion = (String) dtm.getValueAt(jt_profesor.getSelectedRow(), 0);
+              
+               modify_incidencia add = new modify_incidencia(screenProfesor.this, true, usuario);
+               add.setVisible(true);
+                
+               verIncidencias();
+           }
+       });
+       
+    }
+    
     /**
      * Creates new form jd_mainProfesor
      *
@@ -43,6 +75,8 @@ public class screenProfesor extends javax.swing.JDialog {
         verIncidencias();
         
         icono();
+        
+        popmenu();
 
         
     }
@@ -62,14 +96,17 @@ public class screenProfesor extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jppm = new javax.swing.JPopupMenu();
         jsp_profesor = new javax.swing.JScrollPane();
         jt_profesor = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jbtnSalirP = new javax.swing.JButton();
+        jbtn_buscar = new javax.swing.JButton();
+        jtxt_buscar = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jmb_profesor = new javax.swing.JMenuBar();
         jmi_mas = new javax.swing.JMenu();
         jmi_verProfesores = new javax.swing.JMenuItem();
-        jmi_correoP = new javax.swing.JMenuItem();
         jmi_add = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -100,19 +137,27 @@ public class screenProfesor extends javax.swing.JDialog {
             }
         });
 
+        jbtn_buscar.setText("Buscar");
+        jbtn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_buscarActionPerformed(evt);
+            }
+        });
+
+        jtxt_buscar.setToolTipText("AAAA-MM-DD");
+
+        jLabel2.setText("Buscar por descripción:");
+
         jmi_mas.setText("Más...");
         jmi_mas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
-        jmi_verProfesores.setText("Ver Profesorado");
+        jmi_verProfesores.setText("Enviar Correo");
         jmi_verProfesores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmi_verProfesoresActionPerformed(evt);
             }
         });
         jmi_mas.add(jmi_verProfesores);
-
-        jmi_correoP.setText("Enviar Correo");
-        jmi_mas.add(jmi_correoP);
 
         jmi_add.setText("Nueva Incidencia");
         jmi_add.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +179,15 @@ public class screenProfesor extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
-                    .addComponent(jbtnSalirP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtn_buscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -145,7 +198,11 @@ public class screenProfesor extends javax.swing.JDialog {
                 .addGap(0, 0, 0)
                 .addComponent(jsp_profesor, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbtnSalirP)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnSalirP)
+                    .addComponent(jbtn_buscar)
+                    .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -172,17 +229,25 @@ public class screenProfesor extends javax.swing.JDialog {
         vp.setVisible(true);
     }//GEN-LAST:event_jmi_verProfesoresActionPerformed
 
+    // BOTON PARA BUSCAR UNA INCIDENCIA EN CONCRETO SEGUN LA FECHA
+    private void jbtn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_buscarActionPerformed
+
+        buscar();
+    }//GEN-LAST:event_jbtn_buscarActionPerformed
+
     // MOSTRAR INCIDENCIAS EN EL JTABLE
     public void verIncidencias() {
 
-        DefaultTableModel dtm = new DefaultTableModel();
         dtm.setColumnIdentifiers(new String[]{"Nombre", "Descripción", "Fecha", "Ubicación", "Observaciones"});
+        
+        //String buscar = jtxt_buscar.getText().toString();
 
         String[] a = new String[5];
 
         conectar = new Conectar();
         Connection conexion = conectar.getConexion();
-
+     
+        dtm.setRowCount(0);
         try {
 
             PreparedStatement ps = conexion.prepareStatement("select p.nombre_completo, m.descripcion, m.fecha, u.ubicacion, m.observaciones\n"
@@ -220,14 +285,17 @@ public class screenProfesor extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jbtnSalirP;
+    private javax.swing.JButton jbtn_buscar;
     private javax.swing.JMenuBar jmb_profesor;
     private javax.swing.JMenuItem jmi_add;
-    private javax.swing.JMenuItem jmi_correoP;
     private javax.swing.JMenu jmi_mas;
     private javax.swing.JMenuItem jmi_verProfesores;
+    private javax.swing.JPopupMenu jppm;
     private javax.swing.JScrollPane jsp_profesor;
     private javax.swing.JTable jt_profesor;
+    private javax.swing.JTextField jtxt_buscar;
     // End of variables declaration//GEN-END:variables
 
     // METODO PARA AVERIGUAR EL ID 
@@ -249,6 +317,10 @@ public class screenProfesor extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void buscar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
         
 }

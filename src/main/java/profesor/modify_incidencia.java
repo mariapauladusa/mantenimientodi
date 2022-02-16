@@ -19,15 +19,22 @@ import javax.swing.JOptionPane;
  *
  * @author damA
  */
-public class add_incidencia extends javax.swing.JDialog {
-
+public class modify_incidencia extends javax.swing.JDialog {
+    
     Conectar conectar = new Conectar();
+    
+    //DefaultTableModel dtm = new DefaultTableModel();
 
     String usuario;
     String id;
 
-    public add_incidencia(javax.swing.JDialog parent, boolean modal, String user) {
+    /**
+     * Creates new form modify_incidencia
+     */
+    public modify_incidencia(javax.swing.JDialog parent, boolean modal, String user) {
+        
         super(parent, modal);
+        
         conectar.getConexion();
 
         initComponents();
@@ -37,13 +44,68 @@ public class add_incidencia extends javax.swing.JDialog {
         saberId();
 
         icono();
-
     }
     
     // METODO QUE HE CREADO EN LA PANTALLA PRINCIPAL PARA EL ICONO Y LO LLAMO AQUI.
     public void icono() {
         main m = new main();
         m.iconoPrograma();
+    }
+    
+    //AVERIGUAR ID
+    private void saberId() {
+
+        conectar = new Conectar();
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login = '" + usuario + "';");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                id = rs.getString(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     
+    // MODIFICAR INCIDENCIA 
+    public void modificarIncidencia() {
+        
+        //dtm.setColumnIdentifiers(new String[]{"Nombre", "Descripción", "Fecha", "Ubicación", "Observaciones"});
+        
+        String descripcion = jtxta_descr.getText();
+
+        String fecha = jtxt_fecha.getText();
+
+        String ubicacion = (String) jcbo_ubs.getSelectedItem();
+
+        String observaciones = jtxta_obsv.getText();
+
+        String[] s = ubicacion.toString().split(" - ");
+        String sid = s[0];
+
+        // Conexion a la base de datos
+        conectar = new Conectar();
+        Connection conexion = conectar.getConexion();
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement("UPDATE man_incidencias(id_profesor_crea, descripcion, fecha, id_ubicacion, observaciones) VALUES('" + id + "','" + descripcion + "','" + fecha + "','" + sid + "','" + observaciones + "')");
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Datos insertados. Espera un segundo y lo verás en la tabla.");
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        dispose();
+
     }
 
     /**
@@ -55,42 +117,23 @@ public class add_incidencia extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jcbo_ubs = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtxta_obsv = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jbtn_crear = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jbtn_volver = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtxta_descr = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         jtxt_fecha = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jcbo_ubs = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jtxta_obsv = new javax.swing.JTextArea();
-        jbtn_crear = new javax.swing.JButton();
-        jbtn_volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("NUEVA INCIDENCIA");
-
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Descripción:");
-
-        jtxta_descr.setColumns(20);
-        jtxta_descr.setRows(5);
-        jScrollPane1.setViewportView(jtxta_descr);
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setText("Fecha:");
-
-        jtxt_fecha.setToolTipText("AAAA-MM-DD");
-
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setText("Ubicación:");
-
-        jcbo_ubs.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Click aquí para mostrar", " " }));
+        jcbo_ubs.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Click aquí para mostrar" }));
         jcbo_ubs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbo_ubsActionPerformed(evt);
@@ -104,6 +147,10 @@ public class add_incidencia extends javax.swing.JDialog {
         jtxta_obsv.setRows(5);
         jScrollPane2.setViewportView(jtxta_obsv);
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("MODIFICAR INCIDENCIA");
+
         jbtn_crear.setText("Guardar");
         jbtn_crear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,12 +158,27 @@ public class add_incidencia extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setText("Descripción:");
+
         jbtn_volver.setText("Volver");
         jbtn_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtn_volverActionPerformed(evt);
             }
         });
+
+        jtxta_descr.setColumns(20);
+        jtxta_descr.setRows(5);
+        jScrollPane1.setViewportView(jtxta_descr);
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel3.setText("Fecha:");
+
+        jtxt_fecha.setToolTipText("AAAA-MM-DD");
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setText("Ubicación:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,7 +236,7 @@ public class add_incidencia extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtn_crear)
                     .addComponent(jbtn_volver))
@@ -182,15 +244,8 @@ public class add_incidencia extends javax.swing.JDialog {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    // BOTON PARA VOLVER A LA PANTALLA DEL PROFESOR
-    private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
-        dispose();
-    }//GEN-LAST:event_jbtn_volverActionPerformed
-
-    // JCBO QUE MOSTRARA LAS UBICACIONES QUE EXISTAN PARA QUE PUEDA CREAR UNA
     private void jcbo_ubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubsActionPerformed
 
         conectar = new Conectar();
@@ -214,8 +269,12 @@ public class add_incidencia extends javax.swing.JDialog {
     }//GEN-LAST:event_jcbo_ubsActionPerformed
 
     private void jbtn_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_crearActionPerformed
-        insertarIncidencia();
+        modificarIncidencia();
     }//GEN-LAST:event_jbtn_crearActionPerformed
+
+    private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbtn_volverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -232,57 +291,4 @@ public class add_incidencia extends javax.swing.JDialog {
     private javax.swing.JTextArea jtxta_descr;
     private javax.swing.JTextArea jtxta_obsv;
     // End of variables declaration//GEN-END:variables
-
-    private void saberId() {
-
-        conectar = new Conectar();
-        Connection conexion = conectar.getConexion();
-
-        try {
-
-            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login = '" + usuario + "';");
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                id = rs.getString(1);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void insertarIncidencia() {
-
-        String descripcion = jtxta_descr.getText();
-
-        String fecha = jtxt_fecha.getText();
-
-        String ubicacion = (String) jcbo_ubs.getSelectedItem();
-
-        String observaciones = jtxta_obsv.getText();
-
-        String[] s = ubicacion.toString().split(" - ");
-        String sid = s[0];
-
-        // Conexion a la base de datos
-        conectar = new Conectar();
-        Connection conexion = conectar.getConexion();
-
-        try {
-            PreparedStatement ps = conexion.prepareStatement("INSERT INTO man_incidencias(id_profesor_crea, descripcion, fecha, id_ubicacion, observaciones) VALUES('" + id + "','" + descripcion + "','" + fecha + "','" + sid + "','" + observaciones + "')");
-            ps.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Datos insertados. Espera un segundo y lo verás en la tabla.");
-
-        } catch (SQLException ex) {
-
-            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        dispose();
-
-    }
-
 }

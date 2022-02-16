@@ -2,6 +2,12 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <NonVisualComponents>
+    <Container class="javax.swing.JPopupMenu" name="jppm">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+    </Container>
     <Menu class="javax.swing.JMenuBar" name="jmb_profesor">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jmi_mas">
@@ -14,16 +20,11 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_verProfesores">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ver Profesorado"/>
+                <Property name="text" type="java.lang.String" value="Enviar Correo"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_verProfesoresActionPerformed"/>
               </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmi_correoP">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Enviar Correo"/>
-              </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_add">
               <Properties>
@@ -66,7 +67,16 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jsp_profesor" pref="810" max="32767" attributes="0"/>
-                  <Component id="jbtnSalirP" alignment="1" min="-2" pref="79" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jtxt_buscar" min="-2" pref="239" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jbtn_buscar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jbtnSalirP" min="-2" pref="79" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -80,7 +90,12 @@
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="jsp_profesor" min="-2" pref="480" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jbtnSalirP" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jbtnSalirP" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbtn_buscar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtxt_buscar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -125,6 +140,24 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtnSalirPActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbtn_buscar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtn_buscarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtxt_buscar">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="AAAA-MM-DD"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar por descripci&#xf3;n:"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
