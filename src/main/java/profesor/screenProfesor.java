@@ -31,6 +31,7 @@ public class screenProfesor extends javax.swing.JDialog {
     
     String usuario;
     String id;
+
     
     DefaultTableModel dtm = new DefaultTableModel();
    
@@ -47,15 +48,15 @@ public class screenProfesor extends javax.swing.JDialog {
            @Override
            public void actionPerformed(ActionEvent e) {
                
-               //String descripcion = (String) dtm.getValueAt(jt_profesor.getSelectedRow(), 0);
+               String idInci = (String) dtm.getValueAt(jt_profesor.getSelectedRow(), 0);
               
-               modify_incidencia add = new modify_incidencia(screenProfesor.this, true, usuario);
+               modify_incidencia add = new modify_incidencia(screenProfesor.this, true, usuario, idInci);
                add.setVisible(true);
                 
                verIncidencias();
            }
        });
-       
+      
     }
     
     /**
@@ -242,7 +243,7 @@ public class screenProfesor extends javax.swing.JDialog {
         
         //String buscar = jtxt_buscar.getText().toString();
 
-        String[] a = new String[5];
+        String[] a = new String[6];
 
         conectar = new Conectar();
         Connection conexion = conectar.getConexion();
@@ -250,18 +251,19 @@ public class screenProfesor extends javax.swing.JDialog {
         dtm.setRowCount(0);
         try {
 
-            PreparedStatement ps = conexion.prepareStatement("select p.nombre_completo, m.descripcion, m.fecha, u.ubicacion, m.observaciones\n"
+            PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.fecha, u.ubicacion, m.observaciones\n"
                     + "from man_incidencias m inner join fp_profesor p on p.id_profesor = m.id_profesor_crea\n"
                     + "inner join man_ubicacion u on u.id_ubicacion = m.id_ubicacion\n"
                     + "where m.id_profesor_crea = '"+id+"'");
 
             ResultSet rs = ps.executeQuery();
             
+           /* String idInci = null;
             String nombre = null;
             String descripcion = null;
             String fecha = null;
             String ubicacion = null;
-            String observaciones = null;
+            String observaciones = null;*/
 
             while (rs.next()) {
                 
@@ -270,8 +272,10 @@ public class screenProfesor extends javax.swing.JDialog {
                 a[2] = rs.getString(3);
                 a[3] = rs.getString(4);
                 a[4] = rs.getString(5);
+                a[5] = rs.getString(6);
 
                 dtm.addRow(a);
+         
             }
             
             jt_profesor.setModel(dtm);

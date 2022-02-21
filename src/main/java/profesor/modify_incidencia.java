@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import jdk.jfr.Description;
 
 /**
  *
@@ -27,11 +28,13 @@ public class modify_incidencia extends javax.swing.JDialog {
 
     String usuario;
     String id;
+    // Para saber el id de la incidencia para ponder modificar
+    String idIn;
 
     /**
      * Creates new form modify_incidencia
      */
-    public modify_incidencia(javax.swing.JDialog parent, boolean modal, String user) {
+    public modify_incidencia(javax.swing.JDialog parent, boolean modal, String user, String idInci) {
         
         super(parent, modal);
         
@@ -40,10 +43,13 @@ public class modify_incidencia extends javax.swing.JDialog {
         initComponents();
 
         usuario = user;
+        idIn = idInci;
 
         saberId();
 
         icono();
+        
+        rellenarDatos();
     }
     
     // METODO QUE HE CREADO EN LA PANTALLA PRINCIPAL PARA EL ICONO Y LO LLAMO AQUI.
@@ -75,8 +81,7 @@ public class modify_incidencia extends javax.swing.JDialog {
      
     // MODIFICAR INCIDENCIA 
     public void modificarIncidencia() {
-        
-        //dtm.setColumnIdentifiers(new String[]{"Nombre", "Descripción", "Fecha", "Ubicación", "Observaciones"});
+     
         
         String descripcion = jtxta_descr.getText();
 
@@ -87,14 +92,15 @@ public class modify_incidencia extends javax.swing.JDialog {
         String observaciones = jtxta_obsv.getText();
 
         String[] s = ubicacion.toString().split(" - ");
-        String sid = s[0];
+        String ubi = s[0];
 
         // Conexion a la base de datos
         conectar = new Conectar();
         Connection conexion = conectar.getConexion();
 
         try {
-            PreparedStatement ps = conexion.prepareStatement("UPDATE man_incidencias(id_profesor_crea, descripcion, fecha, id_ubicacion, observaciones) VALUES('" + id + "','" + descripcion + "','" + fecha + "','" + sid + "','" + observaciones + "')");
+            PreparedStatement ps = conexion.prepareStatement("UPDATE man_incidencias set id_incidencia='" + idIn + "',descripcion='" + descripcion + "',fecha='" + fecha + "',id_ubicacion='" + ubi + "',observaciones='" + observaciones + "' where id_incidencia = '"+idIn+"'");
+            System.out.println("UPDATE man_incidencias set id_incidencia='" + idIn + "',descripcion='" + descripcion + "',fecha='" + fecha + "',id_ubicacion='" + ubi + "',observaciones='" + observaciones + "' where id_incidencia = '"+idIn+"");
             ps.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Datos insertados. Espera un segundo y lo verás en la tabla.");
@@ -130,6 +136,7 @@ public class modify_incidencia extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jtxt_fecha = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jlbl_ubis = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -180,37 +187,45 @@ public class modify_incidencia extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Ubicación:");
 
+        jlbl_ubis.setText("Tu ubicación anterior era:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtn_volver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
+                        .addComponent(jbtn_crear))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jcbo_ubs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                            .addComponent(jtxt_fecha))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtn_volver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbtn_crear)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jcbo_ubs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                                    .addComponent(jtxt_fecha))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(134, 134, 134)
+                .addComponent(jlbl_ubis, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,7 +243,9 @@ public class modify_incidencia extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jtxt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
+                .addComponent(jlbl_ubis)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jcbo_ubs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -236,7 +253,7 @@ public class modify_incidencia extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtn_crear)
                     .addComponent(jbtn_volver))
@@ -287,8 +304,39 @@ public class modify_incidencia extends javax.swing.JDialog {
     private javax.swing.JButton jbtn_crear;
     private javax.swing.JButton jbtn_volver;
     private javax.swing.JComboBox<String> jcbo_ubs;
+    private javax.swing.JLabel jlbl_ubis;
     private javax.swing.JTextField jtxt_fecha;
     private javax.swing.JTextArea jtxta_descr;
     private javax.swing.JTextArea jtxta_obsv;
     // End of variables declaration//GEN-END:variables
+
+    private void rellenarDatos() {
+        conectar = new Conectar();
+        Connection conexion = conectar.getConexion();
+     
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.fecha, u.ubicacion, m.observaciones\n"
+                    + "from man_incidencias m inner join fp_profesor p on p.id_profesor = m.id_profesor_crea\n"
+                    + "inner join man_ubicacion u on u.id_ubicacion = m.id_ubicacion\n"
+                    + "where m.id_incidencia = '"+idIn+"'");
+
+            ResultSet rs = ps.executeQuery();
+            
+
+            while (rs.next()) {
+                jtxta_descr.setText(rs.getString(3));
+                jtxt_fecha.setText(rs.getString(4));
+                jlbl_ubis.setText("La ubicación anterior era: " + rs.getString(5));
+                jtxta_obsv.setText(rs.getString(6));
+                
+
+         
+            }
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
