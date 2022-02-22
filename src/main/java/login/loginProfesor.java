@@ -21,9 +21,10 @@ import javax.swing.JOptionPane;
  * @author damA
  */     
 public class loginProfesor extends javax.swing.JDialog {
-    
+    // Conexion a la base de datos
     Conectar conectar = new Conectar();
     
+    // Variable para el usuario y la contraseña
     public String user;
     public String pass;
     
@@ -41,18 +42,19 @@ public class loginProfesor extends javax.swing.JDialog {
         
     }
     
-    // METODO QUE HE CREADO EN LA PANTALLA PRINCIPAL PARA EL ICONO Y LO LLAMO AQUI.
+    // Metodo para el icono del programa
     public void iconoPrograma(){
         main m = new main();
         m.iconoPrograma();
     }
     
+    // Método para los iconos de usuario y contraseña
     public void iconosLabel(){
         jLabel2.setIcon(new ImageIcon("src\\main\\java\\resources\\usuario.png"));
         jLabel3.setIcon(new ImageIcon("src\\main\\java\\resources\\padlock.png"));
     }
 
-    // METODO DONDE CREO EL LOGIN DE PROFESOR
+    // Metod para el login del profesor
     public void loginP(){
         
         // Conexión a la base de datos
@@ -65,13 +67,14 @@ public class loginProfesor extends javax.swing.JDialog {
         PreparedStatement ps = null;
         ResultSet rs = null;
         
-        // Recojo rol del profesor
+        // Indico que el rol es 3 que corresponde con profesor
         int rol = 3;
+        //boolean activo = true;
         
         // Si los txt estan vacioes
         if (user.equals("") || pass.equals("")) {
           
-            // Mostrara un mensaje
+            // Mostrara un mensaje de campos vacios, los campos no pueden estar vacios
             JOptionPane.showMessageDialog(this, "Si quieres entrar no dejes los campos vacios :( .", "Campos vacíos", 0);
             
         }else{
@@ -84,28 +87,25 @@ public class loginProfesor extends javax.swing.JDialog {
                     
                     rs = ps.executeQuery();
                     
-                    
                     if (rs.next()) {
                     
+                        this.setVisible(false);
                         screenProfesor mp = new screenProfesor(this, true, user);
                         mp.setVisible(true);
                     
-                    }else{
-                        
+                    }else{                        
                         JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);
                     }
                     
-                }else{
-                    
+                }else{                   
                     JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Profesor.", "Usuario Incorrecto", 0);
                 }
                 
-                 
-            } catch (SQLException e) {
+                cn.close();
                 
+            } catch (SQLException e) {               
                 System.err.println(e.toString());
-                JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);
-                
+                JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);               
             }
         }
     }
@@ -160,11 +160,6 @@ public class loginProfesor extends javax.swing.JDialog {
         });
 
         jpassProfesor.setText("prueba");
-        jpassProfesor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jpassProfesorActionPerformed(evt);
-            }
-        });
 
         jcbMostrarOcultar.setText("Ver");
         jcbMostrarOcultar.addActionListener(new java.awt.event.ActionListener() {
@@ -185,18 +180,18 @@ public class loginProfesor extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtnEntrarP))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 35, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtxtUsuarioP, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
                             .addComponent(jpassProfesor))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbMostrarOcultar)))
                 .addGap(20, 20, 20))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -206,40 +201,40 @@ public class loginProfesor extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jtxtUsuarioP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jpassProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcbMostrarOcultar, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnEntrarP)
-                    .addComponent(jbtnVolverP))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jcbMostrarOcultar, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jpassProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbtnVolverP)
+                    .addComponent(jbtnEntrarP))
+                .addGap(0, 60, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    // BOTON PARA VOLVER ATRAS
+    // Al darle al boton de volver atras esta ventana ya no sera visible y se mostrara la pantalla principal
     private void jbtnVolverPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverPActionPerformed
         this.setVisible(false);
         new main().setVisible(true);
     }//GEN-LAST:event_jbtnVolverPActionPerformed
 
-    // BOTON PARA ENTRAR
+    // Al darle en el boton de entrar, llamo al metodo que he creado para realizar el login
     private void jbtnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarPActionPerformed
        loginP();
     }//GEN-LAST:event_jbtnEntrarPActionPerformed
 
-    // JCB PARA OCULTAR O MOSTRAR LA CONTRASEÑA
+    // Check Box para mostrar o no la contraseña al darle
     private void jcbMostrarOcultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMostrarOcultarActionPerformed
-
         if (jcbMostrarOcultar.isSelected()) {
             jpassProfesor.setEchoChar((char)0);
         }else{
@@ -247,11 +242,7 @@ public class loginProfesor extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jcbMostrarOcultarActionPerformed
 
-    // BORRAR ESTO
-    private void jpassProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpassProfesorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jpassProfesorActionPerformed
- 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

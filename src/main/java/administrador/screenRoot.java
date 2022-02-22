@@ -52,9 +52,10 @@ public class screenRoot extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_root = new javax.swing.JTable();
-        jbtn_filtrarR = new javax.swing.JButton();
-        jtxt_filter = new javax.swing.JTextField();
         jbtn_salir = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jmenuroot = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("screenRoot"); // NOI18N
@@ -78,19 +79,21 @@ public class screenRoot extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(jt_root);
 
-        jbtn_filtrarR.setText("Filtrar por...");
-        jbtn_filtrarR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtn_filtrarRActionPerformed(evt);
-            }
-        });
-
         jbtn_salir.setText("SALIR");
         jbtn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtn_salirActionPerformed(evt);
             }
         });
+
+        jmenuroot.setText("Más...");
+
+        jMenuItem1.setText("jMenuItem1");
+        jmenuroot.add(jMenuItem1);
+
+        jMenuBar1.add(jmenuroot);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,12 +102,9 @@ public class screenRoot extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jbtn_filtrarR)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxt_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 640, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jbtn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -116,11 +116,8 @@ public class screenRoot extends javax.swing.JDialog {
                 .addGap(0, 0, 0)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtn_salir)
-                    .addComponent(jbtn_filtrarR)
-                    .addComponent(jtxt_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addComponent(jbtn_salir)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -187,21 +184,18 @@ public class screenRoot extends javax.swing.JDialog {
         }
     }
 
-    private void jbtn_filtrarRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_filtrarRActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtn_filtrarRActionPerformed
-
     private void jbtn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_salirActionPerformed
         dispose();
     }//GEN-LAST:event_jbtn_salirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbtn_filtrarR;
     private javax.swing.JButton jbtn_salir;
+    private javax.swing.JMenu jmenuroot;
     private javax.swing.JTable jt_root;
-    private javax.swing.JTextField jtxt_filter;
     // End of variables declaration//GEN-END:variables
 
     private void saberId() {

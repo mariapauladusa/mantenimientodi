@@ -5,6 +5,8 @@
  */
 package tecnico;
 
+import com.mycompany.mantenimiento_paula.main;
+
 /**
  *
  * @author damA
@@ -14,7 +16,7 @@ public class screenTecnico extends javax.swing.JDialog {
     /**
      * Creates new form screenTecnico
      */
-    public screenTecnico(java.awt.Frame parent, boolean modal) {
+    public screenTecnico(javax.swing.JDialog parent, boolean modal, String user) {
         super(parent, modal);
         initComponents();
     }
@@ -28,23 +30,102 @@ public class screenTecnico extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jsp_profesor = new javax.swing.JScrollPane();
+        jt_profesor = new javax.swing.JTable();
+        jbtnSalirP = new javax.swing.JButton();
+        jmb_tecnico = new javax.swing.JMenuBar();
+        jmb_mas = new javax.swing.JMenu();
+        jmi_correo = new javax.swing.JMenuItem();
+        jmi_addInci = new javax.swing.JMenuItem();
+
+        jLabel2.setText("jLabel2");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("INCIDENCIAS");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jt_profesor.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jsp_profesor.setViewportView(jt_profesor);
+
+        jbtnSalirP.setText("SALIR");
+        jbtnSalirP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnSalirPActionPerformed(evt);
+            }
+        });
+
+        jmb_mas.setText("Más...");
+        jmb_mas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        jmi_correo.setText("Enviar Correo");
+        jmb_mas.add(jmi_correo);
+
+        jmi_addInci.setText("Nueva Incidencia");
+        jmb_mas.add(jmi_addInci);
+
+        jmb_tecnico.add(jmb_mas);
+
+        setJMenuBar(jmb_tecnico);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jsp_profesor, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbtnSalirP)
+                .addGap(12, 12, 12))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbtnSalirPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSalirPActionPerformed
+        this.setVisible(false);
+        new main().setVisible(true);
+    }//GEN-LAST:event_jbtnSalirPActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jbtnSalirP;
+    private javax.swing.JMenu jmb_mas;
+    private javax.swing.JMenuBar jmb_tecnico;
+    private javax.swing.JMenuItem jmi_addInci;
+    private javax.swing.JMenuItem jmi_correo;
+    private javax.swing.JScrollPane jsp_profesor;
+    private javax.swing.JTable jt_profesor;
     // End of variables declaration//GEN-END:variables
 }

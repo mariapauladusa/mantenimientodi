@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,6 +28,7 @@ public class add_incidencia extends javax.swing.JDialog {
     String id;
 
     public add_incidencia(javax.swing.JDialog parent, boolean modal, String user) {
+        
         super(parent, modal);
         conectar.getConexion();
 
@@ -35,15 +37,15 @@ public class add_incidencia extends javax.swing.JDialog {
         usuario = user;
 
         saberId();
-
         icono();
+        rellenarBox();
 
     }
     
-    // METODO QUE HE CREADO EN LA PANTALLA PRINCIPAL PARA EL ICONO Y LO LLAMO AQUI.
+    // Icono del programa
     public void icono() {
-        main m = new main();
-        m.iconoPrograma();
+       ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+       this.setIconImage(img.getImage());
     }
 
     /**
@@ -90,7 +92,6 @@ public class add_incidencia extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Ubicación:");
 
-        jcbo_ubs.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Click aquí para mostrar", " " }));
         jcbo_ubs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbo_ubsActionPerformed(evt);
@@ -185,34 +186,39 @@ public class add_incidencia extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    // BOTON PARA VOLVER A LA PANTALLA DEL PROFESOR
+    // Boton para volver atras
     private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
         dispose();
     }//GEN-LAST:event_jbtn_volverActionPerformed
 
-    // JCBO QUE MOSTRARA LAS UBICACIONES QUE EXISTAN PARA QUE PUEDA CREAR UNA
+    // JComboBox para mostrar las difernetes ubicaciones existentes en man_ubicaciones
     private void jcbo_ubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubsActionPerformed
 
-        conectar = new Conectar();
-        Connection conexion = conectar.getConexion();
-
-        try {
-
-            PreparedStatement ps = conexion.prepareStatement("SELECT id_ubicacion, ubicacion FROM man_ubicacion");
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                jcbo_ubs.addItem(rs.getString("id_ubicacion") + " - " + rs.getString("ubicacion"));
-            }
-
-        } catch (SQLException ex) {
-
-            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        rellenarBox();
     }//GEN-LAST:event_jcbo_ubsActionPerformed
 
+    // Metodo para rellenar el combo box con la informacion de la base de datos
+    private void rellenarBox() {
+        Connection conexion = conectar.getConexion();
+        
+        try {
+            
+            PreparedStatement ps = conexion.prepareStatement("SELECT id_ubicacion, ubicacion FROM man_ubicacion");
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                
+                jcbo_ubs.addItem(rs.getString("id_ubicacion") + " - " + rs.getString("ubicacion"));
+            }
+            
+            conexion.close();
+            
+        } catch (SQLException ex) {
+            
+            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    // Boton Crear 
     private void jbtn_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_crearActionPerformed
         insertarIncidencia();
     }//GEN-LAST:event_jbtn_crearActionPerformed
@@ -233,9 +239,9 @@ public class add_incidencia extends javax.swing.JDialog {
     private javax.swing.JTextArea jtxta_obsv;
     // End of variables declaration//GEN-END:variables
 
+    // Metodo para saber el id del usuario que se ha conectado
     private void saberId() {
-
-        conectar = new Conectar();
+        
         Connection conexion = conectar.getConexion();
 
         try {
@@ -247,42 +253,37 @@ public class add_incidencia extends javax.swing.JDialog {
             while (rs.next()) {
                 id = rs.getString(1);
             }
+            
+            conexion.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    // Metodo para insertar una incidencia en la base de datos
     public void insertarIncidencia() {
 
         String descripcion = jtxta_descr.getText();
-
         String fecha = jtxt_fecha.getText();
-
         String ubicacion = (String) jcbo_ubs.getSelectedItem();
-
         String observaciones = jtxta_obsv.getText();
-
         String[] s = ubicacion.toString().split(" - ");
         String sid = s[0];
 
-        // Conexion a la base de datos
-        conectar = new Conectar();
         Connection conexion = conectar.getConexion();
 
         try {
             PreparedStatement ps = conexion.prepareStatement("INSERT INTO man_incidencias(id_profesor_crea, descripcion, fecha, id_ubicacion, observaciones) VALUES('" + id + "','" + descripcion + "','" + fecha + "','" + sid + "','" + observaciones + "')");
             ps.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Datos insertados. Espera un segundo y lo verás en la tabla.");
+            JOptionPane.showMessageDialog(null, "Datos insertados.");
+            
+            conexion.close();
 
         } catch (SQLException ex) {
-
             Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         dispose();
-
     }
-
 }

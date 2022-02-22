@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import administrador.screenRoot;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -37,21 +38,21 @@ public class loginRoot extends javax.swing.JDialog {
         initComponents();
         
         iconoPrograma();
-        //iconosLabel();
+        iconosLabel();
       
     }
     
-    // METODO PARA PONER UN ICONO
+    // Metodo para el icono del programa
     public void iconoPrograma(){
-        main m = new main();
-        m.iconoPrograma();
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        this.setIconImage(img.getImage());
     }
      
-    
-    //public void iconosLabel(){
-    //    jLabel2.setIcon(new ImageIcon("src\\main\\java\\resources\\usuario.png"));
-    //    jLabel3.setIcon(new ImageIcon("src\\main\\java\\resources\\padlock.png"));
-    //}
+    // Iconos que utilizo en label2 y 3 para usuario y contraseña
+    public void iconosLabel(){
+        jLabel2.setIcon(new ImageIcon("src\\main\\java\\resources\\usuario.png"));
+        jLabel3.setIcon(new ImageIcon("src\\main\\java\\resources\\padlock.png"));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,26 +111,27 @@ public class loginRoot extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbtnEntrarP)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnVolverP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnVolverP))
+                        .addComponent(jbtnEntrarP))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtxtUsuarioA)
                             .addComponent(jpassAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbMostrarOcultar)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(33, 33, 33))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,27 +140,30 @@ public class loginRoot extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addGap(26, 26, 26)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jtxtUsuarioA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jpassAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcbMostrarOcultar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtUsuarioA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jpassAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcbMostrarOcultar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnVolverP)
-                    .addComponent(jbtnEntrarP))
-                .addContainerGap(71, Short.MAX_VALUE))
+                    .addComponent(jbtnEntrarP)
+                    .addComponent(jbtnVolverP))
+                .addGap(0, 50, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-   // JCB PARA MOSTRAR U OCULTAR LA CONTRASEÑA
+   // JCheckBox para mostar u ocultar la contraseña
     private void jcbMostrarOcultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMostrarOcultarActionPerformed
          if (jcbMostrarOcultar.isSelected()) {
             jpassAdmin.setEchoChar((char)0);
@@ -167,12 +172,12 @@ public class loginRoot extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jcbMostrarOcultarActionPerformed
 
-    // BOTON PARA ENTRAR
+    // Boton entrar
     private void jbtnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarPActionPerformed
-        loginA();
+        loginT();
     }//GEN-LAST:event_jbtnEntrarPActionPerformed
 
-    // BOTON PARA VOLVER
+    // Boton volver
     private void jbtnVolverPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverPActionPerformed
         this.setVisible(false);
         new main().setVisible(true);
@@ -190,8 +195,8 @@ public class loginRoot extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtUsuarioA;
     // End of variables declaration//GEN-END:variables
 
-    // METODO PARA EL LOGIN DE ADMINISTRADOR
-    private void loginA() {
+    // Metodo para el login del administrador
+    private void loginT() {
         
         Connection cn = conectar.getConexion();
         
@@ -219,27 +224,24 @@ public class loginRoot extends javax.swing.JDialog {
                 
                     if (rs.next()) {
                     
+                        this.setVisible(false);
                         screenRoot sa = new screenRoot(this,true,user);
                         sa.setVisible(true);
                     
-                    }else{
-                        
-                        JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Administración.", "Usuario Incorrecto", 0);
+                    }else{                        
+                        JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);
                     }
                     
-                }else{
-                    
+                }else{                   
                     JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Administración.", "Usuario Incorrecto", 0);
                 }
                 
+                cn.close();
                  
-            } catch (SQLException e) {
-                
+            } catch (SQLException e) {                
                 System.err.println(e.toString());
-                JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);
-                
+                JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);                
             }
-        }
-        
+        }       
     }
 }

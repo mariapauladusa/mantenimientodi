@@ -13,8 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import jdk.jfr.Description;
 
 /**
  *
@@ -23,11 +23,11 @@ import jdk.jfr.Description;
 public class modify_incidencia extends javax.swing.JDialog {
     
     Conectar conectar = new Conectar();
-    
-    //DefaultTableModel dtm = new DefaultTableModel();
 
+    // Relacionado con el id del usuario correspondiente
     String usuario;
     String id;
+    
     // Para saber el id de la incidencia para ponder modificar
     String idIn;
 
@@ -36,8 +36,7 @@ public class modify_incidencia extends javax.swing.JDialog {
      */
     public modify_incidencia(javax.swing.JDialog parent, boolean modal, String user, String idInci) {
         
-        super(parent, modal);
-        
+        super(parent, modal);       
         conectar.getConexion();
 
         initComponents();
@@ -45,73 +44,66 @@ public class modify_incidencia extends javax.swing.JDialog {
         usuario = user;
         idIn = idInci;
 
+        rellenarBox();
         saberId();
-
-        icono();
-        
+        icono();        
         rellenarDatos();
     }
     
-    // METODO QUE HE CREADO EN LA PANTALLA PRINCIPAL PARA EL ICONO Y LO LLAMO AQUI.
+    // Icono del programa
     public void icono() {
-        main m = new main();
-        m.iconoPrograma();
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        this.setIconImage(img.getImage());
     }
     
-    //AVERIGUAR ID
+    // Metodo para saber el id del usuario correspondiente
     private void saberId() {
-
-        conectar = new Conectar();
         Connection conexion = conectar.getConexion();
 
         try {
 
             PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login = '" + usuario + "';");
-
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 id = rs.getString(1);
             }
+            
+            conexion.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
      
-    // MODIFICAR INCIDENCIA 
+    // Metodo para modificar una incidencia
     public void modificarIncidencia() {
      
-        
         String descripcion = jtxta_descr.getText();
-
         String fecha = jtxt_fecha.getText();
-
         String ubicacion = (String) jcbo_ubs.getSelectedItem();
-
         String observaciones = jtxta_obsv.getText();
 
         String[] s = ubicacion.toString().split(" - ");
         String ubi = s[0];
 
-        // Conexion a la base de datos
-        conectar = new Conectar();
         Connection conexion = conectar.getConexion();
 
         try {
+            
             PreparedStatement ps = conexion.prepareStatement("UPDATE man_incidencias set id_incidencia='" + idIn + "',descripcion='" + descripcion + "',fecha='" + fecha + "',id_ubicacion='" + ubi + "',observaciones='" + observaciones + "' where id_incidencia = '"+idIn+"'");
             System.out.println("UPDATE man_incidencias set id_incidencia='" + idIn + "',descripcion='" + descripcion + "',fecha='" + fecha + "',id_ubicacion='" + ubi + "',observaciones='" + observaciones + "' where id_incidencia = '"+idIn+"");
             ps.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Datos insertados. Espera un segundo y lo verás en la tabla.");
+            JOptionPane.showMessageDialog(null, "Datos insertados.");
+            
+            conexion.close();
 
         } catch (SQLException ex) {
 
             Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         dispose();
-
     }
 
     /**
@@ -123,7 +115,6 @@ public class modify_incidencia extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jcbo_ubs = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtxta_obsv = new javax.swing.JTextArea();
@@ -137,15 +128,9 @@ public class modify_incidencia extends javax.swing.JDialog {
         jtxt_fecha = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jlbl_ubis = new javax.swing.JLabel();
+        jcbo_ubs = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jcbo_ubs.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Click aquí para mostrar" }));
-        jcbo_ubs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbo_ubsActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Observaciones:");
@@ -189,6 +174,12 @@ public class modify_incidencia extends javax.swing.JDialog {
 
         jlbl_ubis.setText("Tu ubicación anterior era:");
 
+        jcbo_ubs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbo_ubsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -203,15 +194,12 @@ public class modify_incidencia extends javax.swing.JDialog {
                         .addComponent(jbtn_crear))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jcbo_ubs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -224,7 +212,9 @@ public class modify_incidencia extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(134, 134, 134)
-                .addComponent(jlbl_ubis, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlbl_ubis, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbo_ubs, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -261,37 +251,41 @@ public class modify_incidencia extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jcbo_ubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubsActionPerformed
-
-        conectar = new Conectar();
-        Connection conexion = conectar.getConexion();
-
-        try {
-
-            PreparedStatement ps = conexion.prepareStatement("SELECT id_ubicacion, ubicacion FROM man_ubicacion");
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                jcbo_ubs.addItem(rs.getString("id_ubicacion") + " - " + rs.getString("ubicacion"));
-            }
-
-        } catch (SQLException ex) {
-
-            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jcbo_ubsActionPerformed
-
+    // Boton crear
     private void jbtn_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_crearActionPerformed
         modificarIncidencia();
     }//GEN-LAST:event_jbtn_crearActionPerformed
 
+    // Boton volver
     private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
         dispose();
     }//GEN-LAST:event_jbtn_volverActionPerformed
+
+    private void jcbo_ubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubsActionPerformed
+      rellenarBox();
+    }//GEN-LAST:event_jcbo_ubsActionPerformed
+
+    private void rellenarBox() {
+        Connection conexion = conectar.getConexion();
+        
+        try {
+            
+            PreparedStatement ps = conexion.prepareStatement("SELECT id_ubicacion, ubicacion FROM man_ubicacion");
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                jcbo_ubs.addItem(rs.getString("id_ubicacion") + " - " + rs.getString("ubicacion"));
+            }
+            
+            //conexion.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -310,8 +304,9 @@ public class modify_incidencia extends javax.swing.JDialog {
     private javax.swing.JTextArea jtxta_obsv;
     // End of variables declaration//GEN-END:variables
 
+    // Metodo para rellenar el JDialog con los datos existentes en la tabla dependiendo de que columna se ha seleccionado
     private void rellenarDatos() {
-        conectar = new Conectar();
+        
         Connection conexion = conectar.getConexion();
      
         try {
@@ -328,12 +323,10 @@ public class modify_incidencia extends javax.swing.JDialog {
                 jtxta_descr.setText(rs.getString(3));
                 jtxt_fecha.setText(rs.getString(4));
                 jlbl_ubis.setText("La ubicación anterior era: " + rs.getString(5));
-                jtxta_obsv.setText(rs.getString(6));
-                
-
-         
+                jtxta_obsv.setText(rs.getString(6));          
             }
             
+            conexion.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);

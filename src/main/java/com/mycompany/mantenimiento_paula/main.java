@@ -20,12 +20,9 @@ public class main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public main() {
-
         initComponents();
-
         // ICONO DEL PROGRAMA
         iconoPrograma();
-
     }
     
     
@@ -133,9 +130,7 @@ public class main extends javax.swing.JFrame {
 
     // METODO PARA PONER ICONO AL PROGRAMA
     public void iconoPrograma(){
-        //crea un ImageIcon y define la ruta de tu imagen
         ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        //define el icon a tu JFrame
         this.setIconImage(img.getImage());
     }
 
