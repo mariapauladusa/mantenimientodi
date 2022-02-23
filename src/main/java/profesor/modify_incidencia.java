@@ -6,7 +6,6 @@
 package profesor;
 
 import com.mycompany.mantenimiento_paula.Conectar;
-import com.mycompany.mantenimiento_paula.main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

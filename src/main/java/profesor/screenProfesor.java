@@ -28,9 +28,11 @@ public class screenProfesor extends javax.swing.JDialog {
 
     Conectar conectar = new Conectar();
     
+    // Variable para guardar el id del usuario
     String usuario;
     String id;
     
+    // Modelo de la tabla 
     DefaultTableModel dtm = new DefaultTableModel();
     
     /**
@@ -52,6 +54,12 @@ public class screenProfesor extends javax.swing.JDialog {
         popmenu();
 
         
+    }
+    
+     // Metodo del icono
+    public void icono(){
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        this.setIconImage(img.getImage());
     }
     
       // JPopUp Menu
@@ -90,6 +98,7 @@ public class screenProfesor extends javax.swing.JDialog {
       
     }
     
+    // Metodo para eliminar una incidencia
     private void deleteRow() {
         Connection conexion = conectar.getConexion();
         
@@ -105,12 +114,6 @@ public class screenProfesor extends javax.swing.JDialog {
             
         } catch (Exception e) {
         }
-    }
-
-   // Metodo del icono
-    public void icono(){
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
     }
     
     /**
@@ -227,7 +230,7 @@ public class screenProfesor extends javax.swing.JDialog {
 
     // Opcion del Menu Bar para ver los profesores existentes
     private void jmi_verProfesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_verProfesoresActionPerformed
-        verProfesores vp = new verProfesores(this, true);
+        enviarCorreo vp = new enviarCorreo(this, true);
         vp.setVisible(true);
     }//GEN-LAST:event_jmi_verProfesoresActionPerformed
 
@@ -235,14 +238,11 @@ public class screenProfesor extends javax.swing.JDialog {
     public void verIncidencias() {
 
         dtm.setColumnIdentifiers(new String[]{"Id Incidencia","Nombre", "Descripción", "Fecha", "Ubicación", "Observaciones"});
-        
-        //String buscar = jtxt_buscar.getText().toString();
 
         String[] a = new String[6];
 
         Connection conexion = conectar.getConexion();
      
-        dtm.setRowCount(0);
         try {
 
             PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.fecha, u.ubicacion, m.observaciones\n"
@@ -271,9 +271,7 @@ public class screenProfesor extends javax.swing.JDialog {
 
         } catch (SQLException ex) {
             Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-
+        }        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

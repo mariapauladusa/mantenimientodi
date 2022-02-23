@@ -5,7 +5,18 @@
  */
 package tecnico;
 
+import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import profesor.enviarCorreo;
+import profesor.screenProfesor;
 
 /**
  *
@@ -13,12 +24,36 @@ import com.mycompany.mantenimiento_paula.main;
  */
 public class screenTecnico extends javax.swing.JDialog {
 
+    Conectar conectar = new Conectar();
+
+    // Variable para guardar el id del usuario
+    String usuario;
+    String id;
+
+    // Modelo de la tabla 
+    DefaultTableModel dtm = new DefaultTableModel();
+
     /**
      * Creates new form screenTecnico
      */
     public screenTecnico(javax.swing.JDialog parent, boolean modal, String user) {
-        super(parent, modal);
+        
+        conectar.getConexion();
+        
         initComponents();
+
+        usuario = user;
+        
+        saberId();
+        verIncidencias();
+
+        icono();
+    }
+
+    // Metodo del icono
+    public void icono() {
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        this.setIconImage(img.getImage());
     }
 
     /**
@@ -33,7 +68,7 @@ public class screenTecnico extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jsp_profesor = new javax.swing.JScrollPane();
-        jt_profesor = new javax.swing.JTable();
+        jt_tecnico = new javax.swing.JTable();
         jbtnSalirP = new javax.swing.JButton();
         jmb_tecnico = new javax.swing.JMenuBar();
         jmb_mas = new javax.swing.JMenu();
@@ -44,12 +79,12 @@ public class screenTecnico extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("INCIDENCIAS");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jt_profesor.setModel(new javax.swing.table.DefaultTableModel(
+        jt_tecnico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -60,7 +95,7 @@ public class screenTecnico extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jsp_profesor.setViewportView(jt_profesor);
+        jsp_profesor.setViewportView(jt_tecnico);
 
         jbtnSalirP.setText("SALIR");
         jbtnSalirP.addActionListener(new java.awt.event.ActionListener() {
@@ -70,12 +105,24 @@ public class screenTecnico extends javax.swing.JDialog {
         });
 
         jmb_mas.setText("Más...");
-        jmb_mas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jmb_mas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
+        jmi_correo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jmi_correo.setText("Enviar Correo");
+        jmi_correo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_correoActionPerformed(evt);
+            }
+        });
         jmb_mas.add(jmi_correo);
 
+        jmi_addInci.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jmi_addInci.setText("Nueva Incidencia");
+        jmi_addInci.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_addInciActionPerformed(evt);
+            }
+        });
         jmb_mas.add(jmi_addInci);
 
         jmb_tecnico.add(jmb_mas);
@@ -90,7 +137,7 @@ public class screenTecnico extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+                    .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 1361, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -99,22 +146,35 @@ public class screenTecnico extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsp_profesor, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtnSalirP)
                 .addGap(12, 12, 12))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // Boton para salir
     private void jbtnSalirPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSalirPActionPerformed
         this.setVisible(false);
         new main().setVisible(true);
     }//GEN-LAST:event_jbtnSalirPActionPerformed
+
+    // Item de menu para enviar correo
+    private void jmi_correoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_correoActionPerformed
+       enviarCorreo e = new enviarCorreo(this, true);
+       e.setVisible(true);
+    }//GEN-LAST:event_jmi_correoActionPerformed
+
+    // Item para crear una nueva incidencia
+    private void jmi_addInciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_addInciActionPerformed
+        add_incidencia_tec a = new add_incidencia_tec(this, true, usuario);
+        a.setVisible(true);
+    }//GEN-LAST:event_jmi_addInciActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -126,6 +186,76 @@ public class screenTecnico extends javax.swing.JDialog {
     private javax.swing.JMenuItem jmi_addInci;
     private javax.swing.JMenuItem jmi_correo;
     private javax.swing.JScrollPane jsp_profesor;
-    private javax.swing.JTable jt_profesor;
+    private javax.swing.JTable jt_tecnico;
     // End of variables declaration//GEN-END:variables
+
+    private void verIncidencias() {
+
+        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});
+
+        String[] a = new String[12];
+
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.desc_tecnica, m.horas, e.estado, m.fecha, m.fecha_ini_rep, m.fecha_fin_rep, m.nivel_urgencia, ub.ubicacion, m.observaciones\n"
+                    + "from man_incidencias m left join fp_profesor p\n"
+                    + "on p.id_profesor = m.id_profesor_crea left join man_estado e \n"
+                    + "on e.id_estado = m.id_estado left join man_ubicacion ub\n"
+                    + "on ub.id_ubicacion = m.id_ubicacion\n");
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                a[0] = rs.getString(1);
+                a[1] = rs.getString(2);
+                a[2] = rs.getString(3);
+                a[3] = rs.getString(4);
+                a[4] = rs.getString(5);
+                a[5] = rs.getString(6);
+                a[6] = rs.getString(7);
+                a[7] = rs.getString(8);
+                a[8] = rs.getString(9);
+                a[9] = rs.getString(10);
+                a[10] = rs.getString(11);
+                a[11] = rs.getString(12);
+
+                dtm.addRow(a);
+
+            }
+            System.out.println(a[0]);
+                    
+            
+            jt_tecnico.setModel(dtm);
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    // Metodo para everiguar el id del usuario correspondiente
+    private void saberId() {
+
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login = '" + usuario + "';");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                id = rs.getString(1);
+            }
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

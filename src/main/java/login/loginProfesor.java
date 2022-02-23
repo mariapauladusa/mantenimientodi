@@ -69,7 +69,6 @@ public class loginProfesor extends javax.swing.JDialog {
         
         // Indico que el rol es 3 que corresponde con profesor
         int rol = 3;
-        //boolean activo = true;
         
         // Si los txt estan vacioes
         if (user.equals("") || pass.equals("")) {

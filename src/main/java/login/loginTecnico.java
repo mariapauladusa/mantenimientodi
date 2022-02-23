@@ -27,8 +27,9 @@ public class loginTecnico extends javax.swing.JDialog {
     Conectar conectar = new Conectar();
 
     // Usuario y contraseña
-    String user;
-    String pass;
+    public String user;
+    public String pass;
+    
     // Para saber si el usuario esta activo o no
     String activo;
     String a;
@@ -37,13 +38,15 @@ public class loginTecnico extends javax.swing.JDialog {
      * Creates new form loginTecnico
      */
     public loginTecnico(java.awt.Frame parent, boolean modal) {
+        
         conectar.getConexion();
+        
         a = activo;
+        
         initComponents();
-
+        
         iconoPrograma();
         iconosLabel();
-
         saberActivo();
 
     }
@@ -191,7 +194,6 @@ public class loginTecnico extends javax.swing.JDialog {
         new main().setVisible(true);
     }//GEN-LAST:event_jbtnVolverPActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -204,7 +206,7 @@ public class loginTecnico extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtUsuarioT;
     // End of variables declaration//GEN-END:variables
 
-    // METODO PARA EL LOGIN DE TECNICO
+    // Metodo para el login del técnico
     private void loginT() {
         Connection cn = conectar.getConexion();
 
@@ -260,6 +262,7 @@ public class loginTecnico extends javax.swing.JDialog {
         }
     }
 
+    // Metodo para recoger el estado de activo
     private void saberActivo() {
         Connection conexion = conectar.getConexion();
 
