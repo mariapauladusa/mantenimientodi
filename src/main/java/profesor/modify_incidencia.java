@@ -43,9 +43,10 @@ public class modify_incidencia extends javax.swing.JDialog {
         usuario = user;
         idIn = idInci;
 
-        rellenarBox();
         saberId();
-        icono();        
+        icono();
+        
+        rellenarBox();        
         rellenarDatos();
     }
     
@@ -91,7 +92,6 @@ public class modify_incidencia extends javax.swing.JDialog {
         try {
             
             PreparedStatement ps = conexion.prepareStatement("UPDATE man_incidencias set id_incidencia='" + idIn + "',descripcion='" + descripcion + "',fecha='" + fecha + "',id_ubicacion='" + ubi + "',observaciones='" + observaciones + "' where id_incidencia = '"+idIn+"'");
-            System.out.println("UPDATE man_incidencias set id_incidencia='" + idIn + "',descripcion='" + descripcion + "',fecha='" + fecha + "',id_ubicacion='" + ubi + "',observaciones='" + observaciones + "' where id_incidencia = '"+idIn+"");
             ps.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Datos insertados.");
@@ -102,6 +102,7 @@ public class modify_incidencia extends javax.swing.JDialog {
 
             Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         dispose();
     }
 
@@ -171,6 +172,7 @@ public class modify_incidencia extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Ubicación:");
 
+        jlbl_ubis.setForeground(new java.awt.Color(255, 0, 0));
         jlbl_ubis.setText("Tu ubicación anterior era:");
 
         jcbo_ubs.addActionListener(new java.awt.event.ActionListener() {
@@ -279,7 +281,7 @@ public class modify_incidencia extends javax.swing.JDialog {
                 jcbo_ubs.addItem(rs.getString("id_ubicacion") + " - " + rs.getString("ubicacion"));
             }
             
-            //conexion.close();
+            conexion.close();
             
         } catch (SQLException ex) {
             Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);

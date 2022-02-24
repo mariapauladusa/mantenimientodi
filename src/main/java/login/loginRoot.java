@@ -13,7 +13,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import administrador.screenRoot;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import profesor.screenProfesor;
 
 /**
  *
@@ -27,6 +30,10 @@ public class loginRoot extends javax.swing.JDialog {
     // usuario y contraseña
     public String user;
     public String pass;
+    
+    // Para saber si el usuario esta activo o no
+    String activo;
+    String a;
 
     /**
      * Creates new form jdlr
@@ -37,8 +44,12 @@ public class loginRoot extends javax.swing.JDialog {
         
         initComponents();
         
+        a = activo;
+        
         iconoPrograma();
         iconosLabel();
+        
+        saberActivo();
       
     }
     
@@ -175,6 +186,8 @@ public class loginRoot extends javax.swing.JDialog {
     // Boton entrar
     private void jbtnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarPActionPerformed
         loginT();
+        jtxtUsuarioA.setName(null);
+        jpassAdmin.setName(null);
     }//GEN-LAST:event_jbtnEntrarPActionPerformed
 
     // Boton volver
@@ -206,19 +219,22 @@ public class loginRoot extends javax.swing.JDialog {
         user = jtxtUsuarioA.getText();
         pass = String.valueOf(jpassAdmin.getPassword());
         
+        // Variable para rol
         int rol = 1;
+        // Variable para activo siend 1 true
+        a = "1";
         
         if (user.equals("") || pass.equals("")) {
           
             JOptionPane.showMessageDialog(this, "Si quieres entrar no dejes los campos vacios :( .", "Campos vacíos", 0);
             
-        }else{
+        }else if (rol == rol) {
             
             try {
                
-                ps = cn.prepareStatement("Select login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "' and id_rol = '" + rol + "'");
+                ps = cn.prepareStatement("Select login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass +  "' and id_rol = '" + rol + "' and activo = '" + a + "'");
                 
-                if (rol==rol) {
+                if (a==a) {
                     
                     rs = ps.executeQuery();
                 
@@ -229,11 +245,11 @@ public class loginRoot extends javax.swing.JDialog {
                         sa.setVisible(true);
                     
                     }else{                        
-                        JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);
+                        JOptionPane.showMessageDialog(this, "ERROR!!\nEl usuario introducio no corresponde o esta inactivo");
                     }
                     
                 }else{                   
-                    JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Administración.", "Usuario Incorrecto", 0);
+                   //JOptionPane.showMessageDialog(this, "El usuario introducido no esta activo.", "Usuario Inactivo", 0);
                 }
                 
                 cn.close();
@@ -242,6 +258,30 @@ public class loginRoot extends javax.swing.JDialog {
                 System.err.println(e.toString());
                 JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);                
             }
+        }else{
+            // Por aqui nunca entra
+            //JOptionPane.showConfirmDialog(null, "El usuario introducido no corresponde a Profesor", "Error Log In", 0);
         }       
+    }
+
+    // Metodo para averiguar si el usuario esta activo o no
+    private void saberActivo() {
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("select activo from fp_profesor where activo = '" + activo + "';");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                a = rs.getString(1);
+            }
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -236,7 +236,8 @@ public class screenProfesor extends javax.swing.JDialog {
 
     // Metodo para mostrar las incidencias correspondientes al usuario que entra en el JTable
     public void verIncidencias() {
-
+        
+        dtm.setNumRows(0);
         dtm.setColumnIdentifiers(new String[]{"Id Incidencia","Nombre", "Descripción", "Fecha", "Ubicación", "Observaciones"});
 
         String[] a = new String[6];

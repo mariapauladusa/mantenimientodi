@@ -7,6 +7,12 @@
         <Property name="text" type="java.lang.String" value="jLabel2"/>
       </Properties>
     </Component>
+    <Container class="javax.swing.JPopupMenu" name="jppm">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+    </Container>
     <Menu class="javax.swing.JMenuBar" name="jmb_tecnico">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jmb_mas">

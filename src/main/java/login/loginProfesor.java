@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -28,6 +30,10 @@ public class loginProfesor extends javax.swing.JDialog {
     public String user;
     public String pass;
     
+    // Para saber si el usuario esta activo o no
+    String activo;
+    String a;
+    
     /**
      * Creates new form jd_login_profesor
      */
@@ -35,10 +41,14 @@ public class loginProfesor extends javax.swing.JDialog {
         
         conectar.getConexion();
         
+        a = activo;
+        
         initComponents();
         
         iconosLabel();
         iconoPrograma();
+        
+        saberActivo();
         
     }
     
@@ -69,6 +79,7 @@ public class loginProfesor extends javax.swing.JDialog {
         
         // Indico que el rol es 3 que corresponde con profesor
         int rol = 3;
+        a = "1";
         
         // Si los txt estan vacioes
         if (user.equals("") || pass.equals("")) {
@@ -76,14 +87,13 @@ public class loginProfesor extends javax.swing.JDialog {
             // Mostrara un mensaje de campos vacios, los campos no pueden estar vacios
             JOptionPane.showMessageDialog(this, "Si quieres entrar no dejes los campos vacios :( .", "Campos vacíos", 0);
             
-        }else{
+        }else if (rol == rol) {
             
             try {
                 
-                ps = cn.prepareStatement("Select id_profesor, login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "';");
-                
-                if (rol==rol) {
+                if (a==a) {
                     
+                    ps = cn.prepareStatement("Select id_profesor, login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "' and id_rol = '" + rol + "' and activo = '" + a + "'");
                     rs = ps.executeQuery();
                     
                     if (rs.next()) {
@@ -93,11 +103,11 @@ public class loginProfesor extends javax.swing.JDialog {
                         mp.setVisible(true);
                     
                     }else{                        
-                        JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);
+                        JOptionPane.showMessageDialog(this, "ERROR!!\nEl usuario introducio no corresponde o esta inactivo");
                     }
                     
                 }else{                   
-                    JOptionPane.showMessageDialog(this, "El usuario introducido no corresponde como Profesor.", "Usuario Incorrecto", 0);
+                    //JOptionPane.showMessageDialog(this, "El usuario introducido no esta activo.", "Usuario Inactivo", 0);
                 }
                 
                 cn.close();
@@ -106,6 +116,10 @@ public class loginProfesor extends javax.swing.JDialog {
                 System.err.println(e.toString());
                 JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);               
             }
+            
+        }else{
+            // Por aqui nunca entra
+            //JOptionPane.showConfirmDialog(null, "El usuario introducido no corresponde a Profesor", "Error Log In", 0);
         }
     }
     
@@ -230,6 +244,8 @@ public class loginProfesor extends javax.swing.JDialog {
     // Al darle en el boton de entrar, llamo al metodo que he creado para realizar el login
     private void jbtnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarPActionPerformed
        loginP();
+       jtxtUsuarioP.setText(null);
+       jpassProfesor.setText(null);
     }//GEN-LAST:event_jbtnEntrarPActionPerformed
 
     // Check Box para mostrar o no la contraseña al darle
@@ -241,6 +257,27 @@ public class loginProfesor extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jcbMostrarOcultarActionPerformed
 
+     // Metodo para recoger el estado de activo
+    private void saberActivo() {
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("select activo from fp_profesor where activo = '" + activo + "';");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                a = rs.getString(1);
+            }
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

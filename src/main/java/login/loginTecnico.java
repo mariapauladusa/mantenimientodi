@@ -47,6 +47,7 @@ public class loginTecnico extends javax.swing.JDialog {
         
         iconoPrograma();
         iconosLabel();
+        
         saberActivo();
 
     }
@@ -186,6 +187,8 @@ public class loginTecnico extends javax.swing.JDialog {
     // Boton entrar
     private void jbtnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarPActionPerformed
         loginT();
+        jtxtUsuarioT.setName(null);
+        jpassTecnico.setName(null);
     }//GEN-LAST:event_jbtnEntrarPActionPerformed
 
     // Boton volver
@@ -216,8 +219,8 @@ public class loginTecnico extends javax.swing.JDialog {
         user = jtxtUsuarioT.getText();
         pass = String.valueOf(jpassTecnico.getPassword());
 
-            // Realiza correctamente la actividad de no permitir que el usuario entre en el programa si el usuario que introduce 
-            //  no corresponde con su rol o si este esta inactivo
+        // Realiza correctamente la actividad de no permitir que el usuario entre en el programa si el usuario que introduce 
+        //  no corresponde con su rol o si este esta inactivo
         int rol = 2;
         a = "1";
 

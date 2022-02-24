@@ -7,6 +7,8 @@ package tecnico;
 
 import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,9 +16,10 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import profesor.enviarCorreo;
-import profesor.screenProfesor;
 
 /**
  *
@@ -48,13 +51,72 @@ public class screenTecnico extends javax.swing.JDialog {
         verIncidencias();
 
         icono();
+        
+        popmenu();
     }
-
+    
     // Metodo del icono
     public void icono() {
         ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
         this.setIconImage(img.getImage());
     }
+    
+    // JPopUp Menu
+    private void popmenu(){
+        
+       // Menu Item con Modificar Incidencia
+       JMenuItem modificar = new JMenuItem ("Modificar incidencia");
+       jppm.add(modificar);
+       // Menu item con Eliminar Incidencia
+       JMenuItem borrar = new JMenuItem ("Eliminar incidencia");
+       jppm.add(borrar);
+       
+       jt_tecnico.setComponentPopupMenu(jppm);
+       
+       modificar.addActionListener(new ActionListener() { 
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               
+               String idInci = (String) dtm.getValueAt(jt_tecnico.getSelectedRow(), 0);
+              
+               modify_incidencia_tec add = new modify_incidencia_tec(screenTecnico.this, true, usuario, idInci);
+               add.setVisible(true);
+                
+               verIncidencias();
+           }
+       });
+       
+       borrar.addActionListener(new ActionListener() { 
+           @Override
+           public void actionPerformed(ActionEvent e) {
+
+               deleteRow();             
+               verIncidencias();
+           }
+       });
+      
+    }
+    
+    // Metodo para eliminar una incidencia del pop up menu
+    private void deleteRow() {
+        Connection conexion = conectar.getConexion();
+        
+        var selectedRow = jt_tecnico.getValueAt(jt_tecnico.getSelectedRow(), 0);
+        
+        try {
+            PreparedStatement ps = conexion.prepareStatement("DELETE FROM man_incidencias WHERE id_incidencia = '"+selectedRow+"'");
+            ps.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Incidencia Eliminada");
+            
+            conexion.close();
+            
+        } catch (Exception e) {
+            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,6 +128,7 @@ public class screenTecnico extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
+        jppm = new javax.swing.JPopupMenu();
         jLabel1 = new javax.swing.JLabel();
         jsp_profesor = new javax.swing.JScrollPane();
         jt_tecnico = new javax.swing.JTable();
@@ -185,12 +248,15 @@ public class screenTecnico extends javax.swing.JDialog {
     private javax.swing.JMenuBar jmb_tecnico;
     private javax.swing.JMenuItem jmi_addInci;
     private javax.swing.JMenuItem jmi_correo;
+    private javax.swing.JPopupMenu jppm;
     private javax.swing.JScrollPane jsp_profesor;
     private javax.swing.JTable jt_tecnico;
     // End of variables declaration//GEN-END:variables
 
+    // Metodo para mostrar las incidencias en el JTable
     private void verIncidencias() {
-
+        
+        dtm.setNumRows(0);
         dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});
 
         String[] a = new String[12];
@@ -199,11 +265,12 @@ public class screenTecnico extends javax.swing.JDialog {
 
         try {
 
-            PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.desc_tecnica, m.horas, e.estado, m.fecha, m.fecha_ini_rep, m.fecha_fin_rep, m.nivel_urgencia, ub.ubicacion, m.observaciones\n"
+            PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.desc_tecnica, m.horas, e.estado, m.fecha, m.fecha_ini_rep, m.fecha_fin_rep, ur.urgencia, ub.ubicacion, m.observaciones\n"
                     + "from man_incidencias m left join fp_profesor p\n"
                     + "on p.id_profesor = m.id_profesor_crea left join man_estado e \n"
                     + "on e.id_estado = m.id_estado left join man_ubicacion ub\n"
-                    + "on ub.id_ubicacion = m.id_ubicacion\n");
+                    + "on ub.id_ubicacion = m.id_ubicacion left join man_urgencia ur\n"
+                    + "on ur.id_urgencia = m.nivel_urgencia\n");
             
             ResultSet rs = ps.executeQuery();
 
@@ -233,7 +300,7 @@ public class screenTecnico extends javax.swing.JDialog {
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -255,7 +322,7 @@ public class screenTecnico extends javax.swing.JDialog {
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
