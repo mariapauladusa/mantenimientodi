@@ -23,6 +23,8 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -296,6 +298,10 @@ public class enviarCorreo extends javax.swing.JDialog {
 
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.setColumnIdentifiers(new String[]{"Nombre", "Email", "Departamento"});
+        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
+        jt_profesores
+                
+                .setRowSorter(elQueOrdena);
 
         String[] a = new String[3];
 

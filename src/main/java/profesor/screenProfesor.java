@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -34,6 +36,7 @@ public class screenProfesor extends javax.swing.JDialog {
     
     // Modelo de la tabla 
     DefaultTableModel dtm = new DefaultTableModel();
+    
     
     /**
      * Creates new form jd_mainProfesor
@@ -239,6 +242,8 @@ public class screenProfesor extends javax.swing.JDialog {
         
         dtm.setNumRows(0);
         dtm.setColumnIdentifiers(new String[]{"Id Incidencia","Nombre", "Descripción", "Fecha", "Ubicación", "Observaciones"});
+        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
+        jt_profesor.setRowSorter(elQueOrdena);
 
         String[] a = new String[6];
 

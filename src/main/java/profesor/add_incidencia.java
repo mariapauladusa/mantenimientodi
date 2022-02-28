@@ -140,9 +140,10 @@ public class add_incidencia extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
-                            .addComponent(jtxt_fecha)
-                            .addComponent(jcbo_ubs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2))
+                            .addComponent(jScrollPane2)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jtxt_fecha, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jcbo_ubs, javax.swing.GroupLayout.Alignment.LEADING, 0, 185, Short.MAX_VALUE)))
                         .addGap(197, 197, 197)))
                 .addContainerGap())
         );

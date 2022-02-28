@@ -5,7 +5,14 @@
  */
 package com.mycompany.mantenimiento_paula;
 
+import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
+import com.jtattoo.plaf.smart.SmartLookAndFeel;
+import com.jtattoo.plaf.texture.TextureLookAndFeel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import login.loginProfesor;
 import login.loginRoot;
 import login.loginTecnico;
@@ -189,8 +196,19 @@ public class main extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new main().setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(new AcrylLookAndFeel());
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                new main().setVisible(true);
+            }
+            
         });
     }
 

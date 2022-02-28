@@ -76,10 +76,17 @@
           <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jsp_profesor" pref="1361" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jsp_profesor" alignment="1" pref="1361" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jbtn_consultar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                      <Component id="jbtn_estado" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jbtn_urgencia" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jtxt_buscar" min="-2" pref="286" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jbtnSalirP" min="-2" pref="79" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -94,7 +101,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jsp_profesor" pref="564" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jbtnSalirP" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jbtnSalirP" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbtn_urgencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbtn_estado" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtxt_buscar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbtn_consultar" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -138,6 +151,32 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtnSalirPActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbtn_urgencia">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar por urgencia"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtn_urgenciaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbtn_estado">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar por estado"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtn_estadoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtxt_buscar">
+    </Component>
+    <Component class="javax.swing.JButton" name="jbtn_consultar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Consultar tipos"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtn_consultarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
