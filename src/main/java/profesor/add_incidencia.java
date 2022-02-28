@@ -71,24 +71,25 @@ public class add_incidencia extends javax.swing.JDialog {
         jbtn_volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("NUEVA INCIDENCIA");
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Descripción:");
 
         jtxta_descr.setColumns(20);
         jtxta_descr.setRows(5);
         jScrollPane1.setViewportView(jtxta_descr);
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("Fecha:");
 
         jtxt_fecha.setToolTipText("AAAA-MM-DD");
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Ubicación:");
 
         jcbo_ubs.addActionListener(new java.awt.event.ActionListener() {
@@ -97,13 +98,14 @@ public class add_incidencia extends javax.swing.JDialog {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setText("Observaciones:");
 
         jtxta_obsv.setColumns(20);
         jtxta_obsv.setRows(5);
         jScrollPane2.setViewportView(jtxta_obsv);
 
+        jbtn_crear.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_crear.setText("Guardar");
         jbtn_crear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,6 +113,7 @@ public class add_incidencia extends javax.swing.JDialog {
             }
         });
 
+        jbtn_volver.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_volver.setText("Volver");
         jbtn_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,13 +140,13 @@ public class add_incidencia extends javax.swing.JDialog {
                             .addComponent(jLabel4)
                             .addComponent(jLabel2)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
                             .addComponent(jScrollPane2)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jtxt_fecha, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jcbo_ubs, javax.swing.GroupLayout.Alignment.LEADING, 0, 185, Short.MAX_VALUE)))
+                                .addComponent(jcbo_ubs, javax.swing.GroupLayout.Alignment.LEADING, 0, 202, Short.MAX_VALUE)
+                                .addComponent(jtxt_fecha, javax.swing.GroupLayout.Alignment.LEADING)))
                         .addGap(197, 197, 197)))
                 .addContainerGap())
         );
@@ -157,7 +160,7 @@ public class add_incidencia extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtxt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

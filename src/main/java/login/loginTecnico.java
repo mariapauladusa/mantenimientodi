@@ -23,13 +23,11 @@ import tecnico.screenTecnico;
  * @author damA
  */
 public class loginTecnico extends javax.swing.JDialog {
-
+    // Conexión a la base de datos
     Conectar conectar = new Conectar();
-
     // Usuario y contraseña
     public String user;
-    public String pass;
-    
+    public String pass;    
     // Para saber si el usuario esta activo o no
     String activo;
     String a;
@@ -38,28 +36,29 @@ public class loginTecnico extends javax.swing.JDialog {
      * Creates new form loginTecnico
      */
     public loginTecnico(java.awt.Frame parent, boolean modal) {
-        
+        // Recogemos conexión
         conectar.getConexion();
-        
-        a = activo;
-        
+        // activo sera activo
+        a = activo;       
         initComponents();
-        
+        //Metodo iconos
         iconoPrograma();
         iconosLabel();
-        
+        // Metodo para recoger activo
         saberActivo();
 
     }
 
     // METODO PARA PONER ICONO AL PROGRAMA
     public void iconoPrograma() {
-        main m = new main();
-        m.iconoPrograma();;
+        // Imagen guardad en paquete resources
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        this.setIconImage(img.getImage());
     }
 
     // Iconos para usuario y contraseña
     public void iconosLabel() {
+        // Imagenes guardad en paquete resources y puestas en cada label correspondiente
         jLabel2.setIcon(new ImageIcon("src\\main\\java\\resources\\usuario.png"));
         jLabel3.setIcon(new ImageIcon("src\\main\\java\\resources\\padlock.png"));
     }
@@ -90,6 +89,7 @@ public class loginTecnico extends javax.swing.JDialog {
         setResizable(false);
         setSize(new java.awt.Dimension(400, 300));
 
+        jcbMostrarOcultar1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jcbMostrarOcultar1.setText("Ver");
         jcbMostrarOcultar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,14 +97,17 @@ public class loginTecnico extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jtxtUsuarioT.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Técnico");
 
-        jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MANTENIMIENTO INSTITUTO");
 
+        jbtnEntrarP.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtnEntrarP.setText("ENTRAR");
         jbtnEntrarP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,12 +115,15 @@ public class loginTecnico extends javax.swing.JDialog {
             }
         });
 
+        jbtnVolverP.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtnVolverP.setText("VOLVER");
         jbtnVolverP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnVolverPActionPerformed(evt);
             }
         });
+
+        jpassTecnico.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,7 +132,7 @@ public class loginTecnico extends javax.swing.JDialog {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+                .addContainerGap(50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbtnVolverP)
@@ -168,7 +174,7 @@ public class loginTecnico extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbtnVolverP)
                     .addComponent(jbtnEntrarP))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -177,9 +183,12 @@ public class loginTecnico extends javax.swing.JDialog {
 
     // JCheckBox para mostrar u ocultar la contraseña
     private void jcbMostrarOcultar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMostrarOcultar1ActionPerformed
+        // Si el JCheckBox esta seleccionado
         if (jcbMostrarOcultar1.isSelected()) {
+             // Muestro lo que haya introducido
             jpassTecnico.setEchoChar((char) 0);
         } else {
+             // Si no esta seleccionado/con el tick mostrar lo introducido con *****
             jpassTecnico.setEchoChar('*');
         }
     }//GEN-LAST:event_jcbMostrarOcultar1ActionPerformed
@@ -187,13 +196,16 @@ public class loginTecnico extends javax.swing.JDialog {
     // Boton entrar
     private void jbtnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarPActionPerformed
         loginT();
+        // Declaro los JText a null para que se vacie la informacion introducida al entrar
         jtxtUsuarioT.setName(null);
         jpassTecnico.setName(null);
     }//GEN-LAST:event_jbtnEntrarPActionPerformed
 
     // Boton volver
     private void jbtnVolverPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverPActionPerformed
+        // Oculto esta pantalla
         this.setVisible(false);
+        // Muestro la pantalla principal
         new main().setVisible(true);
     }//GEN-LAST:event_jbtnVolverPActionPerformed
 
@@ -212,37 +224,30 @@ public class loginTecnico extends javax.swing.JDialog {
     // Metodo para el login del técnico
     private void loginT() {
         Connection cn = conectar.getConexion();
-
         PreparedStatement ps = null;
         ResultSet rs = null;
-
         user = jtxtUsuarioT.getText();
         pass = String.valueOf(jpassTecnico.getPassword());
-
         // Realiza correctamente la actividad de no permitir que el usuario entre en el programa si el usuario que introduce 
         //  no corresponde con su rol o si este esta inactivo
         int rol = 2;
         a = "1";
-
         if (user.equals("") || pass.equals("")) {
-
+            // Muestra mensaje si el usuario no introduce datos
             JOptionPane.showMessageDialog(this, "Si quieres entrar no dejes los campos vacios :( .", "Campos vacíos", 0);
-
+        // Si el rol corresponde    
         } else if (rol == rol) {
-
             try {
-
-                if (a==a) {
-                    
+                // Si esta activo
+                if (a==a) {                    
                     ps = cn.prepareStatement("Select login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "' and id_rol = '" + rol + "' and activo = '" + a + "'");
-                    rs = ps.executeQuery();
-                    
-                    if (rs.next()) {
-                        
+                    rs = ps.executeQuery();                    
+                    if (rs.next()) {   
+                        // Esta pantalla la ocultara
                         this.setVisible(false);
+                        // Entrara en la pantalla coresspondiente para tecnico
                         screenTecnico s = new screenTecnico(this, true, user);
-                        s.setVisible(true);
-                        
+                        s.setVisible(true);                      
                     } else {
                         // Solo muestra este mensaje si el usuario esta inactivo o si no corresponde con su rol
                         JOptionPane.showMessageDialog(this, "ERROR!!\nEl usuario introducio no corresponde o esta inactivo");
@@ -252,33 +257,26 @@ public class loginTecnico extends javax.swing.JDialog {
                     // Si el usuario no esta activo no muestra este mensaje
                     //JOptionPane.showConfirmDialog(null, "El usuario introducido esta inactivo.", "Usuario Inactivo", 2);
                 }
-                
-                 cn.close();
-
+                // Cierro conexion
+                cn.close();
             } catch (SQLException e) {
                 System.err.println(e.toString());
-            }
-            
+            }          
         } else {
             // Por aqui nunca entra
             //JOptionPane.showConfirmDialog(null, "El usuario introducido no corresponde a Técnico", "Error Log In", 0);
         }
     }
 
-    // Metodo para recoger el estado de activo
+    // Metodo para recoger el estado de activo del usuario que entra
     private void saberActivo() {
         Connection conexion = conectar.getConexion();
-
         try {
-
             PreparedStatement ps = conexion.prepareStatement("select activo from fp_profesor where activo = '" + activo + "';");
-
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 a = rs.getString(1);
             }
-
             conexion.close();
 
         } catch (SQLException ex) {

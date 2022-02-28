@@ -122,6 +122,7 @@ public class enviarCorreo extends javax.swing.JDialog {
         jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jt_profesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -141,6 +141,7 @@ public class screenProfesor extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
+        jt_profesor.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jt_profesor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -159,6 +160,7 @@ public class screenProfesor extends javax.swing.JDialog {
         jLabel1.setText("INCIDENCIAS");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jbtnSalirP.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtnSalirP.setText("SALIR");
         jbtnSalirP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,8 +169,9 @@ public class screenProfesor extends javax.swing.JDialog {
         });
 
         jmi_mas.setText("Más...");
-        jmi_mas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jmi_mas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
+        jmi_verProfesores.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jmi_verProfesores.setText("Enviar Correo");
         jmi_verProfesores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,6 +180,7 @@ public class screenProfesor extends javax.swing.JDialog {
         });
         jmi_mas.add(jmi_verProfesores);
 
+        jmi_add.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jmi_add.setText("Nueva Incidencia");
         jmi_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,9 +201,9 @@ public class screenProfesor extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );

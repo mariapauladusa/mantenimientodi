@@ -25,37 +25,31 @@ import javax.swing.JOptionPane;
 public class loginProfesor extends javax.swing.JDialog {
     // Conexion a la base de datos
     Conectar conectar = new Conectar();
-    
     // Variable para el usuario y la contraseña
-    public String user;
-    public String pass;
-    
+    String user;
+    String pass;
     // Para saber si el usuario esta activo o no
     String activo;
-    String a;
-    
+    String a;    
     /**
      * Creates new form jd_login_profesor
      */
-    public loginProfesor(java.awt.Frame parent, boolean modal) {
-        
+    public loginProfesor(java.awt.Frame parent, boolean modal) {       
         conectar.getConexion();
-        
-        a = activo;
-        
+        // activo sera activo
+        a = activo;        
         initComponents();
-        
+        // Metodo iconos
         iconosLabel();
         iconoPrograma();
-        
-        saberActivo();
-        
+        // Metodo para recoger activo
+        saberActivo();       
     }
     
     // Metodo para el icono del programa
     public void iconoPrograma(){
-        main m = new main();
-        m.iconoPrograma();
+       ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+       this.setIconImage(img.getImage());
     }
     
     // Método para los iconos de usuario y contraseña
@@ -65,10 +59,9 @@ public class loginProfesor extends javax.swing.JDialog {
     }
 
     // Metod para el login del profesor
-    public void loginP(){
-        
+    public void loginProfesor(){       
         // Conexión a la base de datos
-        Connection cn = conectar.getConexion();
+        Connection cn = conectar.getConexion();  
         
         // Recojo valor de txt user y jpass
         user = jtxtUsuarioP.getText();
@@ -82,41 +75,32 @@ public class loginProfesor extends javax.swing.JDialog {
         a = "1";
         
         // Si los txt estan vacioes
-        if (user.equals("") || pass.equals("")) {
-          
+        if (user.equals("") || pass.equals("")) {          
             // Mostrara un mensaje de campos vacios, los campos no pueden estar vacios
             JOptionPane.showMessageDialog(this, "Si quieres entrar no dejes los campos vacios :( .", "Campos vacíos", 0);
-            
-        }else if (rol == rol) {
-            
+        // Si el rol corresponde con su rol en este caso 3 para profesor    
+        }else if (rol == rol) {            
             try {
-                
-                if (a==a) {
-                    
+            // Si activo corresponde con true/activo
+                if (a==a) {                    
                     ps = cn.prepareStatement("Select id_profesor, login, password, activo, id_rol from mantenimiento_dusa_p.fp_profesor where login = '" + user + "' and password = '" + pass + "' and id_rol = '" + rol + "' and activo = '" + a + "'");
-                    rs = ps.executeQuery();
-                    
-                    if (rs.next()) {
-                    
+                    rs = ps.executeQuery();                   
+                    if (rs.next()) {                   
                         this.setVisible(false);
                         screenProfesor mp = new screenProfesor(this, true, user);
-                        mp.setVisible(true);
-                    
+                        mp.setVisible(true);                    
                     }else{                        
                         JOptionPane.showMessageDialog(this, "ERROR!!\nEl usuario introducio no corresponde o esta inactivo");
-                    }
-                    
+                    }                    
                 }else{                   
                     //JOptionPane.showMessageDialog(this, "El usuario introducido no esta activo.", "Usuario Inactivo", 0);
                 }
-                
-                cn.close();
-                
+                // Cierro conexion cuando termine de usarla
+                cn.close();               
             } catch (SQLException e) {               
                 System.err.println(e.toString());
                 JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);               
-            }
-            
+            }           
         }else{
             // Por aqui nunca entra
             //JOptionPane.showConfirmDialog(null, "El usuario introducido no corresponde a Profesor", "Error Log In", 0);
@@ -148,16 +132,18 @@ public class loginProfesor extends javax.swing.JDialog {
         setResizable(false);
         setSize(new java.awt.Dimension(400, 300));
 
+        jtxtUsuarioP.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jtxtUsuarioP.setText("prueba");
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Profesor");
 
-        jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MANTENIMIENTO INSTITUTO");
 
+        jbtnEntrarP.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtnEntrarP.setText("ENTRAR");
         jbtnEntrarP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,6 +151,7 @@ public class loginProfesor extends javax.swing.JDialog {
             }
         });
 
+        jbtnVolverP.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtnVolverP.setText("VOLVER");
         jbtnVolverP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,8 +159,10 @@ public class loginProfesor extends javax.swing.JDialog {
             }
         });
 
+        jpassProfesor.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jpassProfesor.setText("prueba");
 
+        jcbMostrarOcultar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jcbMostrarOcultar.setText("Ver");
         jcbMostrarOcultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,7 +182,7 @@ public class loginProfesor extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtnEntrarP))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 35, Short.MAX_VALUE)
+                        .addGap(0, 49, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -228,7 +217,7 @@ public class loginProfesor extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbtnVolverP)
                     .addComponent(jbtnEntrarP))
-                .addGap(0, 60, Short.MAX_VALUE))
+                .addGap(0, 33, Short.MAX_VALUE))
         );
 
         pack();
@@ -237,22 +226,28 @@ public class loginProfesor extends javax.swing.JDialog {
 
     // Al darle al boton de volver atras esta ventana ya no sera visible y se mostrara la pantalla principal
     private void jbtnVolverPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverPActionPerformed
+        // Quito la visibilidad de esta mantalla
         this.setVisible(false);
+        // Muestro la pantalla principal
         new main().setVisible(true);
     }//GEN-LAST:event_jbtnVolverPActionPerformed
 
     // Al darle en el boton de entrar, llamo al metodo que he creado para realizar el login
     private void jbtnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarPActionPerformed
-       loginP();
+       loginProfesor();
+       // Declaro los JText a null para que se vacie la informacion introducida al entrar
        jtxtUsuarioP.setText(null);
        jpassProfesor.setText(null);
     }//GEN-LAST:event_jbtnEntrarPActionPerformed
 
     // Check Box para mostrar o no la contraseña al darle
     private void jcbMostrarOcultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMostrarOcultarActionPerformed
+        // Si el JCheckBox esta seleccionado
         if (jcbMostrarOcultar.isSelected()) {
+            // Muestro lo que haya introducido
             jpassProfesor.setEchoChar((char)0);
         }else{
+            // Si no esta seleccionado/con el tick mostrar lo introducido con *****
             jpassProfesor.setEchoChar('*');
         }
     }//GEN-LAST:event_jcbMostrarOcultarActionPerformed
@@ -260,19 +255,13 @@ public class loginProfesor extends javax.swing.JDialog {
      // Metodo para recoger el estado de activo
     private void saberActivo() {
         Connection conexion = conectar.getConexion();
-
         try {
-
             PreparedStatement ps = conexion.prepareStatement("select activo from fp_profesor where activo = '" + activo + "';");
-
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 a = rs.getString(1);
             }
-
             conexion.close();
-
         } catch (SQLException ex) {
             Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
         }

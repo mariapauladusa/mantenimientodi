@@ -48,8 +48,10 @@ public class tiposUrEs extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jt_tipos = new javax.swing.JTable();
         jbtn_ok = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jt_tipos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -71,6 +73,10 @@ public class tiposUrEs extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setText("TIPOS DE ESTADO/URGENCIA");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,13 +90,19 @@ public class tiposUrEs extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbtn_ok)
                         .addGap(20, 20, 20))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(113, 113, 113)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(jbtn_ok)
                 .addGap(21, 21, 21))
         );
@@ -104,6 +116,7 @@ public class tiposUrEs extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtn_okActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbtn_ok;
     private javax.swing.JTable jt_tipos;

@@ -121,6 +121,7 @@ public class screenTecnico extends javax.swing.JDialog {
         jbtn_estado = new javax.swing.JButton();
         jtxt_buscar = new javax.swing.JTextField();
         jbtn_consultar = new javax.swing.JButton();
+        jbtn_actualizar = new javax.swing.JButton();
         jmb_tecnico = new javax.swing.JMenuBar();
         jmb_mas = new javax.swing.JMenu();
         jmi_correo = new javax.swing.JMenuItem();
@@ -129,8 +130,9 @@ public class screenTecnico extends javax.swing.JDialog {
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("INCIDENCIAS");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -176,10 +178,17 @@ public class screenTecnico extends javax.swing.JDialog {
             }
         });
 
+        jbtn_actualizar.setText("Actualizar Información");
+        jbtn_actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_actualizarActionPerformed(evt);
+            }
+        });
+
         jmb_mas.setText("Más...");
         jmb_mas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
-        jmi_correo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jmi_correo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jmi_correo.setText("Enviar Correo");
         jmi_correo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,7 +197,7 @@ public class screenTecnico extends javax.swing.JDialog {
         });
         jmb_mas.add(jmi_correo);
 
-        jmi_addInci.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jmi_addInci.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jmi_addInci.setText("Nueva Incidencia");
         jmi_addInci.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +227,8 @@ public class screenTecnico extends javax.swing.JDialog {
                         .addComponent(jbtn_urgencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)
+                        .addComponent(jbtn_actualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -227,14 +238,15 @@ public class screenTecnico extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+                .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnSalirP)
                     .addComponent(jbtn_urgencia)
                     .addComponent(jbtn_estado)
                     .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtn_consultar))
+                    .addComponent(jbtn_consultar)
+                    .addComponent(jbtn_actualizar))
                 .addGap(12, 12, 12))
         );
 
@@ -276,11 +288,17 @@ public class screenTecnico extends javax.swing.JDialog {
         t.setVisible(true);
     }//GEN-LAST:event_jbtn_consultarActionPerformed
 
+    // Boton para despues de buscar informacion vuelva a mostrar los datos principales en la tabla
+    private void jbtn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_actualizarActionPerformed
+        verIncidencias();
+    }//GEN-LAST:event_jbtn_actualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jbtnSalirP;
+    private javax.swing.JButton jbtn_actualizar;
     private javax.swing.JButton jbtn_consultar;
     private javax.swing.JButton jbtn_estado;
     private javax.swing.JButton jbtn_urgencia;

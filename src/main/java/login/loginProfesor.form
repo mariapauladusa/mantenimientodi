@@ -39,7 +39,7 @@
                       <Component id="jbtnEntrarP" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="35" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="49" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel3" min="-2" pref="38" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" pref="41" max="-2" attributes="0"/>
@@ -84,7 +84,7 @@
                   <Component id="jbtnVolverP" min="-2" max="-2" attributes="0"/>
                   <Component id="jbtnEntrarP" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="60" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="33" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -92,13 +92,16 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="jtxtUsuarioP">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="18" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="prueba"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="1"/>
+          <Font name="Dialog" size="18" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Profesor"/>
@@ -107,7 +110,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Leelawadee UI Semilight" size="18" style="1"/>
+          <Font name="Leelawadee UI Semilight" size="24" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="MANTENIMIENTO INSTITUTO"/>
@@ -115,6 +118,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jbtnEntrarP">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="18" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="ENTRAR"/>
       </Properties>
       <Events>
@@ -123,6 +129,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jbtnVolverP">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="18" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="VOLVER"/>
       </Properties>
       <Events>
@@ -131,11 +140,17 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="jpassProfesor">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="18" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="prueba"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jcbMostrarOcultar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="18" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ver"/>
       </Properties>
       <Events>
