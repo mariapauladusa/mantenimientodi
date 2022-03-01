@@ -27,7 +27,7 @@ import profesor.enviarCorreo;
  *
  * @author damA
  */
-public class screenTecnico extends javax.swing.JDialog {
+public class tec_screen extends javax.swing.JDialog {
     Conectar conectar = new Conectar();
     // Variable para guardar el id del usuario
     String usuario;
@@ -38,7 +38,7 @@ public class screenTecnico extends javax.swing.JDialog {
     /**
      * Creates new form screenTecnico
      */
-    public screenTecnico(javax.swing.JDialog parent, boolean modal, String user) {        
+    public tec_screen(javax.swing.JDialog parent, boolean modal, String user) {        
         conectar.getConexion();        
         initComponents();
         usuario = user;
@@ -69,7 +69,7 @@ public class screenTecnico extends javax.swing.JDialog {
            @Override
            public void actionPerformed(ActionEvent e) {               
                String idInci = (String) dtm.getValueAt(jt_tecnico.getSelectedRow(), 0);              
-               modify_incidencia_tec add = new modify_incidencia_tec(screenTecnico.this, true, usuario, idInci);
+               tec_modifyIncidencia add = new tec_modifyIncidencia(tec_screen.this, true, usuario, idInci);
                add.setVisible(true);                
                verIncidencias();
            }
@@ -96,7 +96,7 @@ public class screenTecnico extends javax.swing.JDialog {
             conexion.close();
             
         } catch (Exception e) {
-            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     
@@ -150,13 +150,15 @@ public class screenTecnico extends javax.swing.JDialog {
         ));
         jsp_profesor.setViewportView(jt_tecnico);
 
-        jbtnSalirP.setText("SALIR");
+        jbtnSalirP.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbtnSalirP.setText("Salir");
         jbtnSalirP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnSalirPActionPerformed(evt);
             }
         });
 
+        jbtn_urgencia.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_urgencia.setText("Buscar por urgencia");
         jbtn_urgencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,6 +166,7 @@ public class screenTecnico extends javax.swing.JDialog {
             }
         });
 
+        jbtn_estado.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_estado.setText("Buscar por estado");
         jbtn_estado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,6 +174,9 @@ public class screenTecnico extends javax.swing.JDialog {
             }
         });
 
+        jtxt_buscar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jbtn_consultar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_consultar.setText("Consultar tipos");
         jbtn_consultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,6 +184,7 @@ public class screenTecnico extends javax.swing.JDialog {
             }
         });
 
+        jbtn_actualizar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_actualizar.setText("Actualizar Información");
         jbtn_actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,7 +192,7 @@ public class screenTecnico extends javax.swing.JDialog {
             }
         });
 
-        jmb_mas.setText("Más...");
+        jmb_mas.setText("Acciones");
         jmb_mas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
         jmi_correo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -227,7 +234,7 @@ public class screenTecnico extends javax.swing.JDialog {
                         .addComponent(jbtn_urgencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(92, 92, 92)
+                        .addGap(41, 41, 41)
                         .addComponent(jbtn_actualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -238,7 +245,7 @@ public class screenTecnico extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnSalirP)
@@ -268,8 +275,10 @@ public class screenTecnico extends javax.swing.JDialog {
 
     // Item para crear una nueva incidencia
     private void jmi_addInciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_addInciActionPerformed
-        add_incidencia_tec a = new add_incidencia_tec(this, true, usuario);
+        this.setVisible(false);
+        tec_addIncidencia a = new tec_addIncidencia(this, true, usuario);
         a.setVisible(true);
+        verIncidencias();
     }//GEN-LAST:event_jmi_addInciActionPerformed
 
     // Boton para mostrar informacion segun el estado que el usuario escriba
@@ -284,7 +293,7 @@ public class screenTecnico extends javax.swing.JDialog {
 
     // Boton para consultar los tipos de estado o urgencia existentes
     private void jbtn_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_consultarActionPerformed
-        tiposUrEs t = new tiposUrEs(this, true);
+        tipos t = new tipos(this, true);
         t.setVisible(true);
     }//GEN-LAST:event_jbtn_consultarActionPerformed
 
@@ -347,7 +356,7 @@ public class screenTecnico extends javax.swing.JDialog {
             jt_tecnico.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -362,7 +371,7 @@ public class screenTecnico extends javax.swing.JDialog {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -403,7 +412,7 @@ public class screenTecnico extends javax.swing.JDialog {
             jt_tecnico.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -444,7 +453,7 @@ public class screenTecnico extends javax.swing.JDialog {
             jt_tecnico.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

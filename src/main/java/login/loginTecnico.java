@@ -15,8 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import profesor.screenProfesor;
-import tecnico.screenTecnico;
+import profesor.profe_screen;
+import tecnico.tec_screen;
 
 /**
  *
@@ -246,7 +246,7 @@ public class loginTecnico extends javax.swing.JDialog {
                         // Esta pantalla la ocultara
                         this.setVisible(false);
                         // Entrara en la pantalla coresspondiente para tecnico
-                        screenTecnico s = new screenTecnico(this, true, user);
+                        tec_screen s = new tec_screen(this, true, user);
                         s.setVisible(true);                      
                     } else {
                         // Solo muestra este mensaje si el usuario esta inactivo o si no corresponde con su rol
@@ -280,7 +280,7 @@ public class loginTecnico extends javax.swing.JDialog {
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

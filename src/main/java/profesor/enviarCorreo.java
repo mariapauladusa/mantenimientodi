@@ -124,6 +124,7 @@ public class enviarCorreo extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
+        jt_profesores.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jt_profesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -141,6 +142,7 @@ public class enviarCorreo extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PROFESORES");
 
+        jButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButton1.setText("Volver");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,6 +150,7 @@ public class enviarCorreo extends javax.swing.JDialog {
             }
         });
 
+        jbtn_correo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_correo.setText("Enviar Correo");
         jbtn_correo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,20 +161,35 @@ public class enviarCorreo extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Consulta los profesores:");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("Tu Correo:");
 
+        jtxt_correoUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Para:");
 
+        jtxt_destinatario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setText("Asunto:");
 
+        jtxt_asunto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel6.setText("Mensaje:");
 
         jtxta_mensaje.setColumns(20);
+        jtxta_mensaje.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jtxta_mensaje.setRows(5);
         jScrollPane2.setViewportView(jtxta_mensaje);
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel7.setText("Contraseña:");
 
+        jpass_contra.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jCheckBox1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jCheckBox1.setText("Ver");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,7 +251,7 @@ public class enviarCorreo extends javax.swing.JDialog {
                 .addGap(2, 2, 2)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addGap(4, 4, 4)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
@@ -334,7 +352,7 @@ public class enviarCorreo extends javax.swing.JDialog {
             jt_profesores.setModel(dtm);
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

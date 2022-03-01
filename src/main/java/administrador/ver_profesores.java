@@ -5,18 +5,104 @@
  */
 package administrador;
 
+import com.mycompany.mantenimiento_paula.Conectar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import profesor.profe_screen;
+import tecnico.tec_screen;
+
 /**
  *
  * @author damA
  */
 public class ver_profesores extends javax.swing.JDialog {
+    // Conexion a la base de datos
+    Conectar conectar = new Conectar();
+    // Modelo de la tabla 
+    DefaultTableModel dtm = new DefaultTableModel();
+    // Variables que utilizo para recoger el usuario
+    String usuario;
+    String id;
 
     /**
      * Creates new form ver_profesores
      */
-    public ver_profesores(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public ver_profesores(javax.swing.JDialog parent, boolean modal, String user) {
+        super(parent, modal);        
         initComponents();
+        
+        conectar.getConexion();
+        
+        verProfesorado();
+        popmenu();
+        saberId();
+        icono();
+    }
+    
+      // JPopUp Menu
+    private void popmenu(){        
+       // Menu Item con Modificar Incidencia
+       JMenuItem modificar = new JMenuItem ("Modificar Profesor");
+       jppm.add(modificar);
+       // Menu item con Eliminar Incidencia
+       JMenuItem borrar = new JMenuItem ("Dar de baja");
+       jppm.add(borrar); 
+       
+       jt_profesores.setComponentPopupMenu(jppm);
+       
+       modificar.addActionListener(new ActionListener() { 
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               // Guardo el id de la incidencia seleccionada
+               String idInci = (String) dtm.getValueAt(jt_profesores.getSelectedRow(), 0);
+               // Llamo a la pantalla que tengo para modificar incidencia que tengo en tecnico que me sirve aqui tambien
+               modify_usuario mu = new modify_usuario(ver_profesores.this, true, usuario, idInci);
+               mu.setVisible(true);
+               // Para actualizar las incidencias en la tabla
+               verProfesorado();
+           }
+       });
+       
+       borrar.addActionListener(new ActionListener() { 
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               darBaja();             
+               verProfesorado();
+           }
+       });
+      
+    }
+    
+    // Metodo para eliminar una incidencia del pop up menu
+    private void darBaja() {
+        Connection conexion = conectar.getConexion();        
+        var selectedRow = jt_profesores.getValueAt(jt_profesores.getSelectedRow(), 0);        
+        try {
+            PreparedStatement ps = conexion.prepareStatement("UPDATE fp_profesor SET activo = 0 where id_profesor = '"+selectedRow+"'");
+            ps.executeUpdate();            
+            JOptionPane.showMessageDialog(null, "Usuario dado de baja");            
+            conexion.close();           
+        } catch (Exception e) {
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+     // Metodo del icono
+    public void icono(){
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        this.setIconImage(img.getImage());
     }
 
     /**
@@ -28,16 +114,19 @@ public class ver_profesores extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jppm = new javax.swing.JPopupMenu();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jt_profesores = new javax.swing.JTable();
+        jbtn_volver = new javax.swing.JButton();
+        jbtn_add = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jbnt_inactivos = new javax.swing.JButton();
+        jbtn_activos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jt_profesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -48,17 +137,43 @@ public class ver_profesores extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jt_profesores);
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton1.setText("Volver");
+        jbtn_volver.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbtn_volver.setText("Volver");
+        jbtn_volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_volverActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton2.setText("Nuevo Usuario");
+        jbtn_add.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbtn_add.setText("Nuevo Usuario");
+        jbtn_add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_addActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PROFESORADO");
+
+        jbnt_inactivos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbnt_inactivos.setText("Mostrar Inactivos");
+        jbnt_inactivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnt_inactivosActionPerformed(evt);
+            }
+        });
+
+        jbtn_activos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbtn_activos.setText("Mostrar Activos");
+        jbtn_activos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_activosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,9 +184,13 @@ public class ver_profesores extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1143, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(jbtn_add)
+                        .addGap(76, 76, 76)
+                        .addComponent(jbnt_inactivos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtn_activos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(jbtn_volver)))
                 .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -82,22 +201,149 @@ public class ver_profesores extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jbtn_volver)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbtn_add)
+                        .addComponent(jbnt_inactivos)
+                        .addComponent(jbtn_activos)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // Boton para salir
+    private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
+        this.setVisible(false);
+        root_screen screen = new root_screen(this, true, usuario);
+        screen.setVisible(true);
+    }//GEN-LAST:event_jbtn_volverActionPerformed
+
+    // Boton para mostrar la pantalla que permitira al administrador crear un nuevo usuario
+    private void jbtn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_addActionPerformed
+        this.setVisible(false);
+        add_usuario au = new add_usuario(this, true, usuario);
+        au.setVisible(true);
+        verProfesorado();
+    }//GEN-LAST:event_jbtn_addActionPerformed
+
+    private void jbnt_inactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnt_inactivosActionPerformed
+        dtm.setNumRows(0);        
+        dtm.setColumnIdentifiers(new String[]{"Id del profesor","Nombre de Usuario", "Contraseña", "Nombre Completo", "Email Técnica", "Activo", "Rol", "Departamento"});
+        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
+        jt_profesores.setRowSorter(elQueOrdena);
+        
+        String[] a = new String[8];
+        
+        Connection conexion = conectar.getConexion();
+        
+        try {
+            PreparedStatement ps = conexion.prepareStatement("select p.id_profesor, p.login, p.password, p.nombre_completo, p.email, p.activo, r.rol, d.departamento\n"
+                    + "from fp_profesor p inner join fp_rol r\n"
+                    + "on p.id_rol = r.id_rol inner join fp_departamento d\n"
+                    + "on p.id_departamento = d.id_departamento where p.activo = 0 ");
+
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                
+                a[0] = rs.getString(1);
+                a[1] = rs.getString(2);
+                a[2] = rs.getString(3);
+                a[3] = rs.getString(4);
+                a[4] = rs.getString(5);
+                a[5] = rs.getString(6);
+                a[6] = rs.getString(7);
+                a[7] = rs.getString(8); 
+                
+                dtm.addRow(a);
+            }
+            
+            jt_profesores.setModel(dtm);
+            
+            conexion.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbnt_inactivosActionPerformed
+
+    // Boton que muestra en la tabla los usuarios activos, por defecto mostrara los usuarios activos
+    private void jbtn_activosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_activosActionPerformed
+        verProfesorado();
+    }//GEN-LAST:event_jbtn_activosActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton jbnt_inactivos;
+    private javax.swing.JButton jbtn_activos;
+    private javax.swing.JButton jbtn_add;
+    private javax.swing.JButton jbtn_volver;
+    private javax.swing.JPopupMenu jppm;
+    private javax.swing.JTable jt_profesores;
     // End of variables declaration//GEN-END:variables
+
+    // Metodo para mostrar informacion acerca de los profesores en la tabla
+    private void verProfesorado() {
+        dtm.setNumRows(0);        
+        dtm.setColumnIdentifiers(new String[]{"Id del profesor","Nombre de Usuario", "Contraseña", "Nombre Completo", "Email Técnica", "Activo", "Rol", "Departamento"});
+        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
+        jt_profesores.setRowSorter(elQueOrdena);
+        
+        String[] a = new String[8];
+        
+        Connection conexion = conectar.getConexion();
+        
+        try {
+            PreparedStatement ps = conexion.prepareStatement("select p.id_profesor, p.login, p.password, p.nombre_completo, p.email, p.activo, r.rol, d.departamento\n"
+                    + "from fp_profesor p inner join fp_rol r\n"
+                    + "on p.id_rol = r.id_rol inner join fp_departamento d\n"
+                    + "on p.id_departamento = d.id_departamento where p.activo = 1 ");
+
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                
+                a[0] = rs.getString(1);
+                a[1] = rs.getString(2);
+                a[2] = rs.getString(3);
+                a[3] = rs.getString(4);
+                a[4] = rs.getString(5);
+                a[5] = rs.getString(6);
+                a[6] = rs.getString(7);
+                a[7] = rs.getString(8); 
+                
+                dtm.addRow(a);
+            }
+            
+            jt_profesores.setModel(dtm);
+            
+            conexion.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    // Metodo para everiguar el id del usuario correspondiente
+    private void saberId() {
+        Connection conexion = conectar.getConexion();
+        
+        try {
+            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login= '" + usuario + "';");
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                id = rs.getString(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

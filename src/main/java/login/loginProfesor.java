@@ -7,7 +7,7 @@ package login;
 
 import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
-import profesor.screenProfesor;
+import profesor.profe_screen;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -61,8 +61,7 @@ public class loginProfesor extends javax.swing.JDialog {
     // Metod para el login del profesor
     public void loginProfesor(){       
         // Conexión a la base de datos
-        Connection cn = conectar.getConexion();  
-        
+        Connection cn = conectar.getConexion();          
         // Recojo valor de txt user y jpass
         user = jtxtUsuarioP.getText();
         pass = String.valueOf(jpassProfesor.getPassword());
@@ -72,6 +71,7 @@ public class loginProfesor extends javax.swing.JDialog {
         
         // Indico que el rol es 3 que corresponde con profesor
         int rol = 3;
+        // Indico que activo sera true
         a = "1";
         
         // Si los txt estan vacioes
@@ -87,7 +87,7 @@ public class loginProfesor extends javax.swing.JDialog {
                     rs = ps.executeQuery();                   
                     if (rs.next()) {                   
                         this.setVisible(false);
-                        screenProfesor mp = new screenProfesor(this, true, user);
+                        profe_screen mp = new profe_screen(this, true, user);
                         mp.setVisible(true);                    
                     }else{                        
                         JOptionPane.showMessageDialog(this, "ERROR!!\nEl usuario introducio no corresponde o esta inactivo");
@@ -226,7 +226,7 @@ public class loginProfesor extends javax.swing.JDialog {
 
     // Al darle al boton de volver atras esta ventana ya no sera visible y se mostrara la pantalla principal
     private void jbtnVolverPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnVolverPActionPerformed
-        // Quito la visibilidad de esta mantalla
+        // Quito la visibilidad de esta pantalla
         this.setVisible(false);
         // Muestro la pantalla principal
         new main().setVisible(true);
@@ -263,7 +263,7 @@ public class loginProfesor extends javax.swing.JDialog {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

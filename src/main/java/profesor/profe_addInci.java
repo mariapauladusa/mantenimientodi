@@ -19,14 +19,14 @@ import javax.swing.JOptionPane;
  *
  * @author damA
  */
-public class add_incidencia extends javax.swing.JDialog {
+public class profe_addInci extends javax.swing.JDialog {
 
     Conectar conectar = new Conectar();
 
     String usuario;
     String id;
 
-    public add_incidencia(javax.swing.JDialog parent, boolean modal, String user) {
+    public profe_addInci(javax.swing.JDialog parent, boolean modal, String user) {
         
         super(parent, modal);
         conectar.getConexion();
@@ -144,18 +144,17 @@ public class add_incidencia extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
                             .addComponent(jScrollPane2)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jcbo_ubs, javax.swing.GroupLayout.Alignment.LEADING, 0, 202, Short.MAX_VALUE)
-                                .addComponent(jtxt_fecha, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(jcbo_ubs, javax.swing.GroupLayout.Alignment.LEADING, 0, 202, Short.MAX_VALUE)
+                            .addComponent(jtxt_fecha, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(197, 197, 197)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel1)
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -186,7 +185,9 @@ public class add_incidencia extends javax.swing.JDialog {
 
     // Boton para volver atras
     private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
-        dispose();
+        this.setVisible(false);
+        profe_screen screen = new profe_screen(this, true, usuario);
+        screen.setVisible(true);
     }//GEN-LAST:event_jbtn_volverActionPerformed
 
     // JComboBox para mostrar las difernetes ubicaciones existentes en man_ubicaciones
@@ -201,7 +202,7 @@ public class add_incidencia extends javax.swing.JDialog {
         
         try {
             
-            PreparedStatement ps = conexion.prepareStatement("SELECT id_ubicacion, ubicacion FROM man_ubicacion");
+            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_ubicacion, ubicacion FROM man_ubicacion");
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
@@ -213,7 +214,7 @@ public class add_incidencia extends javax.swing.JDialog {
             
         } catch (SQLException ex) {
             
-            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     // Boton Crear 
@@ -255,7 +256,7 @@ public class add_incidencia extends javax.swing.JDialog {
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -280,7 +281,7 @@ public class add_incidencia extends javax.swing.JDialog {
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
         dispose();
     }

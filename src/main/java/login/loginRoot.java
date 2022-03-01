@@ -12,11 +12,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import administrador.screenRoot;
+import administrador.root_screen;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import profesor.screenProfesor;
+import profesor.profe_screen;
 
 /**
  *
@@ -238,7 +238,7 @@ public class loginRoot extends javax.swing.JDialog {
                     rs = ps.executeQuery();                
                     if (rs.next()) {                    
                         this.setVisible(false);
-                        screenRoot sa = new screenRoot(this,true,user);
+                        root_screen sa = new root_screen(this,true,user);
                         sa.setVisible(true);                    
                     }else{                        
                         JOptionPane.showMessageDialog(this, "ERROR!!\nEl usuario introducio no corresponde o esta inactivo");
@@ -269,7 +269,7 @@ public class loginRoot extends javax.swing.JDialog {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

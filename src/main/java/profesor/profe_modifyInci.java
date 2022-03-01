@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author damA
  */
-public class modify_incidencia extends javax.swing.JDialog {
+public class profe_modifyInci extends javax.swing.JDialog {
     
     Conectar conectar = new Conectar();
 
@@ -33,7 +33,7 @@ public class modify_incidencia extends javax.swing.JDialog {
     /**
      * Creates new form modify_incidencia
      */
-    public modify_incidencia(javax.swing.JDialog parent, boolean modal, String user, String idInci) {
+    public profe_modifyInci(javax.swing.JDialog parent, boolean modal, String user, String idInci) {
         
         super(parent, modal);       
         conectar.getConexion();
@@ -72,7 +72,7 @@ public class modify_incidencia extends javax.swing.JDialog {
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
      
@@ -100,7 +100,7 @@ public class modify_incidencia extends javax.swing.JDialog {
 
         } catch (SQLException ex) {
 
-            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         dispose();
@@ -131,7 +131,6 @@ public class modify_incidencia extends javax.swing.JDialog {
         jcbo_ubs = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(909, 598));
         setResizable(false);
         setSize(new java.awt.Dimension(909, 598));
 
@@ -260,7 +259,9 @@ public class modify_incidencia extends javax.swing.JDialog {
 
     // Boton volver
     private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
-        dispose();
+        this.setVisible(false);
+        profe_screen screen = new profe_screen(this, true, usuario);
+        screen.setVisible(true);
     }//GEN-LAST:event_jbtn_volverActionPerformed
 
     private void jcbo_ubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubsActionPerformed
@@ -272,7 +273,7 @@ public class modify_incidencia extends javax.swing.JDialog {
         
         try {
             
-            PreparedStatement ps = conexion.prepareStatement("SELECT id_ubicacion, ubicacion FROM man_ubicacion");
+            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_ubicacion, ubicacion FROM man_ubicacion");
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
@@ -282,7 +283,7 @@ public class modify_incidencia extends javax.swing.JDialog {
             conexion.close();
             
         } catch (SQLException ex) {
-            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -328,7 +329,7 @@ public class modify_incidencia extends javax.swing.JDialog {
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

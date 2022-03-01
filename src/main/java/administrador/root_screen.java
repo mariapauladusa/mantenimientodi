@@ -4,8 +4,9 @@
  */
 package administrador;
 
-import profesor.screenProfesor;
+import profesor.profe_screen;
 import com.mycompany.mantenimiento_paula.Conectar;
+import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -14,22 +15,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import profesor.enviarCorreo;
-import tecnico.add_incidencia_tec;
-import tecnico.modify_incidencia_tec;
-import tecnico.screenTecnico;
-import tecnico.tiposUrEs;
+import tecnico.tec_addIncidencia;
+import tecnico.tec_modifyIncidencia;
+import tecnico.tec_screen;
+import tecnico.tipos;
 
 /**
  *
  * @author nicol
  */
-public class screenRoot extends javax.swing.JDialog {
+public class root_screen extends javax.swing.JDialog {
     // Conexion a la base de datos
     Conectar conectar = new Conectar();
     // Variables que utilizo para recoger el usuario
@@ -40,13 +42,14 @@ public class screenRoot extends javax.swing.JDialog {
     /**
      * Creates new form screenRoot
      */
-    public screenRoot(javax.swing.JDialog parent, boolean modal, String user) {
+    public root_screen(javax.swing.JDialog parent, boolean modal, String user) {
         conectar.getConexion();
         initComponents();
         usuario = user;
         saberId();
         verIncidencias();
         popmenu();
+        icono();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,6 +75,7 @@ public class screenRoot extends javax.swing.JDialog {
         jmi_correo = new javax.swing.JMenuItem();
         jmi_incidencia = new javax.swing.JMenuItem();
         jmi_profesores = new javax.swing.JMenuItem();
+        jmi_estadistica = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("screenRoot"); // NOI18N
@@ -96,13 +100,15 @@ public class screenRoot extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(jt_root);
 
-        jbtn_salir.setText("SALIR");
+        jbtn_salir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbtn_salir.setText("Salir");
         jbtn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtn_salirActionPerformed(evt);
             }
         });
 
+        jbtn_urgencia.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_urgencia.setText("Buscar por urgencia");
         jbtn_urgencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,6 +116,7 @@ public class screenRoot extends javax.swing.JDialog {
             }
         });
 
+        jbtn_estado.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_estado.setText("Buscar por estado");
         jbtn_estado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,6 +124,7 @@ public class screenRoot extends javax.swing.JDialog {
             }
         });
 
+        jbtn_consultar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_consultar.setText("Consultar tipos");
         jbtn_consultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +132,7 @@ public class screenRoot extends javax.swing.JDialog {
             }
         });
 
+        jbtn_actualizar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_actualizar.setText("Actualizar Información");
         jbtn_actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,7 +140,7 @@ public class screenRoot extends javax.swing.JDialog {
             }
         });
 
-        jmenuroot.setText("Más...");
+        jmenuroot.setText("Acciones");
         jmenuroot.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
         jmi_correo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -154,7 +163,21 @@ public class screenRoot extends javax.swing.JDialog {
 
         jmi_profesores.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jmi_profesores.setText("Profesorado");
+        jmi_profesores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_profesoresActionPerformed(evt);
+            }
+        });
         jmenuroot.add(jmi_profesores);
+
+        jmi_estadistica.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jmi_estadistica.setText("Estadistica");
+        jmi_estadistica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_estadisticaActionPerformed(evt);
+            }
+        });
+        jmenuroot.add(jmi_estadistica);
 
         jMenuBar1.add(jmenuroot);
 
@@ -188,7 +211,7 @@ public class screenRoot extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtn_urgencia)
@@ -212,8 +235,8 @@ public class screenRoot extends javax.swing.JDialog {
        jppm.add(modificar);
        // Menu item con Eliminar Incidencia
        JMenuItem borrar = new JMenuItem ("Eliminar incidencia");
+       jppm.add(borrar); 
        
-       jppm.add(borrar);       
        jt_root.setComponentPopupMenu(jppm);
        
        modificar.addActionListener(new ActionListener() { 
@@ -222,7 +245,7 @@ public class screenRoot extends javax.swing.JDialog {
                // Guardo el id de la incidencia seleccionada
                String idInci = (String) dtm.getValueAt(jt_root.getSelectedRow(), 0);
                // Llamo a la pantalla que tengo para modificar incidencia que tengo en tecnico que me sirve aqui tambien
-               modify_incidencia_tec m = new modify_incidencia_tec(screenRoot.this, true, usuario, idInci);
+               tec_modifyIncidencia m = new tec_modifyIncidencia(root_screen.this, true, usuario, idInci);
                m.setVisible(true);
                // Para actualizar las incidencias en la tabla
                verIncidencias();
@@ -249,8 +272,14 @@ public class screenRoot extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Incidencia Eliminada");            
             conexion.close();           
         } catch (Exception e) {
-            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
+    
+     // Metodo del icono
+    public void icono(){
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        this.setIconImage(img.getImage());
     }
   
     // MOSTRAR INCIDENCIAS EN EL JTABLE
@@ -288,13 +317,14 @@ public class screenRoot extends javax.swing.JDialog {
             jt_root.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     // Boton para salir
     private void jbtn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_salirActionPerformed
-        dispose();
+        this.setVisible(false);
+        new main().setVisible(true);
     }//GEN-LAST:event_jbtn_salirActionPerformed
 
     // Boton para buscar por urgencia
@@ -311,7 +341,7 @@ public class screenRoot extends javax.swing.JDialog {
     private void jbtn_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_consultarActionPerformed
         // Llamo a la pantalla que utilizo para consultar los tipos de estado e urgencias 
         // que existen en la bbdd
-        tiposUrEs t = new tiposUrEs(this, true);
+        tipos t = new tipos(this, true);
         t.setVisible(true);
     }//GEN-LAST:event_jbtn_consultarActionPerformed
 
@@ -322,10 +352,10 @@ public class screenRoot extends javax.swing.JDialog {
         e.setVisible(true);
     }//GEN-LAST:event_jmi_correoActionPerformed
 
-    // Menu Item de MenuBat para crear una nueva incidencia
+    // Menu Item de MenuBar para crear una nueva incidencia
     private void jmi_incidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_incidenciaActionPerformed
         // Llamo a la pantalla para crear una nueva incidencia que tengo en tecnico por que me sirve aqui tambien
-        add_incidencia_tec i = new add_incidencia_tec(this, true, usuario);
+        tec_addIncidencia i = new tec_addIncidencia(this, true, usuario);
         i.setVisible(true);
     }//GEN-LAST:event_jmi_incidenciaActionPerformed
 
@@ -333,6 +363,24 @@ public class screenRoot extends javax.swing.JDialog {
     private void jbtn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_actualizarActionPerformed
         verIncidencias();
     }//GEN-LAST:event_jbtn_actualizarActionPerformed
+
+    // Menu Item de MenuBar para mostrar la pantalla con la información de cada profesor
+    private void jmi_profesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_profesoresActionPerformed
+        this.setVisible(false);
+        ver_profesores vp = new ver_profesores(this, true, usuario);
+        vp.setVisible(true);
+    }//GEN-LAST:event_jmi_profesoresActionPerformed
+
+    // Menu Item del MenuBar para mostrar la pantalla con la estadistica
+    private void jmi_estadisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_estadisticaActionPerformed
+        estadistica screen = null;
+        try {
+            screen = new estadistica(this, true);
+        } catch (SQLException ex) {
+            Logger.getLogger(root_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        screen.setVisible(true);
+    }//GEN-LAST:event_jmi_estadisticaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -345,6 +393,7 @@ public class screenRoot extends javax.swing.JDialog {
     private javax.swing.JButton jbtn_urgencia;
     private javax.swing.JMenu jmenuroot;
     private javax.swing.JMenuItem jmi_correo;
+    private javax.swing.JMenuItem jmi_estadistica;
     private javax.swing.JMenuItem jmi_incidencia;
     private javax.swing.JMenuItem jmi_profesores;
     private javax.swing.JPopupMenu jppm;
@@ -364,7 +413,7 @@ public class screenRoot extends javax.swing.JDialog {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     // Metodo para buscar segun urgencia
@@ -404,7 +453,7 @@ public class screenRoot extends javax.swing.JDialog {
             jt_root.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     // Metodo para buscar segun estado
@@ -444,7 +493,7 @@ public class screenRoot extends javax.swing.JDialog {
             jt_root.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -6,8 +6,6 @@
 package com.mycompany.mantenimiento_paula;
 
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
-import com.jtattoo.plaf.smart.SmartLookAndFeel;
-import com.jtattoo.plaf.texture.TextureLookAndFeel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -28,7 +26,7 @@ public class main extends javax.swing.JFrame {
      */
     public main() {
         initComponents();
-        // ICONO DEL PROGRAMA
+        // Icono del programa
         iconoPrograma();
     }
     
@@ -100,42 +98,42 @@ public class main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(44, 44, 44)
                 .addComponent(jLabel1)
-                .addGap(59, 59, 59)
+                .addGap(30, 30, 30)
                 .addComponent(jbtnProfesor)
                 .addGap(32, 32, 32)
                 .addComponent(jbtnTecnico)
-                .addGap(29, 29, 29)
+                .addGap(32, 32, 32)
                 .addComponent(jbtnRoot)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    // METODO PARA PONER ICONO AL PROGRAMA
+    // Metodo para el icono del programa
     public void iconoPrograma(){
         ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
         this.setIconImage(img.getImage());
     }
 
-    // BOTON PARA EL USUARIO ROOT
+    // Boton Administrador
     private void jbtnRootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRootActionPerformed
         loginRoot frm = new loginRoot(this, true);
         this.setVisible(false);
         frm.setVisible(true);
     }//GEN-LAST:event_jbtnRootActionPerformed
 
-    // BOTON PARA EL USUARIO PROFESOR
+    // Boton Profesor
     private void jbtnProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnProfesorActionPerformed
         loginProfesor frm = new loginProfesor(this, true);
         this.setVisible(false);
         frm.setVisible(true);
     }//GEN-LAST:event_jbtnProfesorActionPerformed
 
-    // BOTON PARA EL USUARIO TECNICO
+    // Boton Tecnico
     private void jbtnTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnTecnicoActionPerformed
         loginTecnico frm = new loginTecnico(this, true);
         this.setVisible(false);

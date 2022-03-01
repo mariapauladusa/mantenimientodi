@@ -9,6 +9,9 @@ import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +20,10 @@ import java.util.logging.Level;
 import javax.swing.table.DefaultTableModel;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -26,25 +31,24 @@ import javax.swing.table.TableRowSorter;
  *
  * @author damA
  */
-public class screenProfesor extends javax.swing.JDialog {
+public class profe_screen extends javax.swing.JDialog {
 
     Conectar conectar = new Conectar();
-    
+
     // Variable para guardar el id del usuario
     String usuario;
     String id;
-    
+
     // Modelo de la tabla 
     DefaultTableModel dtm = new DefaultTableModel();
-    
-    
+
     /**
      * Creates new form jd_mainProfesor
      *
      * @param <error>
      */
-    public screenProfesor(javax.swing.JDialog parent, boolean modal, String user) {
-        
+    public profe_screen(javax.swing.JDialog parent, boolean modal, String user) {
+
         conectar.getConexion();
 
         initComponents();
@@ -53,72 +57,94 @@ public class screenProfesor extends javax.swing.JDialog {
 
         saberId();
         verIncidencias();
-        icono();        
+        icono();
         popmenu();
 
-        
     }
-    
-     // Metodo del icono
-    public void icono(){
+
+    // Metodo del icono
+    public void icono() {
         ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
         this.setIconImage(img.getImage());
     }
-    
-      // JPopUp Menu
-    private void popmenu(){
-        
-       // Menu Item con Modificar Incidencia
-       JMenuItem modificar = new JMenuItem ("Modificar incidencia");
-       jppm.add(modificar);
-       // Menu item con Eliminar Incidencia
-       JMenuItem borrar = new JMenuItem ("Eliminar incidencia");
-       jppm.add(borrar);
-       
-       jt_profesor.setComponentPopupMenu(jppm);
-       
-       modificar.addActionListener(new ActionListener() { 
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               
-               String idInci = (String) dtm.getValueAt(jt_profesor.getSelectedRow(), 0);
-              
-               modify_incidencia add = new modify_incidencia(screenProfesor.this, true, usuario, idInci);
-               add.setVisible(true);
-                
-               verIncidencias();
-           }
-       });
-       
-       borrar.addActionListener(new ActionListener() { 
-           @Override
-           public void actionPerformed(ActionEvent e) {
 
-               deleteRow();             
-               verIncidencias();
-           }
-       });
-      
+    // JPopUp Menu
+    private void popmenu() {
+
+        // Menu Item con Modificar Incidencia
+        JMenuItem modificar = new JMenuItem("Modificar incidencia");
+        jppm.add(modificar);
+        // Menu item con Eliminar Incidencia
+        JMenuItem borrar = new JMenuItem("Eliminar incidencia");
+        jppm.add(borrar);
+
+        jt_profesor.setComponentPopupMenu(jppm);
+
+        modificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String idInci = (String) dtm.getValueAt(jt_profesor.getSelectedRow(), 0);
+
+                profe_modifyInci add = new profe_modifyInci(profe_screen.this, true, usuario, idInci);
+                add.setVisible(true);
+
+                verIncidencias();
+            }
+        });
+
+        borrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                deleteRow();
+                verIncidencias();
+            }
+        });
+
     }
-    
+
     // Metodo para eliminar una incidencia
     private void deleteRow() {
         Connection conexion = conectar.getConexion();
-        
+
         var selectedRow = jt_profesor.getValueAt(jt_profesor.getSelectedRow(), 0);
-        
+
         try {
-            PreparedStatement ps = conexion.prepareStatement("DELETE FROM man_incidencias WHERE id_incidencia = '"+selectedRow+"'");
+            PreparedStatement ps = conexion.prepareStatement("DELETE FROM man_incidencias WHERE id_incidencia = '" + selectedRow + "'");
             ps.executeUpdate();
-            
+
             JOptionPane.showMessageDialog(null, "Incidencia Eliminada");
-            
+
             conexion.close();
-            
+
         } catch (Exception e) {
         }
     }
-    
+
+   public void toExcel(JTable table, File file){
+    try{
+        TableModel model = table.getModel();
+        FileWriter excel = new FileWriter(file);
+
+        for(int i = 0; i < model.getColumnCount(); i++){
+            excel.write(model.getColumnName(i) + "\t");
+        }
+
+        excel.write("\n");
+
+        for(int i=0; i< model.getRowCount(); i++) {
+            for(int j=0; j < model.getColumnCount(); j++) {
+                excel.write(model.getValueAt(i,j).toString()+"\t");
+            }
+            excel.write("\n");
+        }
+
+        excel.close();
+
+    }catch(IOException e){ System.out.println(e); }
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -137,6 +163,7 @@ public class screenProfesor extends javax.swing.JDialog {
         jmi_mas = new javax.swing.JMenu();
         jmi_verProfesores = new javax.swing.JMenuItem();
         jmi_add = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -168,7 +195,7 @@ public class screenProfesor extends javax.swing.JDialog {
             }
         });
 
-        jmi_mas.setText("Más...");
+        jmi_mas.setText("Acciones");
         jmi_mas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
         jmi_verProfesores.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -188,6 +215,15 @@ public class screenProfesor extends javax.swing.JDialog {
             }
         });
         jmi_mas.add(jmi_add);
+
+        jMenuItem1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jMenuItem1.setText("Exportar Datos");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jmi_mas.add(jMenuItem1);
 
         jmb_profesor.add(jmi_mas);
 
@@ -227,12 +263,13 @@ public class screenProfesor extends javax.swing.JDialog {
         this.setVisible(false);
         new main().setVisible(true);
     }//GEN-LAST:event_jbtnSalirPActionPerformed
-    
+
     // Opcion del Menu Bar para añadir una nueva incidencia
     private void jmi_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_addActionPerformed
-       add_incidencia add = new add_incidencia(this, true, usuario);
-       add.setVisible(true);
-       verIncidencias();
+        this.setVisible(false);
+        profe_addInci add = new profe_addInci(this, true, usuario);
+        add.setVisible(true);
+        verIncidencias();
     }//GEN-LAST:event_jmi_addActionPerformed
 
     // Opcion del Menu Bar para ver los profesores existentes
@@ -241,29 +278,35 @@ public class screenProfesor extends javax.swing.JDialog {
         vp.setVisible(true);
     }//GEN-LAST:event_jmi_verProfesoresActionPerformed
 
+    // Menu Item del MenuBar para exportar los datos
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        File datos = new File("D:/Users/damA/Documents/NetBeansProjects/mantenimiento_paula/src/main/java/datos/prueba");       
+        toExcel(jt_profesor, datos);        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     // Metodo para mostrar las incidencias correspondientes al usuario que entra en el JTable
     public void verIncidencias() {
-        
+
         dtm.setNumRows(0);
-        dtm.setColumnIdentifiers(new String[]{"Id Incidencia","Nombre", "Descripción", "Fecha", "Ubicación", "Observaciones"});
+        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Fecha", "Ubicación", "Observaciones"});
         TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
         jt_profesor.setRowSorter(elQueOrdena);
 
         String[] a = new String[6];
 
         Connection conexion = conectar.getConexion();
-     
+
         try {
 
             PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.fecha, u.ubicacion, m.observaciones\n"
                     + "from man_incidencias m inner join fp_profesor p on p.id_profesor = m.id_profesor_crea\n"
                     + "inner join man_ubicacion u on u.id_ubicacion = m.id_ubicacion\n"
-                    + "where m.id_profesor_crea = '"+id+"'");
+                    + "where m.id_profesor_crea = '" + id + "'");
 
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                
+
                 a[0] = rs.getString(1);
                 a[1] = rs.getString(2);
                 a[2] = rs.getString(3);
@@ -272,20 +315,21 @@ public class screenProfesor extends javax.swing.JDialog {
                 a[5] = rs.getString(6);
 
                 dtm.addRow(a);
-         
+
             }
-            
+
             jt_profesor.setModel(dtm);
-            
+
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JButton jbtnSalirP;
     private javax.swing.JMenuBar jmb_profesor;
     private javax.swing.JMenuItem jmi_add;
@@ -298,7 +342,7 @@ public class screenProfesor extends javax.swing.JDialog {
 
     // Metodo para everiguar el id del usuario correspondiente
     private void saberId() {
-        
+
         Connection conexion = conectar.getConexion();
 
         try {
@@ -310,11 +354,11 @@ public class screenProfesor extends javax.swing.JDialog {
             while (rs.next()) {
                 id = rs.getString(1);
             }
-            
+
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }  
+    }
 }

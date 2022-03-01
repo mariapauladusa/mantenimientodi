@@ -14,17 +14,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import profesor.add_incidencia;
-import profesor.screenProfesor;
+import profesor.profe_addInci;
+import profesor.profe_screen;
 
 /**
  *
  * @author damA
  */
-public class modify_incidencia_tec extends javax.swing.JDialog {
-
+public class tec_modifyIncidencia extends javax.swing.JDialog {
+    // Conexion a la bbdd
     Conectar conectar = new Conectar();
-
     // Variable para el id del usuario
     String usuario;
     String id;
@@ -34,7 +33,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
     /**
      * Creates new form modify_incidencia_tec
      */
-    public modify_incidencia_tec(javax.swing.JDialog parent, boolean modal, String user, String idInci) {
+    public tec_modifyIncidencia(javax.swing.JDialog parent, boolean modal, String user, String idInci) {
         super(parent, modal);
 
         conectar.getConexion();
@@ -97,17 +96,20 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
         setResizable(false);
         setSize(new java.awt.Dimension(909, 598));
 
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel11.setText("Observaciones:");
 
         jtxta_observaciones.setColumns(20);
+        jtxta_observaciones.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jtxta_observaciones.setRows(5);
         jScrollPane3.setViewportView(jtxta_observaciones);
 
         jtxta_descrTec.setColumns(20);
+        jtxta_descrTec.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jtxta_descrTec.setRows(5);
         jScrollPane2.setViewportView(jtxta_descrTec);
 
+        jbtn_guardar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_guardar.setText("Guardar");
         jbtn_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,6 +117,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
             }
         });
 
+        jbtn_volver.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_volver.setText("Volver");
         jbtn_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,63 +125,78 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Horas:");
 
+        jcbo_estado.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jcbo_estado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbo_estadoActionPerformed(evt);
             }
         });
 
+        jcb_urgencia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jcb_urgencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcb_urgenciaActionPerformed(evt);
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jtxt_horas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setText("Estado:");
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jtxt_fecha.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel6.setText("Fecha:");
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel7.setText("Fecha Inicial Reparacion:");
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jtxt_fechaini.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel8.setText("Fecha Final Reparacion:");
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jtxt_fechafin.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel9.setText("Urgencia:");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MODIFICAR INCIDENCIA");
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Descripción:");
 
         jtxta_descripcion.setColumns(20);
+        jtxta_descripcion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jtxta_descripcion.setRows(5);
         jScrollPane1.setViewportView(jtxta_descripcion);
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel10.setText("Ubicación:");
 
+        jcbo_ubis.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jcbo_ubis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbo_ubisActionPerformed(evt);
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("Descripción Técnica:");
 
+        jlbl_estado.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jlbl_estado.setForeground(new java.awt.Color(255, 0, 0));
 
+        jlbl_urg.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jlbl_urg.setForeground(new java.awt.Color(255, 0, 0));
 
+        jlbl_ubis.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jlbl_ubis.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,7 +204,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -195,50 +213,45 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtxt_horas, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtxt_fechaini, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtxt_fechafin, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtxt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(10, 10, 10))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel10)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jlbl_ubis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jlbl_urg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jcb_urgencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jlbl_estado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jcbo_ubis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jcbo_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jlbl_ubis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jlbl_urg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jcb_urgencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jlbl_estado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jcbo_ubis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jcbo_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jtxt_fechafin)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jtxt_fechaini))
+                        .addGap(64, 64, 64)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jbtn_volver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtn_guardar)
-                        .addGap(80, 80, 80))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(17, 17, 17))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jbtn_volver)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbtn_guardar)
+                                .addGap(80, 80, 80))))
+                    .addComponent(jtxt_horas, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -246,10 +259,10 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,7 +309,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
                                     .addComponent(jlbl_urg, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jcb_urgencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addContainerGap(38, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(5, 5, 5)
@@ -305,7 +318,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
                         .addComponent(jLabel3)
                         .addGap(5, 5, 5)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
@@ -334,7 +347,9 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
 
     // Boton para volver
     private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
-        dispose();
+       this.setVisible(false);
+       tec_screen screen = new tec_screen(this, true, usuario);
+       screen.setVisible(true);
     }//GEN-LAST:event_jbtn_volverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -391,7 +406,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(modify_incidencia_tec.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_modifyIncidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -430,7 +445,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
 
         } catch (SQLException ex) {
 
-            Logger.getLogger(add_incidencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         dispose();
@@ -442,7 +457,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
 
         try {
 
-            PreparedStatement ps = conexion.prepareStatement("SELECT id_estado, estado FROM man_estado");
+            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_estado, estado FROM man_estado");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -454,7 +469,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
 
         } catch (SQLException ex) {
 
-            Logger.getLogger(modify_incidencia_tec.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_modifyIncidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -464,7 +479,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
 
         try {
 
-            PreparedStatement ps = conexion.prepareStatement("SELECT id_urgencia, urgencia FROM man_urgencia");
+            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_urgencia, urgencia FROM man_urgencia");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -476,7 +491,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
 
         } catch (SQLException ex) {
 
-            Logger.getLogger(modify_incidencia_tec.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_modifyIncidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -486,7 +501,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
 
         try {
 
-            PreparedStatement ps = conexion.prepareStatement("SELECT id_ubicacion, ubicacion FROM man_ubicacion");
+            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_ubicacion, ubicacion FROM man_ubicacion");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -498,7 +513,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
 
         } catch (SQLException ex) {
 
-            Logger.getLogger(modify_incidencia_tec.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_modifyIncidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -536,7 +551,7 @@ public class modify_incidencia_tec extends javax.swing.JDialog {
             conexion.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(screenProfesor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

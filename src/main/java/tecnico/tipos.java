@@ -13,14 +13,12 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author damA
  */
-public class tiposUrEs extends javax.swing.JDialog {
+public class tipos extends javax.swing.JDialog {
 
     Conectar conectar = new Conectar();
     // Modelo de la tabla 
@@ -29,7 +27,7 @@ public class tiposUrEs extends javax.swing.JDialog {
     /**
      * Creates new form tiposUrEs
      */
-    public tiposUrEs(javax.swing.JDialog parent, boolean modal) {
+    public tipos(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         conectar.getConexion();
@@ -53,6 +51,7 @@ public class tiposUrEs extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
+        jt_tipos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jt_tipos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -66,6 +65,7 @@ public class tiposUrEs extends javax.swing.JDialog {
         ));
         jScrollPane2.setViewportView(jt_tipos);
 
+        jbtn_ok.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_ok.setText("OK");
         jbtn_ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,7 +73,7 @@ public class tiposUrEs extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("TIPOS DE ESTADO/URGENCIA");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -89,11 +89,10 @@ public class tiposUrEs extends javax.swing.JDialog {
                         .addGap(47, 47, 47))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbtn_ok)
-                        .addGap(20, 20, 20))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(113, 113, 113)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(67, 67, 67))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,7 +101,7 @@ public class tiposUrEs extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbtn_ok)
                 .addGap(21, 21, 21))
         );
@@ -111,6 +110,7 @@ public class tiposUrEs extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // Boton ok para volver a principal
     private void jbtn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_okActionPerformed
         dispose();
     }//GEN-LAST:event_jbtn_okActionPerformed
@@ -140,7 +140,7 @@ public class tiposUrEs extends javax.swing.JDialog {
             jt_tipos.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(screenTecnico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
