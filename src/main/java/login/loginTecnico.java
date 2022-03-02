@@ -5,7 +5,9 @@
  */
 package login;
 
+import administrador.add_usuario;
 import com.mycompany.mantenimiento_paula.Conectar;
+import com.mycompany.mantenimiento_paula.encriptarPwd;
 import com.mycompany.mantenimiento_paula.main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -133,10 +135,10 @@ public class loginTecnico extends javax.swing.JDialog {
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(50, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbtnVolverP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnEntrarP))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -171,9 +173,9 @@ public class loginTecnico extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbtnVolverP)
-                    .addComponent(jbtnEntrarP))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnEntrarP)
+                    .addComponent(jbtnVolverP))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -227,7 +229,7 @@ public class loginTecnico extends javax.swing.JDialog {
         PreparedStatement ps = null;
         ResultSet rs = null;
         user = jtxtUsuarioT.getText();
-        pass = String.valueOf(jpassTecnico.getPassword());
+        pass = String.valueOf(encriptarPwd.encode(jpassTecnico.getText()));
         // Realiza correctamente la actividad de no permitir que el usuario entre en el programa si el usuario que introduce 
         //  no corresponde con su rol o si este esta inactivo
         int rol = 2;

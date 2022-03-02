@@ -32,6 +32,7 @@ public class tipos extends javax.swing.JDialog {
         initComponents();
         conectar.getConexion();
         mostrarTipos();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
     /**

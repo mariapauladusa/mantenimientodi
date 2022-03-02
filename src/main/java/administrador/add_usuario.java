@@ -6,6 +6,7 @@
 package administrador;
 
 import com.mycompany.mantenimiento_paula.Conectar;
+import com.mycompany.mantenimiento_paula.encriptarPwd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,6 +48,8 @@ public class add_usuario extends javax.swing.JDialog {
         rellenarDepa();
         
         icono();
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
     // Metodo del icono
@@ -353,7 +356,7 @@ public class add_usuario extends javax.swing.JDialog {
     // Insertar un nuevo usuario
     private void crearUsuario() {       
         String login = jtxt_nombre.getText();
-        String pass = String.valueOf(jpass_usuario.getPassword());
+        String pass = String.valueOf(encriptarPwd.encode(jpass_usuario.getText()));
         String nombre = jtxt_nombreCompleto.getText();
         String email = jtxt_email.getText();
         String activo = "1";
@@ -381,4 +384,7 @@ public class add_usuario extends javax.swing.JDialog {
         }
         dispose();
     }
+    
+    
+
 }

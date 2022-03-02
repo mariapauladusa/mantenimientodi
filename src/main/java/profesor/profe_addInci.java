@@ -6,6 +6,8 @@
 package profesor;
 
 import com.mycompany.mantenimiento_paula.Conectar;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,6 +40,8 @@ public class profe_addInci extends javax.swing.JDialog {
         saberId();
         icono();
         rellenarBox();
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
     }
     
@@ -71,6 +75,8 @@ public class profe_addInci extends javax.swing.JDialog {
         jbtn_volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setModal(true);
+        setUndecorated(true);
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N

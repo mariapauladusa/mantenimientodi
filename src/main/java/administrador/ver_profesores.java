@@ -8,18 +8,33 @@ package administrador;
 import com.mycompany.mantenimiento_paula.Conectar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import profesor.profe_screen;
 import tecnico.tec_screen;
 
@@ -49,16 +64,18 @@ public class ver_profesores extends javax.swing.JDialog {
         popmenu();
         saberId();
         icono();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        
     }
     
-      // JPopUp Menu
+    // JPopUp Menu
     private void popmenu(){        
        // Menu Item con Modificar Incidencia
        JMenuItem modificar = new JMenuItem ("Modificar Profesor");
        jppm.add(modificar);
        // Menu item con Eliminar Incidencia
-       JMenuItem borrar = new JMenuItem ("Dar de baja");
-       jppm.add(borrar); 
+       JMenuItem baja = new JMenuItem ("Dar de baja");
+       jppm.add(baja); 
        
        jt_profesores.setComponentPopupMenu(jppm);
        
@@ -75,7 +92,7 @@ public class ver_profesores extends javax.swing.JDialog {
            }
        });
        
-       borrar.addActionListener(new ActionListener() { 
+       baja.addActionListener(new ActionListener() { 
            @Override
            public void actionPerformed(ActionEvent e) {
                darBaja();             
@@ -85,26 +102,6 @@ public class ver_profesores extends javax.swing.JDialog {
       
     }
     
-    // Metodo para eliminar una incidencia del pop up menu
-    private void darBaja() {
-        Connection conexion = conectar.getConexion();        
-        var selectedRow = jt_profesores.getValueAt(jt_profesores.getSelectedRow(), 0);        
-        try {
-            PreparedStatement ps = conexion.prepareStatement("UPDATE fp_profesor SET activo = 0 where id_profesor = '"+selectedRow+"'");
-            ps.executeUpdate();            
-            JOptionPane.showMessageDialog(null, "Usuario dado de baja");            
-            conexion.close();           
-        } catch (Exception e) {
-            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
-    
-     // Metodo del icono
-    public void icono(){
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,6 +119,10 @@ public class ver_profesores extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jbnt_inactivos = new javax.swing.JButton();
         jbtn_activos = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jmi_proferoot = new javax.swing.JMenu();
+        jmi_exportar = new javax.swing.JMenuItem();
+        jmi_importar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -175,6 +176,31 @@ public class ver_profesores extends javax.swing.JDialog {
             }
         });
 
+        jmi_proferoot.setText("Acciones");
+        jmi_proferoot.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+
+        jmi_exportar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jmi_exportar.setText("Exportar Datos");
+        jmi_exportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_exportarActionPerformed(evt);
+            }
+        });
+        jmi_proferoot.add(jmi_exportar);
+
+        jmi_importar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jmi_importar.setText("Importar Datos");
+        jmi_importar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_importarActionPerformed(evt);
+            }
+        });
+        jmi_proferoot.add(jmi_importar);
+
+        jMenuBar1.add(jmi_proferoot);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -208,7 +234,7 @@ public class ver_profesores extends javax.swing.JDialog {
                         .addComponent(jbtn_add)
                         .addComponent(jbnt_inactivos)
                         .addComponent(jbtn_activos)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -230,59 +256,74 @@ public class ver_profesores extends javax.swing.JDialog {
         verProfesorado();
     }//GEN-LAST:event_jbtn_addActionPerformed
 
+    // Boton para mostrar en la tabla los usuarios que estan inactivos
     private void jbnt_inactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnt_inactivosActionPerformed
-        dtm.setNumRows(0);        
-        dtm.setColumnIdentifiers(new String[]{"Id del profesor","Nombre de Usuario", "Contraseña", "Nombre Completo", "Email Técnica", "Activo", "Rol", "Departamento"});
-        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
-        jt_profesores.setRowSorter(elQueOrdena);
-        
-        String[] a = new String[8];
-        
-        Connection conexion = conectar.getConexion();
-        
-        try {
-            PreparedStatement ps = conexion.prepareStatement("select p.id_profesor, p.login, p.password, p.nombre_completo, p.email, p.activo, r.rol, d.departamento\n"
-                    + "from fp_profesor p inner join fp_rol r\n"
-                    + "on p.id_rol = r.id_rol inner join fp_departamento d\n"
-                    + "on p.id_departamento = d.id_departamento where p.activo = 0 ");
-
-            ResultSet rs = ps.executeQuery();
-            
-            while (rs.next()) {
-                
-                a[0] = rs.getString(1);
-                a[1] = rs.getString(2);
-                a[2] = rs.getString(3);
-                a[3] = rs.getString(4);
-                a[4] = rs.getString(5);
-                a[5] = rs.getString(6);
-                a[6] = rs.getString(7);
-                a[7] = rs.getString(8); 
-                
-                dtm.addRow(a);
-            }
-            
-            jt_profesores.setModel(dtm);
-            
-            conexion.close();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        verInactivos();
     }//GEN-LAST:event_jbnt_inactivosActionPerformed
-
+ 
     // Boton que muestra en la tabla los usuarios activos, por defecto mostrara los usuarios activos
     private void jbtn_activosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_activosActionPerformed
         verProfesorado();
     }//GEN-LAST:event_jbtn_activosActionPerformed
 
+    // Menu Item de MenuBar con la opcion de exportar los datos
+    private void jmi_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_exportarActionPerformed
+
+        Workbook wb = new XSSFWorkbook();
+
+        JFileChooser file = new JFileChooser();
+        int option = file.showSaveDialog(this);
+
+        FileFilter filter = new FileNameExtensionFilter("Excel file", "xls");
+        file.addChoosableFileFilter(filter);
+
+        String ruta = file.getSelectedFile().getAbsolutePath();
+
+        ruta = ruta + ".xls";
+        File datos = new File(ruta);
+
+        if (option == JFileChooser.APPROVE_OPTION) {
+
+            if (!datos.exists()) {
+                if (!ruta.contains(".xls")) {
+
+                    Exportar(datos, jt_profesores);
+                    JOptionPane.showMessageDialog(this, "Archivo exportado!");
+
+                } else {
+                    Exportar(datos, jt_profesores);
+                    JOptionPane.showMessageDialog(this, "Archivo exportado!");
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "El archivo ya existe!");
+            }
+        }
+    }//GEN-LAST:event_jmi_exportarActionPerformed
+
+    // Menu Item de MenuBar con la opcion de importar los datos
+    private void jmi_importarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_importarActionPerformed
+
+        // FileChooser para que el usuario seleccione donde quiere guardar el archivo
+        JFileChooser file = new JFileChooser();
+        file.showOpenDialog(this);
+
+        String ruta = file.getSelectedFile().getAbsolutePath();
+
+        File datos = new File(ruta);
+        Importar(datos, jt_profesores);
+    }//GEN-LAST:event_jmi_importarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbnt_inactivos;
     private javax.swing.JButton jbtn_activos;
     private javax.swing.JButton jbtn_add;
     private javax.swing.JButton jbtn_volver;
+    private javax.swing.JMenuItem jmi_exportar;
+    private javax.swing.JMenuItem jmi_importar;
+    private javax.swing.JMenu jmi_proferoot;
     private javax.swing.JPopupMenu jppm;
     private javax.swing.JTable jt_profesores;
     // End of variables declaration//GEN-END:variables
@@ -329,7 +370,6 @@ public class ver_profesores extends javax.swing.JDialog {
         }
     }
     
-    
     // Metodo para everiguar el id del usuario correspondiente
     private void saberId() {
         Connection conexion = conectar.getConexion();
@@ -344,6 +384,197 @@ public class ver_profesores extends javax.swing.JDialog {
 
         } catch (SQLException ex) {
             Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    Workbook book;
+    
+    // Metodo para exportar datos de la tabla en excel
+    public String Exportar(File archivo, JTable tabla) {
+        
+        String mensaje = "Error en la Exportacion!";
+        
+        int NumeroFila = tabla.getRowCount(), NumeroColumna = tabla.getColumnCount();
+        
+        if (archivo.getName().endsWith("xls")) {
+            book = new HSSFWorkbook();
+        } else {
+            book = new XSSFWorkbook();
+        }
+        
+        Sheet hoja = book.createSheet("Hoja1");
+
+        try {
+            for (int i = -1; i < NumeroFila; i++) {
+                
+                Row fila = hoja.createRow(i + 1);
+                
+                for (int j = 0; j < NumeroColumna; j++) {
+                    
+                    Cell celda = fila.createCell(j);
+                    
+                    if (i == -1) {
+                        
+                        celda.setCellValue(String.valueOf(tabla.getColumnName(j)));
+                        
+                    } else {
+                        
+                        celda.setCellValue(String.valueOf(tabla.getValueAt(i, j)));
+                    }
+                    
+                    book.write(new FileOutputStream(archivo));
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Archivo exportado con exito!");
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JOptionPane.showMessageDialog(this, mensaje);
+        return mensaje;
+    }
+
+    // Metodo para importar archivos excel a jtable
+    public String Importar(File archivo, JTable tabla) {
+        
+        String mensaje = "Error en la importaciòn!";
+        
+        DefaultTableModel modelo = new DefaultTableModel();
+        tabla.setModel(modelo);
+
+        try {
+            // Archivo con extension xls , xlsx
+            book = WorkbookFactory.create(new FileInputStream(archivo));
+            Sheet hoja = book.getSheetAt(0);
+            
+            Iterator FilaIterator = hoja.rowIterator();
+            
+            int IndiceFila = -1;
+
+            // Si existen filas por recorrer
+            while (FilaIterator.hasNext()) {
+                
+                // +fila por cada recorrido
+                IndiceFila++;
+                
+                Row fila = (Row) FilaIterator.next();
+                
+                // Recorre columnas
+                Iterator ColumnaIterator = fila.cellIterator();
+                
+                // Máxmimo de columna permitido
+                Object[] ListaColumna = new Object[9999];
+                int IndiceColumna = -1;
+                
+                // Si existen columnas por recorrer
+                while (ColumnaIterator.hasNext()) {
+                    
+                    // +columna por cada recorrido
+                    IndiceColumna++;
+                    
+                    Cell celda = (Cell) ColumnaIterator.next();
+                    
+                    //SI INDICE FILA ES IGUAL A "0" ENTONCES SE AGREGA UNA COLUMNA
+                    if (IndiceFila == 0) {
+                        modelo.addColumn(celda.getStringCellValue());
+                    } else {
+                        if (celda != null) {
+                            
+                            switch (celda.getCellType()) {
+                                case Cell.CELL_TYPE_NUMERIC:
+                                    ListaColumna[IndiceColumna] = (int) Math.round(celda.getNumericCellValue());
+                                    break;
+                                    
+                                case Cell.CELL_TYPE_STRING:
+                                    ListaColumna[IndiceColumna] = celda.getStringCellValue();
+                                    break;
+                                    
+                                case Cell.CELL_TYPE_BOOLEAN:
+                                    ListaColumna[IndiceColumna] = celda.getBooleanCellValue();
+                                    break;
+                                    
+                                default:
+                                    ListaColumna[IndiceColumna] = celda.getDateCellValue();
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                if (IndiceFila != 0) {
+                    modelo.addRow(ListaColumna);
+                }
+            }
+            
+            JOptionPane.showMessageDialog(this, "Archivo importado con exito!");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Asegurate de que sea un archivo .xlsx");
+        }
+        
+        JOptionPane.showMessageDialog(this, mensaje);
+        return mensaje;
+    }
+    
+    // Metodo para ver los usuarios que estan inactivos
+    public void verInactivos() {
+        dtm.setNumRows(0);
+        dtm.setColumnIdentifiers(new String[]{"Id del profesor","Nombre de Usuario", "Contraseña", "Nombre Completo", "Email Técnica", "Activo", "Rol", "Departamento"});
+        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
+        jt_profesores.setRowSorter(elQueOrdena);
+        
+        String[] a = new String[8];
+        
+        Connection conexion = conectar.getConexion();
+        
+        try {
+            PreparedStatement ps = conexion.prepareStatement("select p.id_profesor, p.login, p.password, p.nombre_completo, p.email, p.activo, r.rol, d.departamento\n"
+                    + "from fp_profesor p inner join fp_rol r\n"
+                    + "on p.id_rol = r.id_rol inner join fp_departamento d\n"
+                    + "on p.id_departamento = d.id_departamento where p.activo = 0 ");
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                
+                a[0] = rs.getString(1);
+                a[1] = rs.getString(2);
+                a[2] = rs.getString(3);
+                a[3] = rs.getString(4);
+                a[4] = rs.getString(5);
+                a[5] = rs.getString(6);
+                a[6] = rs.getString(7);
+                a[7] = rs.getString(8);
+                
+                dtm.addRow(a);
+            }
+            
+            jt_profesores.setModel(dtm);
+            
+            conexion.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    // Metodo del icono
+    public void icono(){
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        this.setIconImage(img.getImage());
+    }
+    
+    // Metodo para eliminar una incidencia del pop up menu
+    private void darBaja() {
+        Connection conexion = conectar.getConexion();        
+        var selectedRow = jt_profesores.getValueAt(jt_profesores.getSelectedRow(), 0);        
+        try {
+            PreparedStatement ps = conexion.prepareStatement("UPDATE fp_profesor SET activo = 0 where id_profesor = '"+selectedRow+"'");
+            ps.executeUpdate();            
+            JOptionPane.showMessageDialog(null, "Usuario dado de baja");            
+            conexion.close();           
+        } catch (Exception e) {
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 }

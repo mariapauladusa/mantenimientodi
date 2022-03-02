@@ -46,6 +46,8 @@ public class tec_screen extends javax.swing.JDialog {
         verIncidencias();
         icono();        
         popmenu();
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
     // Metodo del icono

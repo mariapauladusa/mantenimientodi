@@ -48,6 +48,8 @@ public class profe_modifyInci extends javax.swing.JDialog {
         
         rellenarBox();        
         rellenarDatos();
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
     // Icono del programa

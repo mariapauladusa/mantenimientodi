@@ -50,6 +50,8 @@ public class modify_usuario extends javax.swing.JDialog {
         
         saberId();
         icono();
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
      // Metodo del icono

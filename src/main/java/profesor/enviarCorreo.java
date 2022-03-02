@@ -43,7 +43,8 @@ public class enviarCorreo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         verProfesores();
-        icono();     
+        icono();  
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
     // Metodo para enviar un correo

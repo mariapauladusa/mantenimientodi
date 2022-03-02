@@ -46,6 +46,8 @@ public class tec_addIncidencia extends javax.swing.JDialog {
         rellenar_urgencia();       
         
         icono();
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
     /**

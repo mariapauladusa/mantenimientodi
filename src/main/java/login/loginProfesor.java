@@ -5,7 +5,9 @@
  */
 package login;
 
+import administrador.add_usuario;
 import com.mycompany.mantenimiento_paula.Conectar;
+import com.mycompany.mantenimiento_paula.encriptarPwd;
 import com.mycompany.mantenimiento_paula.main;
 import profesor.profe_screen;
 import java.sql.Connection;
@@ -64,7 +66,7 @@ public class loginProfesor extends javax.swing.JDialog {
         Connection cn = conectar.getConexion();          
         // Recojo valor de txt user y jpass
         user = jtxtUsuarioP.getText();
-        pass = String.valueOf(jpassProfesor.getPassword());
+        pass = String.valueOf(encriptarPwd.encode(jpassProfesor.getText()));
         
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -133,7 +135,6 @@ public class loginProfesor extends javax.swing.JDialog {
         setSize(new java.awt.Dimension(400, 300));
 
         jtxtUsuarioP.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jtxtUsuarioP.setText("prueba");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -160,7 +161,6 @@ public class loginProfesor extends javax.swing.JDialog {
         });
 
         jpassProfesor.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jpassProfesor.setText("prueba");
 
         jcbMostrarOcultar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jcbMostrarOcultar.setText("Ver");
@@ -174,15 +174,16 @@ public class loginProfesor extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnVolverP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(123, 123, 123)
                         .addComponent(jbtnEntrarP))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 49, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -193,8 +194,6 @@ public class loginProfesor extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbMostrarOcultar)))
                 .addGap(20, 20, 20))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,11 +212,11 @@ public class loginProfesor extends javax.swing.JDialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jcbMostrarOcultar, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jpassProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnVolverP)
                     .addComponent(jbtnEntrarP))
-                .addGap(0, 33, Short.MAX_VALUE))
+                .addGap(0, 29, Short.MAX_VALUE))
         );
 
         pack();
