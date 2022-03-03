@@ -134,5 +134,11 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.8-beta4</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.help/javahelp -->
+        <dependency>
+            <groupId>javax.help</groupId>
+            <artifactId>javahelp</artifactId>
+            <version>2.0.05</version>
+        </dependency>
     </dependencies>
 </project>

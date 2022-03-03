@@ -9,8 +9,6 @@ import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -127,6 +125,7 @@ public class profe_screen extends javax.swing.JDialog {
         jmi_mas = new javax.swing.JMenu();
         jmi_verProfesores = new javax.swing.JMenuItem();
         jmi_add = new javax.swing.JMenuItem();
+        jmi_helpProfe = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -178,6 +177,10 @@ public class profe_screen extends javax.swing.JDialog {
             }
         });
         jmi_mas.add(jmi_add);
+
+        jmi_helpProfe.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jmi_helpProfe.setText("Ayuda");
+        jmi_mas.add(jmi_helpProfe);
 
         jmb_profesor.add(jmi_mas);
 
@@ -239,6 +242,7 @@ public class profe_screen extends javax.swing.JDialog {
     private javax.swing.JButton jbtnSalirP;
     private javax.swing.JMenuBar jmb_profesor;
     private javax.swing.JMenuItem jmi_add;
+    private javax.swing.JMenuItem jmi_helpProfe;
     private javax.swing.JMenu jmi_mas;
     private javax.swing.JMenuItem jmi_verProfesores;
     private javax.swing.JPopupMenu jppm;

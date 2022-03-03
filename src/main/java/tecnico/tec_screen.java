@@ -6,6 +6,7 @@
 package tecnico;
 
 import com.mycompany.mantenimiento_paula.Conectar;
+import com.mycompany.mantenimiento_paula.ayuda;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -128,6 +129,7 @@ public class tec_screen extends javax.swing.JDialog {
         jmb_mas = new javax.swing.JMenu();
         jmi_correo = new javax.swing.JMenuItem();
         jmi_addInci = new javax.swing.JMenuItem();
+        jmi_helpTecnico = new javax.swing.JMenuItem();
 
         jLabel2.setText("jLabel2");
 
@@ -214,6 +216,15 @@ public class tec_screen extends javax.swing.JDialog {
             }
         });
         jmb_mas.add(jmi_addInci);
+
+        jmi_helpTecnico.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jmi_helpTecnico.setText("Ayuda");
+        jmi_helpTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_helpTecnicoActionPerformed(evt);
+            }
+        });
+        jmb_mas.add(jmi_helpTecnico);
 
         jmb_tecnico.add(jmb_mas);
 
@@ -304,6 +315,11 @@ public class tec_screen extends javax.swing.JDialog {
         verIncidencias();
     }//GEN-LAST:event_jbtn_actualizarActionPerformed
 
+    private void jmi_helpTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_helpTecnicoActionPerformed
+      ayuda a = new ayuda();
+      a.cargarAyuda();
+    }//GEN-LAST:event_jmi_helpTecnicoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -317,6 +333,7 @@ public class tec_screen extends javax.swing.JDialog {
     private javax.swing.JMenuBar jmb_tecnico;
     private javax.swing.JMenuItem jmi_addInci;
     private javax.swing.JMenuItem jmi_correo;
+    public static javax.swing.JMenuItem jmi_helpTecnico;
     private javax.swing.JPopupMenu jppm;
     private javax.swing.JScrollPane jsp_profesor;
     private javax.swing.JTable jt_tecnico;

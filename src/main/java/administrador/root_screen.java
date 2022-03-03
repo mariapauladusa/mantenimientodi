@@ -9,30 +9,18 @@ import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import profesor.enviarCorreo;
 import tecnico.tec_addIncidencia;
 import tecnico.tec_modifyIncidencia;
@@ -89,6 +77,7 @@ public class root_screen extends javax.swing.JDialog {
         jmi_incidencia = new javax.swing.JMenuItem();
         jmi_profesores = new javax.swing.JMenuItem();
         jmi_estadistica = new javax.swing.JMenuItem();
+        jmi_helpRoot = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("screenRoot"); // NOI18N
@@ -191,6 +180,10 @@ public class root_screen extends javax.swing.JDialog {
             }
         });
         jmenuroot.add(jmi_estadistica);
+
+        jmi_helpRoot.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jmi_helpRoot.setText("Ayuda");
+        jmenuroot.add(jmi_helpRoot);
 
         jMenuBar1.add(jmenuroot);
 
@@ -407,6 +400,7 @@ public class root_screen extends javax.swing.JDialog {
     private javax.swing.JMenu jmenuroot;
     private javax.swing.JMenuItem jmi_correo;
     private javax.swing.JMenuItem jmi_estadistica;
+    private javax.swing.JMenuItem jmi_helpRoot;
     private javax.swing.JMenuItem jmi_incidencia;
     private javax.swing.JMenuItem jmi_profesores;
     private javax.swing.JPopupMenu jppm;
