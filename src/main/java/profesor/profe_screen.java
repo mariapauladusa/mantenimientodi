@@ -5,9 +5,8 @@
  */
 package profesor;
 
-import administrador.add_usuario;
-import administrador.ver_profesores;
 import com.mycompany.mantenimiento_paula.Conectar;
+import com.mycompany.mantenimiento_paula.ayuda;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,8 +39,6 @@ public class profe_screen extends javax.swing.JDialog {
 
     // Modelo de la tabla 
     DefaultTableModel dtm = new DefaultTableModel();
-    
-
 
     /**
      * Creates new form jd_mainProfesor
@@ -60,8 +57,8 @@ public class profe_screen extends javax.swing.JDialog {
         verIncidencias();
         icono();
         popmenu();
-        
-         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         // X de la pantalla
         addWindowListener(new WindowAdapter() {
             @Override
@@ -70,7 +67,6 @@ public class profe_screen extends javax.swing.JDialog {
                 new main().setVisible(true);
             }
         });
-        
 
     }
 
@@ -119,6 +115,7 @@ public class profe_screen extends javax.swing.JDialog {
         });
 
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -132,11 +129,11 @@ public class profe_screen extends javax.swing.JDialog {
         jsp_profesor = new javax.swing.JScrollPane();
         jt_profesor = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jbtn_ayuda = new javax.swing.JButton();
         jmb_profesor = new javax.swing.JMenuBar();
         jmi_mas = new javax.swing.JMenu();
         jmi_verProfesores = new javax.swing.JMenuItem();
         jmi_add = new javax.swing.JMenuItem();
-        jmi_helpProfe = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -160,8 +157,15 @@ public class profe_screen extends javax.swing.JDialog {
         jLabel1.setText("INCIDENCIAS");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jbtn_ayuda.setText("Ayuda!");
+        jbtn_ayuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_ayudaActionPerformed(evt);
+            }
+        });
+
         jmi_mas.setText("Acciones");
-        jmi_mas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jmi_mas.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
 
         jmi_verProfesores.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jmi_verProfesores.setText("Enviar Correo");
@@ -181,10 +185,6 @@ public class profe_screen extends javax.swing.JDialog {
         });
         jmi_mas.add(jmi_add);
 
-        jmi_helpProfe.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jmi_helpProfe.setText("Ayuda");
-        jmi_mas.add(jmi_helpProfe);
-
         jmb_profesor.add(jmi_mas);
 
         setJMenuBar(jmb_profesor);
@@ -193,11 +193,15 @@ public class profe_screen extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbtn_ayuda)))
                 .addContainerGap())
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,7 +209,9 @@ public class profe_screen extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addGap(0, 0, 0)
                 .addComponent(jsp_profesor, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtn_ayuda)
+                .addContainerGap())
         );
 
         pack();
@@ -226,14 +232,19 @@ public class profe_screen extends javax.swing.JDialog {
         vp.setVisible(true);
     }//GEN-LAST:event_jmi_verProfesoresActionPerformed
 
-    
+    // Boton para mostrar ayuda
+    private void jbtn_ayudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_ayudaActionPerformed
+        ayuda a = new ayuda();
+        a.cargarAyuda(jbtn_ayuda);
+    }//GEN-LAST:event_jbtn_ayudaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    public static javax.swing.JButton jbtn_ayuda;
     private javax.swing.JMenuBar jmb_profesor;
     private javax.swing.JMenuItem jmi_add;
-    private javax.swing.JMenuItem jmi_helpProfe;
-    private javax.swing.JMenu jmi_mas;
+    private static javax.swing.JMenu jmi_mas;
     private javax.swing.JMenuItem jmi_verProfesores;
     private javax.swing.JPopupMenu jppm;
     private javax.swing.JScrollPane jsp_profesor;
@@ -261,7 +272,7 @@ public class profe_screen extends javax.swing.JDialog {
             Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     // Metodo para mostrar las incidencias correspondientes al usuario que entra en el JTable
     public void verIncidencias() {
 
@@ -304,7 +315,7 @@ public class profe_screen extends javax.swing.JDialog {
             Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     // Metodo para eliminar una incidencia
     private void deleteRow() {
         Connection conexion = conectar.getConexion();

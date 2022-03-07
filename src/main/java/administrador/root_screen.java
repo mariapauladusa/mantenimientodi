@@ -6,6 +6,7 @@ package administrador;
 
 import profesor.profe_screen;
 import com.mycompany.mantenimiento_paula.Conectar;
+import com.mycompany.mantenimiento_paula.ayuda;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +35,7 @@ import tecnico.tipos;
  * @author nicol
  */
 public class root_screen extends javax.swing.JDialog {
+
     // Conexion a la base de datos
     Conectar conectar = new Conectar();
     // Variables que utilizo para recoger el usuario
@@ -41,6 +43,7 @@ public class root_screen extends javax.swing.JDialog {
     String id;
     // Modelo de la tabla 
     DefaultTableModel dtm = new DefaultTableModel();
+
     /**
      * Creates new form screenRoot
      */
@@ -62,6 +65,7 @@ public class root_screen extends javax.swing.JDialog {
             }
         });
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,6 +84,7 @@ public class root_screen extends javax.swing.JDialog {
         jbtn_estado = new javax.swing.JButton();
         jbtn_consultar = new javax.swing.JButton();
         jbtn_actualizar = new javax.swing.JButton();
+        jbtn_ayudaroot = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmenuroot = new javax.swing.JMenu();
         jmi_correo = new javax.swing.JMenuItem();
@@ -143,6 +148,8 @@ public class root_screen extends javax.swing.JDialog {
             }
         });
 
+        jbtn_ayudaroot.setText("Ayuda!");
+
         jmenuroot.setText("Acciones");
         jmenuroot.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
@@ -184,6 +191,11 @@ public class root_screen extends javax.swing.JDialog {
 
         jmi_helpRoot.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jmi_helpRoot.setText("Ayuda");
+        jmi_helpRoot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_helpRootActionPerformed(evt);
+            }
+        });
         jmenuroot.add(jmi_helpRoot);
 
         jMenuBar1.add(jmenuroot);
@@ -207,8 +219,10 @@ public class root_screen extends javax.swing.JDialog {
                         .addComponent(jbtn_urgencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtn_actualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtn_actualizar)))
+                        .addComponent(jbtn_ayudaroot)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -223,7 +237,8 @@ public class root_screen extends javax.swing.JDialog {
                     .addComponent(jbtn_estado)
                     .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtn_consultar)
-                    .addComponent(jbtn_actualizar))
+                    .addComponent(jbtn_actualizar)
+                    .addComponent(jbtn_ayudaroot))
                 .addGap(17, 17, 17))
         );
 
@@ -231,67 +246,66 @@ public class root_screen extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
-     // JPopUp Menu
-    private void popmenu(){        
-       // Menu Item con Modificar Incidencia
-       JMenuItem modificar = new JMenuItem ("Modificar incidencia");
-       jppm.add(modificar);
-       // Menu item con Eliminar Incidencia
-       JMenuItem borrar = new JMenuItem ("Eliminar incidencia");
-       jppm.add(borrar); 
-       
-       jt_root.setComponentPopupMenu(jppm);
-       
-       modificar.addActionListener(new ActionListener() { 
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               // Guardo el id de la incidencia seleccionada
-               String idInci = (String) dtm.getValueAt(jt_root.getSelectedRow(), 0);
-               // Llamo a la pantalla que tengo para modificar incidencia que tengo en tecnico que me sirve aqui tambien
-               tec_modifyIncidencia m = new tec_modifyIncidencia(root_screen.this, true, usuario, idInci);
-               m.setVisible(true);
-               // Para actualizar las incidencias en la tabla
-               verIncidencias();
-           }
-       });
-       
-       borrar.addActionListener(new ActionListener() { 
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               deleteRow();             
-               verIncidencias();
-           }
-       });
-      
+    // JPopUp Menu
+    private void popmenu() {
+        // Menu Item con Modificar Incidencia
+        JMenuItem modificar = new JMenuItem("Modificar incidencia");
+        jppm.add(modificar);
+        // Menu item con Eliminar Incidencia
+        JMenuItem borrar = new JMenuItem("Eliminar incidencia");
+        jppm.add(borrar);
+
+        jt_root.setComponentPopupMenu(jppm);
+
+        modificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Guardo el id de la incidencia seleccionada
+                String idInci = (String) dtm.getValueAt(jt_root.getSelectedRow(), 0);
+                // Llamo a la pantalla que tengo para modificar incidencia que tengo en tecnico que me sirve aqui tambien
+                tec_modifyIncidencia m = new tec_modifyIncidencia(root_screen.this, true, usuario, idInci);
+                m.setVisible(true);
+                // Para actualizar las incidencias en la tabla
+                verIncidencias();
+            }
+        });
+
+        borrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteRow();
+                verIncidencias();
+            }
+        });
+
     }
-    
+
     // Metodo para eliminar una incidencia del pop up menu
     private void deleteRow() {
-        Connection conexion = conectar.getConexion();        
-        var selectedRow = jt_root.getValueAt(jt_root.getSelectedRow(), 0);        
+        Connection conexion = conectar.getConexion();
+        var selectedRow = jt_root.getValueAt(jt_root.getSelectedRow(), 0);
         try {
-            PreparedStatement ps = conexion.prepareStatement("DELETE FROM man_incidencias WHERE id_incidencia = '"+selectedRow+"'");
-            ps.executeUpdate();            
-            JOptionPane.showMessageDialog(null, "Incidencia Eliminada");            
-            conexion.close();           
+            PreparedStatement ps = conexion.prepareStatement("DELETE FROM man_incidencias WHERE id_incidencia = '" + selectedRow + "'");
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Incidencia Eliminada");
+            conexion.close();
         } catch (Exception e) {
             Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
-     // Metodo del icono
-    public void icono(){
+
+    // Metodo del icono
+    public void icono() {
         ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
         this.setIconImage(img.getImage());
     }
-  
+
     // MOSTRAR INCIDENCIAS EN EL JTABLE
     public void verIncidencias() {
         dtm.setNumRows(0);
-        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});        
+        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});
         TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
-        jt_root.setRowSorter(elQueOrdena);        
+        jt_root.setRowSorter(elQueOrdena);
         String[] a = new String[12];
         Connection conexion = conectar.getConexion();
         try {
@@ -301,7 +315,7 @@ public class root_screen extends javax.swing.JDialog {
                     + "on e.id_estado = m.id_estado left join man_ubicacion ub\n"
                     + "on ub.id_ubicacion = m.id_ubicacion left join man_urgencia ur\n"
                     + "on ur.id_urgencia = m.nivel_urgencia\n");
-            
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 a[0] = rs.getString(1);
@@ -317,7 +331,7 @@ public class root_screen extends javax.swing.JDialog {
                 a[10] = rs.getString(11);
                 a[11] = rs.getString(12);
                 dtm.addRow(a);
-            }                  
+            }
             jt_root.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {
@@ -380,18 +394,25 @@ public class root_screen extends javax.swing.JDialog {
         screen.setVisible(true);
     }//GEN-LAST:event_jmi_estadisticaActionPerformed
 
+    // Java Help
+    private void jmi_helpRootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_helpRootActionPerformed
+        ayuda a = new ayuda();
+        a.cargarAyuda(jbtn_ayudaroot);
+    }//GEN-LAST:event_jmi_helpRootActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtn_actualizar;
+    private javax.swing.JButton jbtn_ayudaroot;
     private javax.swing.JButton jbtn_consultar;
     private javax.swing.JButton jbtn_estado;
     private javax.swing.JButton jbtn_urgencia;
     private javax.swing.JMenu jmenuroot;
     private javax.swing.JMenuItem jmi_correo;
     private javax.swing.JMenuItem jmi_estadistica;
-    private javax.swing.JMenuItem jmi_helpRoot;
+    public static javax.swing.JMenuItem jmi_helpRoot;
     private javax.swing.JMenuItem jmi_incidencia;
     private javax.swing.JMenuItem jmi_profesores;
     private javax.swing.JPopupMenu jppm;
@@ -414,13 +435,14 @@ public class root_screen extends javax.swing.JDialog {
             Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     // Metodo para buscar segun urgencia
     private void buscadorUrgencia() {
         dtm.setNumRows(0);
-        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});        
+        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});
         TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
-        jt_root.setRowSorter(elQueOrdena);        
-        String buscar = jtxt_buscar.getText();        
+        jt_root.setRowSorter(elQueOrdena);
+        String buscar = jtxt_buscar.getText();
         String[] a = new String[12];
         Connection conexion = conectar.getConexion();
         try {
@@ -430,8 +452,8 @@ public class root_screen extends javax.swing.JDialog {
                     + "on e.id_estado = m.id_estado left join man_ubicacion ub\n"
                     + "on ub.id_ubicacion = m.id_ubicacion left join man_urgencia ur\n"
                     + "on ur.id_urgencia = m.nivel_urgencia\n"
-                    + "where ur.urgencia = '"+buscar+"' order by m.nivel_urgencia");
-            
+                    + "where ur.urgencia = '" + buscar + "' order by m.nivel_urgencia");
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 a[0] = rs.getString(1);
@@ -447,20 +469,21 @@ public class root_screen extends javax.swing.JDialog {
                 a[10] = rs.getString(11);
                 a[11] = rs.getString(12);
                 dtm.addRow(a);
-            }                  
+            }
             jt_root.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     // Metodo para buscar segun estado
     private void buscadorEstado() {
         dtm.setNumRows(0);
-        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});        
+        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});
         TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
-        jt_root.setRowSorter(elQueOrdena);        
-        String buscar = jtxt_buscar.getText();        
+        jt_root.setRowSorter(elQueOrdena);
+        String buscar = jtxt_buscar.getText();
         String[] a = new String[12];
         Connection conexion = conectar.getConexion();
         try {
@@ -470,8 +493,8 @@ public class root_screen extends javax.swing.JDialog {
                     + "on e.id_estado = m.id_estado left join man_ubicacion ub\n"
                     + "on ub.id_ubicacion = m.id_ubicacion left join man_urgencia ur\n"
                     + "on ur.id_urgencia = m.nivel_urgencia\n"
-                    + "where e.estado = '"+buscar+"' order by m.id_estado");
-            
+                    + "where e.estado = '" + buscar + "' order by m.id_estado");
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 a[0] = rs.getString(1);
@@ -487,7 +510,7 @@ public class root_screen extends javax.swing.JDialog {
                 a[10] = rs.getString(11);
                 a[11] = rs.getString(12);
                 dtm.addRow(a);
-            }                  
+            }
             jt_root.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {

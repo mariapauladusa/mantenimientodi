@@ -5,10 +5,11 @@
  */
 package login;
 
-import administrador.add_usuario;
 import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.encriptarPwd;
 import com.mycompany.mantenimiento_paula.main;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,6 +49,17 @@ public class loginTecnico extends javax.swing.JDialog {
         iconosLabel();
         // Metodo para recoger activo
         saberActivo();
+        
+        jpassTecnico.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    loginT();
+                }
+            }
+  
+        });
 
     }
 

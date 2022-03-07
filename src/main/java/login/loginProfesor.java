@@ -5,10 +5,11 @@
  */
 package login;
 
-import administrador.add_usuario;
 import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.encriptarPwd;
 import com.mycompany.mantenimiento_paula.main;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import profesor.profe_screen;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,7 +46,18 @@ public class loginProfesor extends javax.swing.JDialog {
         iconosLabel();
         iconoPrograma();
         // Metodo para recoger activo
-        saberActivo();       
+        saberActivo();
+        
+        jpassProfesor.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    loginProfesor();
+                }
+            }
+  
+        });
     }
     
     // Metodo para el icono del programa
@@ -68,6 +80,7 @@ public class loginProfesor extends javax.swing.JDialog {
         user = jtxtUsuarioP.getText();
         pass = String.valueOf(encriptarPwd.encode(jpassProfesor.getText()));
         
+        
         PreparedStatement ps = null;
         ResultSet rs = null;
         
@@ -79,7 +92,7 @@ public class loginProfesor extends javax.swing.JDialog {
         // Si los txt estan vacioes
         if (user.equals("") || pass.equals("")) {          
             // Mostrara un mensaje de campos vacios, los campos no pueden estar vacios
-            JOptionPane.showMessageDialog(this, "Si quieres entrar no dejes los campos vacios :( .", "Campos vacíos", 0);
+            JOptionPane.showMessageDialog(this, "Si quieres entrar no dejes los campos vacios :( ", "Campos vacíos", 0);
         // Si el rol corresponde con su rol en este caso 3 para profesor    
         }else if (rol == rol) {            
             try {
@@ -92,7 +105,7 @@ public class loginProfesor extends javax.swing.JDialog {
                         profe_screen mp = new profe_screen(this, true, user);
                         mp.setVisible(true);                    
                     }else{                        
-                        JOptionPane.showMessageDialog(this, "ERROR!!\nEl usuario introducio no corresponde o esta inactivo");
+                        JOptionPane.showMessageDialog(this, "ERROR!!\nEl usuario introducio no corresponde o esta inactivo.");
                     }                    
                 }else{                   
                     //JOptionPane.showMessageDialog(this, "El usuario introducido no esta activo.", "Usuario Inactivo", 0);
@@ -101,7 +114,7 @@ public class loginProfesor extends javax.swing.JDialog {
                 cn.close();               
             } catch (SQLException e) {               
                 System.err.println(e.toString());
-                JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( .", "Errorsito", 2);               
+                JOptionPane.showConfirmDialog(this, "No se que ha pasado, pero algo ha ido mal :( ", "Errorsito", 2);               
             }           
         }else{
             // Por aqui nunca entra
@@ -161,6 +174,11 @@ public class loginProfesor extends javax.swing.JDialog {
         });
 
         jpassProfesor.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jpassProfesor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jpassProfesorActionPerformed(evt);
+            }
+        });
 
         jcbMostrarOcultar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jcbMostrarOcultar.setText("Ver");
@@ -213,7 +231,7 @@ public class loginProfesor extends javax.swing.JDialog {
                         .addComponent(jcbMostrarOcultar, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jpassProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbtnVolverP)
                     .addComponent(jbtnEntrarP))
                 .addGap(0, 29, Short.MAX_VALUE))
@@ -250,6 +268,11 @@ public class loginProfesor extends javax.swing.JDialog {
             jpassProfesor.setEchoChar('*');
         }
     }//GEN-LAST:event_jcbMostrarOcultarActionPerformed
+
+    // No hace falta pero no puedo borrar
+    private void jpassProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpassProfesorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jpassProfesorActionPerformed
 
      // Metodo para recoger el estado de activo
     private void saberActivo() {

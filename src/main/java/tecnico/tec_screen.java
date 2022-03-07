@@ -136,6 +136,7 @@ public class tec_screen extends javax.swing.JDialog {
         jtxt_buscar = new javax.swing.JTextField();
         jbtn_consultar = new javax.swing.JButton();
         jbtn_actualizar = new javax.swing.JButton();
+        jbtn_ayudaTec = new javax.swing.JButton();
         jmb_tecnico = new javax.swing.JMenuBar();
         jmb_mas = new javax.swing.JMenu();
         jmi_correo = new javax.swing.JMenuItem();
@@ -199,6 +200,8 @@ public class tec_screen extends javax.swing.JDialog {
             }
         });
 
+        jbtn_ayudaTec.setText("Ayuda!");
+
         jmb_mas.setText("Acciones");
         jmb_mas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
@@ -250,8 +253,10 @@ public class tec_screen extends javax.swing.JDialog {
                         .addComponent(jbtn_urgencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtn_actualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtn_actualizar)))
+                        .addComponent(jbtn_ayudaTec)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -266,7 +271,8 @@ public class tec_screen extends javax.swing.JDialog {
                     .addComponent(jbtn_estado)
                     .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtn_consultar)
-                    .addComponent(jbtn_actualizar))
+                    .addComponent(jbtn_actualizar)
+                    .addComponent(jbtn_ayudaTec))
                 .addGap(12, 12, 12))
         );
 
@@ -311,7 +317,7 @@ public class tec_screen extends javax.swing.JDialog {
 
     private void jmi_helpTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_helpTecnicoActionPerformed
       ayuda a = new ayuda();
-      a.cargarAyuda();
+      a.cargarAyuda(jbtn_ayudaTec);
     }//GEN-LAST:event_jmi_helpTecnicoActionPerformed
 
 
@@ -319,6 +325,7 @@ public class tec_screen extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jbtn_actualizar;
+    private javax.swing.JButton jbtn_ayudaTec;
     private javax.swing.JButton jbtn_consultar;
     private javax.swing.JButton jbtn_estado;
     private javax.swing.JButton jbtn_urgencia;

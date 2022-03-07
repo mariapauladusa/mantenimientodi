@@ -9,7 +9,7 @@ import java.io.File;
 import java.net.URL;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
-import tecnico.tec_screen;
+import javax.swing.JButton;
 
 /**
  *
@@ -18,7 +18,7 @@ import tecnico.tec_screen;
 public class ayuda {
     //Método llamado al cargar la ayuda.
 
-    public void cargarAyuda() {
+    public void cargarAyuda(JButton b) {
         try {
             // Carga el fichero de ayuda
             File fichero = new File("src\\main\\java\\help\\help_set.hs");
@@ -28,9 +28,11 @@ public class ayuda {
             HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
             HelpBroker hb = helpset.createHelpBroker();
 
-            // Pone ayuda a item de menu al pulsar F1. mntmIndice es el JMenuitem
-            hb.enableHelpOnButton(tec_screen.jmi_helpTecnico, "aplicacion", helpset);
-            //hb.enableHelpKey(principal.getContentPane(), "ventana_principal", helpset);
+
+            hb.enableHelpOnButton(b, "aplicacion", helpset);
+            hb.enableHelpOnButton(b, "aplicacion", helpset);
+            hb.enableHelpOnButton(b, "aplicacion", helpset);
+
 
         } catch (Exception e) {
             e.printStackTrace();

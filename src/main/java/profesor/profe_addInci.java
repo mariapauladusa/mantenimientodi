@@ -5,8 +5,6 @@
  */
 package profesor;
 
-import administrador.add_usuario;
-import administrador.ver_profesores;
 import com.mycompany.mantenimiento_paula.Conectar;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

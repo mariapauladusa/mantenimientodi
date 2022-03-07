@@ -10,9 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,6 +38,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import profesor.profe_screen;
 import tecnico.tec_screen;
@@ -53,6 +58,9 @@ public class ver_profesores extends javax.swing.JDialog {
     // Variables que utilizo para recoger el usuario
     String usuario;
     String id;
+
+    String idRol;
+    String idDepa;
 
     /**
      * Creates new form ver_profesores
@@ -128,7 +136,7 @@ public class ver_profesores extends javax.swing.JDialog {
         try {
             PreparedStatement ps = conexion.prepareStatement("UPDATE fp_profesor SET activo = 0 where id_profesor = '" + selectedRow + "'");
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Usuario dado de baja");
+            JOptionPane.showMessageDialog(this, "El usuario que has seleccionado ha sido dado de baja!", "Usuario Dado de Baja", JOptionPane.OK_OPTION);
             conexion.close();
         } catch (Exception e) {
             Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, e);
@@ -151,7 +159,6 @@ public class ver_profesores extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jbnt_inactivos = new javax.swing.JButton();
         jbtn_activos = new javax.swing.JButton();
-        jbtn_insertar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmi_proferoot = new javax.swing.JMenu();
         jmi_exportar = new javax.swing.JMenuItem();
@@ -201,14 +208,6 @@ public class ver_profesores extends javax.swing.JDialog {
             }
         });
 
-        jbtn_insertar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbtn_insertar.setText("Insertar datos importados");
-        jbtn_insertar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtn_insertarActionPerformed(evt);
-            }
-        });
-
         jmi_proferoot.setText("Acciones");
         jmi_proferoot.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
@@ -248,8 +247,7 @@ public class ver_profesores extends javax.swing.JDialog {
                         .addComponent(jbnt_inactivos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtn_activos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtn_insertar)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -264,8 +262,7 @@ public class ver_profesores extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtn_add)
                     .addComponent(jbnt_inactivos)
-                    .addComponent(jbtn_activos)
-                    .addComponent(jbtn_insertar))
+                    .addComponent(jbtn_activos))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -377,7 +374,7 @@ public class ver_profesores extends javax.swing.JDialog {
     // Menu Item de MenuBar con la opcion de exportar los datos
     private void jmi_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_exportarActionPerformed
 
-        Workbook wb = new XSSFWorkbook();
+        //Workbook wb = new XSSFWorkbook();
 
         JFileChooser file = new JFileChooser();
         int option = file.showSaveDialog(this);
@@ -396,21 +393,19 @@ public class ver_profesores extends javax.swing.JDialog {
                 if (!ruta.contains(".xls")) {
 
                     Exportar(datos, jt_profesores);
-                    JOptionPane.showMessageDialog(this, "Archivo exportado!");
+                    JOptionPane.showMessageDialog(this, "Archivo exportado con exito!", ":)", JOptionPane.OK_OPTION);
 
                 } else {
                     Exportar(datos, jt_profesores);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "El archivo ya existe!");
+                 JOptionPane.showMessageDialog(this, "El archivo ya existe!!", ":(", JOptionPane.OK_OPTION);
             }
         }
     }//GEN-LAST:event_jmi_exportarActionPerformed
 
     // Metodo para exportar datos de la tabla en excel
-    public String Exportar(File archivo, JTable tabla) {
-
-        String mensaje = "Error en la Exportacion!";
+    public void Exportar(File archivo, JTable tabla) {
 
         int NumeroFila = tabla.getRowCount(), NumeroColumna = tabla.getColumnCount();
 
@@ -444,210 +439,107 @@ public class ver_profesores extends javax.swing.JDialog {
                     book.write(new FileOutputStream(archivo));
                 }
             }
-            JOptionPane.showMessageDialog(this, "Archivo exportado!");
+            JOptionPane.showMessageDialog(this, "Archivo exportado con exito!", ":)", JOptionPane.OK_OPTION);
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, mensaje);
+            JOptionPane.showMessageDialog(this, "Vaya algo ha ido mal!!", ":(", JOptionPane.OK_OPTION);
         }
 
-        return mensaje;
     }
 
     Workbook book;
 
     // Menu Item de MenuBar con la opcion de importar los datos
     private void jmi_importarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_importarActionPerformed
-
-        // FileChooser para que el usuario seleccione donde quiere guardar el archivo
-        JFileChooser file = new JFileChooser();
-        int option = file.showOpenDialog(this);
-
-        String ruta = file.getSelectedFile().getAbsolutePath();
-
-        File datos = new File(ruta);
-
-        Importar(datos, jt_profesores);
-        JOptionPane.showMessageDialog(this, "Archivo importado!");
-
-
+        importExcelToJtableJava();
     }//GEN-LAST:event_jmi_importarActionPerformed
+    // Metodo para importar archivos a la tabla ya su vez a la base de datos
+    public void importExcelToJtableJava() {
 
-    // Metodo para importar archivos excel a jtable
-    public String Importar(File archivo, JTable tabla) {
+        int a = JOptionPane.showConfirmDialog(this, "Se importara un archivo con nuevos datos a la tabla y también se subirán a la base de datos", "Información antes de continuar", JOptionPane.OK_CANCEL_OPTION);
 
-        String mensaje = "Error en la importaciòn!";
+        if (a == JOptionPane.OK_OPTION) {
+            
+            File excelFile;
+            FileInputStream excelFIS = null;
+            BufferedInputStream excelBIS = null;
+            XSSFWorkbook excelImportToJTable = null;
 
-        DefaultTableModel modelo = new DefaultTableModel();
-        tabla.setModel(modelo);
+            JFileChooser excelFileChooser = new JFileChooser();
+            excelFileChooser.setDialogTitle("Select Excel File");
 
-        try {
-            // Archivo con extension xls , xlsx
-            book = WorkbookFactory.create(new FileInputStream(archivo));
-            Sheet hoja = book.getSheetAt(0);
+            FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+            excelFileChooser.setFileFilter(fnef);
 
-            Iterator FilaIterator = hoja.rowIterator();
+            int excelChooser = excelFileChooser.showOpenDialog(null);
 
-            int IndiceFila = -1;
+            if (excelChooser == JFileChooser.APPROVE_OPTION) {
 
-            // Si existen filas por recorrer
-            while (FilaIterator.hasNext()) {
+                try {
+                    excelFile = excelFileChooser.getSelectedFile();
+                    excelFIS = new FileInputStream(excelFile);
+                    excelBIS = new BufferedInputStream(excelFIS);
+                    excelImportToJTable = new XSSFWorkbook(excelBIS);
+                    
+                    XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
 
-                // +fila por cada recorrido
-                IndiceFila++;
+                    for (int row = 1; row < excelSheet.getLastRowNum()+1 ; row++) {
+                        
+                        XSSFRow excelRow = excelSheet.getRow(row);
 
-                Row fila = (Row) FilaIterator.next();
+                        XSSFCell login = excelRow.getCell(0);
+                        XSSFCell passsword = excelRow.getCell(1);
+                        XSSFCell nombre_completo = excelRow.getCell(2);
+                        XSSFCell email = excelRow.getCell(3);
+                        XSSFCell activo = excelRow.getCell(4);
+                        XSSFCell id_rol = excelRow.getCell(5);
+                        XSSFCell id_departamento = excelRow.getCell(6);
 
-                // Recorre columnas
-                Iterator ColumnaIterator = fila.cellIterator();
+                        dtm.addRow(new Object[]{login, passsword, nombre_completo, email, activo, id_rol, id_departamento});
+                        
+                        if (dtm.getRowCount() == 0) {
+                            JOptionPane.showMessageDialog(this, "La tabla esta vacia!!", "Tabla Vacía", JOptionPane.OK_OPTION);
+                            
+                        } else {
+                            
+                            try {
+                                
+                                Connection conexion = conectar.getConexion();
 
-                // Máxmimo de columna permitido
-                Object[] ListaColumna = new Object[9999];
-                int IndiceColumna = -1;
+                                String query = "insert into fp_profesor(login, password, nombre_completo, email, activo, id_rol, id_departamento)values(?,?,?,?,?,?,?)";
+                                PreparedStatement ps = conexion.prepareStatement(query);
 
-                // Si existen columnas por recorrer
-                while (ColumnaIterator.hasNext()) {
+                                ps.setString(1, login.toString());
+                                ps.setString(2, passsword.toString());
+                                ps.setString(3, nombre_completo.toString());
+                                ps.setString(4, email.toString());
+                                ps.setString(5, activo.toString());
+                                ps.setString(6, saberIdRol(id_rol.toString()));
+                                ps.setString(7, saberIdDepa(id_departamento.toString()));
 
-                    // +columna por cada recorrido
-                    IndiceColumna++;
+                                ps.execute();
 
-                    Cell celda = (Cell) ColumnaIterator.next();
-
-                    //SI INDICE FILA ES IGUAL A "0" ENTONCES SE AGREGA UNA COLUMNA
-                    if (IndiceFila == 0) {
-                        modelo.addColumn(celda.getStringCellValue());
-                    } else {
-                        if (celda != null) {
-
-                            switch (celda.getCellType()) {
-                                case Cell.CELL_TYPE_NUMERIC:
-                                    ListaColumna[IndiceColumna] = (int) Math.round(celda.getNumericCellValue());
-                                    break;
-
-                                case Cell.CELL_TYPE_STRING:
-                                    ListaColumna[IndiceColumna] = celda.getStringCellValue();
-                                    break;
-
-                                case Cell.CELL_TYPE_BOOLEAN:
-                                    ListaColumna[IndiceColumna] = celda.getBooleanCellValue();
-                                    break;
-
-                                default:
-                                    ListaColumna[IndiceColumna] = celda.getDateCellValue();
-                                    break;
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }
                     }
-                }
 
-                if (IndiceFila != 0) {
-                    modelo.addRow(ListaColumna);
-                }
-            }
+                    verProfesorado();
 
-            JOptionPane.showMessageDialog(this, "Archivo importado con exito!");
+                   JOptionPane.showConfirmDialog(this, "Información subida a la base de datos!!", ":D", JOptionPane.OK_OPTION);
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Asegurate de que sea un archivo .xlsx");
-        }
-
-        JOptionPane.showMessageDialog(this, mensaje);
-        return mensaje;
-    }
-    
-   /* public void importExcelToJtableJava() {
-
-        DefaultTableModel modelo = new DefaultTableModel();
-        File excelFile;
-        FileInputStream excelFIS = null;
-        BufferedInputStream excelBIS = null;
-        XSSFWorkbook excelImportToJTable = null;
-        JFileChooser excelFileChooser = new JFileChooser();
-        excelFileChooser.setDialogTitle("Select Excel File");
-        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
-        excelFileChooser.setFileFilter(fnef);
-        int excelChooser = excelFileChooser.showOpenDialog(null);
-        if (excelChooser == JFileChooser.APPROVE_OPTION) {
-            try {
-                excelFile = excelFileChooser.getSelectedFile();
-                excelFIS = new FileInputStream(excelFile);
-                excelBIS = new BufferedInputStream(excelFIS);
-                excelImportToJTable = new XSSFWorkbook(excelBIS);
-                XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
-
-                for (int row = 0; row < excelSheet.getLastRowNum(); row++) {
-                    XSSFRow excelRow = excelSheet.getRow(row);
-
-                    XSSFCell login = excelRow.getCell(0);
-                    XSSFCell passsword = excelRow.getCell(1);
-                    XSSFCell nombre_completo = excelRow.getCell(2);
-                    XSSFCell email = excelRow.getCell(3);
-                    XSSFCell activo = excelRow.getCell(4);
-                    XSSFCell id_rol = excelRow.getCell(5);
-                    XSSFCell id_departamento = excelRow.getCell(6);
-
-                   
-                    modelo.addRow(new Object[]{login, passsword, nombre_completo, email, activo, id_rol, id_departamento  });
-                }
-                JOptionPane.showMessageDialog(null, "Archivo Importado!");
-            } catch (IOException iOException) {
-                JOptionPane.showMessageDialog(null, iOException.getMessage());
-            } finally {
-                try {
-                    if (excelFIS != null) {
-                        excelFIS.close();
-                    }
-                    if (excelBIS != null) {
-                        excelBIS.close();
-                    }
-                    if (excelImportToJTable != null) {
-                        excelImportToJTable.cloneSheet(HEIGHT);
-                    }
-                } catch (IOException iOException) {
-                    JOptionPane.showMessageDialog(null, iOException.getMessage());
+                } catch (IOException ie) {
+                    ie.printStackTrace();
                 }
             }
-        }
-    }*/
 
-    // Boton para insertar los datos de la tabla en la base de datos
-    private void jbtn_insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_insertarActionPerformed
-        DefaultTableModel model = (DefaultTableModel) jt_profesores.getModel();
-        if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "La tabla esta vacía.");
         } else {
-            String login, password, nombre_completo, email, activo, id_rol, id_departamento;
-            try {
-                Connection conexion = conectar.getConexion();
-                for (int i = 0; i < model.getRowCount(); i++) {
-
-                    login = model.getValueAt(i, 0).toString();
-                    password = model.getValueAt(i, 1).toString();
-                    nombre_completo = model.getValueAt(i, 2).toString();
-                    email = model.getValueAt(i, 3).toString();
-                    activo = model.getValueAt(i, 4).toString();
-                    id_rol = model.getValueAt(i, 5).toString();
-                    id_departamento = model.getValueAt(i, 6).toString();
-
-                    String query = "insert into fp_profesor(id_profesor, login, password, nombre_completo, email, activo, id_rol, id_departamento)values(?,?,?,?,?,?,?,?)";
-                    PreparedStatement ps = conexion.prepareStatement(query);
-
-                    ps.setString(1, login);
-                    ps.setString(2, password);
-                    ps.setString(3, nombre_completo);
-                    ps.setString(4, email);
-                    ps.setString(5, activo);
-                    ps.setString(6, id_rol);
-                    ps.setString(7, id_departamento);
-
-                    ps.execute();
-                }
-                JOptionPane.showMessageDialog(this, "Datos introducidos!.");
-                model.setRowCount(0);
-            } catch (Exception e) {
-            }
+             JOptionPane.showConfirmDialog(this, "Pues que mal, no podrás importar un archivo sin subirlo a base de datos, tendras que aceptar!!", ":(", JOptionPane.OK_OPTION);
         }
-    }//GEN-LAST:event_jbtn_insertarActionPerformed
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -656,7 +548,6 @@ public class ver_profesores extends javax.swing.JDialog {
     private javax.swing.JButton jbnt_inactivos;
     private javax.swing.JButton jbtn_activos;
     private javax.swing.JButton jbtn_add;
-    private javax.swing.JButton jbtn_insertar;
     private javax.swing.JMenuItem jmi_exportar;
     private javax.swing.JMenuItem jmi_importar;
     private javax.swing.JMenu jmi_proferoot;
@@ -679,5 +570,41 @@ public class ver_profesores extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    // Metodo para everiguar el id del rol para usarlo en importar
+    private String saberIdRol(String Rol) {
+        Connection conexion = conectar.getConexion();
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement("select id_rol from fp_rol where rol= '" + Rol + "';");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                idRol = rs.getString(1);
+            }
+            return idRol;
+        } catch (SQLException ex) {
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    // Metodo para everiguar el id del departamento para usarlo en importar
+    private String saberIdDepa(String epa) {
+        Connection conexion = conectar.getConexion();
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement("select id_departamento from fp_departamento where departamento= '" + epa + "';");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                idDepa = rs.getString(1);
+            }
+            return idDepa;
+        } catch (SQLException ex) {
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

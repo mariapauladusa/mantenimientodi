@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import administrador.root_screen;
 import com.mycompany.mantenimiento_paula.encriptarPwd;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -46,7 +48,18 @@ public class loginRoot extends javax.swing.JDialog {
         iconoPrograma();
         iconosLabel();
          // Metodo para recoger activo
-        saberActivo();     
+        saberActivo(); 
+        
+        jpassAdmin.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    loginRoot();
+                }
+            }
+  
+        });
     }
     
     // Metodo para el icono del programa
