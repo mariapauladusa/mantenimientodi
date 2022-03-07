@@ -9,6 +9,8 @@ import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,6 +53,14 @@ public class root_screen extends javax.swing.JDialog {
         popmenu();
         icono();
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        // X de la pantalla
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                new main().setVisible(true);
+            }
+        });
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,7 +75,6 @@ public class root_screen extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_root = new javax.swing.JTable();
-        jbtn_salir = new javax.swing.JButton();
         jbtn_urgencia = new javax.swing.JButton();
         jtxt_buscar = new javax.swing.JTextField();
         jbtn_estado = new javax.swing.JButton();
@@ -101,14 +110,6 @@ public class root_screen extends javax.swing.JDialog {
             }
         ));
         jScrollPane1.setViewportView(jt_root);
-
-        jbtn_salir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbtn_salir.setText("Salir");
-        jbtn_salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtn_salirActionPerformed(evt);
-            }
-        });
 
         jbtn_urgencia.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_urgencia.setText("Buscar por urgencia");
@@ -206,10 +207,8 @@ public class root_screen extends javax.swing.JDialog {
                         .addComponent(jbtn_urgencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
-                        .addComponent(jbtn_actualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jbtn_actualizar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -224,7 +223,6 @@ public class root_screen extends javax.swing.JDialog {
                     .addComponent(jbtn_estado)
                     .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtn_consultar)
-                    .addComponent(jbtn_salir)
                     .addComponent(jbtn_actualizar))
                 .addGap(17, 17, 17))
         );
@@ -327,12 +325,6 @@ public class root_screen extends javax.swing.JDialog {
         }
     }
 
-    // Boton para salir
-    private void jbtn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_salirActionPerformed
-        this.setVisible(false);
-        new main().setVisible(true);
-    }//GEN-LAST:event_jbtn_salirActionPerformed
-
     // Boton para buscar por urgencia
     private void jbtn_urgenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_urgenciaActionPerformed
         buscadorUrgencia();
@@ -395,7 +387,6 @@ public class root_screen extends javax.swing.JDialog {
     private javax.swing.JButton jbtn_actualizar;
     private javax.swing.JButton jbtn_consultar;
     private javax.swing.JButton jbtn_estado;
-    private javax.swing.JButton jbtn_salir;
     private javax.swing.JButton jbtn_urgencia;
     private javax.swing.JMenu jmenuroot;
     private javax.swing.JMenuItem jmi_correo;

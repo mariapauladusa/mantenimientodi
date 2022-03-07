@@ -5,7 +5,11 @@
  */
 package tecnico;
 
+import administrador.add_usuario;
+import administrador.ver_profesores;
 import com.mycompany.mantenimiento_paula.Conectar;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +26,7 @@ import profesor.profe_screen;
  * @author damA
  */
 public class tec_addIncidencia extends javax.swing.JDialog {
-    
+
     Conectar conectar = new Conectar();
 
     String usuario;
@@ -34,20 +38,29 @@ public class tec_addIncidencia extends javax.swing.JDialog {
     public tec_addIncidencia(javax.swing.JDialog parent, boolean modal, String user) {
         super(parent, modal);
         conectar.getConexion();
-        
+
         usuario = user;
-        
+
         initComponents();
-        
+
         saberId();
-        
+
         rellenar_ubicaciones();
         rellenar_estado();
-        rellenar_urgencia();       
-        
+        rellenar_urgencia();
+
         icono();
-        
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        // X de la pantalla
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                tec_screen screen = new tec_screen(tec_addIncidencia.this, true, usuario);
+                screen.setVisible(true);
+            }
+        });
     }
 
     /**
@@ -82,7 +95,6 @@ public class tec_addIncidencia extends javax.swing.JDialog {
         jScrollPane3 = new javax.swing.JScrollPane();
         jtxta_observaciones = new javax.swing.JTextArea();
         jbtn_guardar = new javax.swing.JButton();
-        jbtn_volver = new javax.swing.JButton();
         jcbo_estado = new javax.swing.JComboBox<>();
         jcb_urgencia = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
@@ -122,6 +134,7 @@ public class tec_addIncidencia extends javax.swing.JDialog {
         jLabel5.setText("Estado:");
 
         jtxt_fecha.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtxt_fecha.setToolTipText("YYYY-MM-DD");
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel6.setText("Fecha:");
@@ -130,11 +143,13 @@ public class tec_addIncidencia extends javax.swing.JDialog {
         jLabel7.setText("Fecha Inicial Reparacion:");
 
         jtxt_fechaini.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtxt_fechaini.setToolTipText("YYYY-MM-DD");
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel8.setText("Fecha Final Reparacion:");
 
         jtxt_fechafin.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtxt_fechafin.setToolTipText("YYYY-MM-DD");
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel9.setText("Urgencia:");
@@ -162,14 +177,6 @@ public class tec_addIncidencia extends javax.swing.JDialog {
         jbtn_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtn_guardarActionPerformed(evt);
-            }
-        });
-
-        jbtn_volver.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbtn_volver.setText("Volver");
-        jbtn_volver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtn_volverActionPerformed(evt);
             }
         });
 
@@ -216,13 +223,6 @@ public class tec_addIncidencia extends javax.swing.JDialog {
                         .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jcb_urgencia, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbtn_volver)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbtn_guardar)
-                                .addGap(97, 97, 97))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
                                     .addComponent(jtxt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,7 +246,12 @@ public class tec_addIncidencia extends javax.swing.JDialog {
                                     .addComponent(jcbo_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel9)
                                     .addComponent(jtxt_horas, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jcb_urgencia, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbtn_guardar)
+                                .addGap(120, 120, 120))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,35 +292,35 @@ public class tec_addIncidencia extends javax.swing.JDialog {
                                 .addGap(129, 129, 129)
                                 .addComponent(jLabel12))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jcbo_ubis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel14))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jcbo_estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel9)
-                                .addGap(12, 12, 12)
-                                .addComponent(jcb_urgencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(34, 34, 34)
                         .addComponent(jLabel13)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbtn_guardar)
-                            .addComponent(jbtn_volver))
-                        .addGap(67, 67, 67))))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcbo_ubis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcbo_estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jcb_urgencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbtn_guardar)
+                                .addGap(60, 60, 60))))))
         );
 
         pack();
@@ -335,14 +340,8 @@ public class tec_addIncidencia extends javax.swing.JDialog {
     }//GEN-LAST:event_jcbo_estadoActionPerformed
 
     private void jcb_urgenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_urgenciaActionPerformed
-       rellenar_urgencia();
+        rellenar_urgencia();
     }//GEN-LAST:event_jcb_urgenciaActionPerformed
-    // Boton Volver
-    private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
-       this.setVisible(false);
-       tec_screen screen = new tec_screen(this, true, usuario);
-       screen.setVisible(true);
-    }//GEN-LAST:event_jbtn_volverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -363,7 +362,6 @@ public class tec_addIncidencia extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jbtn_guardar;
-    private javax.swing.JButton jbtn_volver;
     private javax.swing.JComboBox<String> jcb_urgencia;
     private javax.swing.JComboBox<String> jcbo_estado;
     private javax.swing.JComboBox<String> jcbo_ubis;
@@ -389,7 +387,7 @@ public class tec_addIncidencia extends javax.swing.JDialog {
             while (rs.next()) {
                 id = rs.getString(1);
             }
-            
+
             conexion.close();
 
         } catch (SQLException ex) {
@@ -399,8 +397,8 @@ public class tec_addIncidencia extends javax.swing.JDialog {
 
     // Metodo para poner icono al programa en esta ventana
     private void icono() {
-       ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-       this.setIconImage(img.getImage());
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        this.setIconImage(img.getImage());
     }
 
     // Metodo para insertar incidencia en la base de datos
@@ -415,13 +413,13 @@ public class tec_addIncidencia extends javax.swing.JDialog {
         String urgencia = (String) jcb_urgencia.getSelectedItem();
         String ubicacion = (String) jcbo_ubis.getSelectedItem();
         String observaciones = jtxta_observaciones.getText();
-        
+
         String[] u = ubicacion.toString().split(" - ");
         String ubis = u[0];
-        
+
         String[] e = estado.toString().split(" - ");
         String es = e[0];
-        
+
         String[] ur = urgencia.toString().split(" - ");
         String urg = ur[0];
 
@@ -429,11 +427,11 @@ public class tec_addIncidencia extends javax.swing.JDialog {
 
         try {
             PreparedStatement ps = conexion.prepareStatement("INSERT INTO man_incidencias(id_profesor_crea, descripcion, desc_tecnica, horas, estado, fecha, fecha_ini_rep, fecha_fin_rep, nivel_urgencia id_ubicacion, observaciones) "
-                    + "VALUES('" +id+ "','" +descripcion+ "','"+descrTecnico+"','"+horas+"','"+es+"'," +fecha+ "','"+f_ini+"','"+f_fin+"','"+urg+"','" +ubis+ "','" + observaciones + "')");
+                    + "VALUES('" + id + "','" + descripcion + "','" + descrTecnico + "','" + horas + "','" + es + "'," + fecha + "','" + f_ini + "','" + f_fin + "','" + urg + "','" + ubis + "','" + observaciones + "')");
             ps.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Datos insertados.");
-            
+
             conexion.close();
 
         } catch (SQLException ex) {
@@ -441,47 +439,47 @@ public class tec_addIncidencia extends javax.swing.JDialog {
         }
         dispose();
     }
-    
+
     // Metodo para rellenar con la informacion de diferentes tipo de ubicaciones
     private void rellenar_ubicaciones() {
         Connection conexion = conectar.getConexion();
-        
+
         try {
-            
+
             PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_ubicacion, ubicacion FROM man_ubicacion");
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                
+
                 jcbo_ubis.addItem(rs.getString("id_ubicacion") + " - " + rs.getString("ubicacion"));
             }
-            
+
             conexion.close();
-            
+
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     // Metodo para rellenar con la informacion de diferentes tipo de estados
     private void rellenar_estado() {
-       Connection conexion = conectar.getConexion();
-        
+        Connection conexion = conectar.getConexion();
+
         try {
-            
+
             PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_estado, estado FROM man_estado");
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                
+
                 jcbo_estado.addItem(rs.getString("id_estado") + " - " + rs.getString("estado"));
             }
-            
+
             conexion.close();
-            
+
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -489,21 +487,21 @@ public class tec_addIncidencia extends javax.swing.JDialog {
     // Metodo para rellenar con la informacion de los diferentes tipos de urgencias
     private void rellenar_urgencia() {
         Connection conexion = conectar.getConexion();
-        
+
         try {
-            
+
             PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_urgencia, urgencia FROM man_urgencia");
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                
+
                 jcb_urgencia.addItem(rs.getString("id_urgencia") + " - " + rs.getString("urgencia"));
             }
-            
+
             conexion.close();
-            
+
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

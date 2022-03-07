@@ -5,11 +5,15 @@
  */
 package tecnico;
 
+import administrador.add_usuario;
+import administrador.ver_profesores;
 import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.ayuda;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,7 +52,15 @@ public class tec_screen extends javax.swing.JDialog {
         icono();        
         popmenu();
         
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        // X de la pantalla
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                new main().setVisible(true);
+            }
+        });
     }
     
     // Metodo del icono
@@ -119,7 +131,6 @@ public class tec_screen extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jsp_profesor = new javax.swing.JScrollPane();
         jt_tecnico = new javax.swing.JTable();
-        jbtnSalirP = new javax.swing.JButton();
         jbtn_urgencia = new javax.swing.JButton();
         jbtn_estado = new javax.swing.JButton();
         jtxt_buscar = new javax.swing.JTextField();
@@ -153,14 +164,6 @@ public class tec_screen extends javax.swing.JDialog {
             }
         ));
         jsp_profesor.setViewportView(jt_tecnico);
-
-        jbtnSalirP.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbtnSalirP.setText("Salir");
-        jbtnSalirP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnSalirPActionPerformed(evt);
-            }
-        });
 
         jbtn_urgencia.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_urgencia.setText("Buscar por urgencia");
@@ -247,10 +250,8 @@ public class tec_screen extends javax.swing.JDialog {
                         .addComponent(jbtn_urgencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(jbtn_actualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jbtn_actualizar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -261,7 +262,6 @@ public class tec_screen extends javax.swing.JDialog {
                 .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnSalirP)
                     .addComponent(jbtn_urgencia)
                     .addComponent(jbtn_estado)
                     .addComponent(jtxt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,12 +273,6 @@ public class tec_screen extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    // Boton para salir
-    private void jbtnSalirPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSalirPActionPerformed
-        this.setVisible(false);
-        new main().setVisible(true);
-    }//GEN-LAST:event_jbtnSalirPActionPerformed
 
     // Item de menu para enviar correo
     private void jmi_correoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_correoActionPerformed
@@ -324,7 +318,6 @@ public class tec_screen extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JButton jbtnSalirP;
     private javax.swing.JButton jbtn_actualizar;
     private javax.swing.JButton jbtn_consultar;
     private javax.swing.JButton jbtn_estado;

@@ -5,10 +5,14 @@
  */
 package profesor;
 
+import administrador.add_usuario;
+import administrador.ver_profesores;
 import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,7 +61,15 @@ public class profe_screen extends javax.swing.JDialog {
         icono();
         popmenu();
         
-  
+         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        // X de la pantalla
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                new main().setVisible(true);
+            }
+        });
         
 
     }
@@ -120,7 +132,6 @@ public class profe_screen extends javax.swing.JDialog {
         jsp_profesor = new javax.swing.JScrollPane();
         jt_profesor = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jbtnSalirP = new javax.swing.JButton();
         jmb_profesor = new javax.swing.JMenuBar();
         jmi_mas = new javax.swing.JMenu();
         jmi_verProfesores = new javax.swing.JMenuItem();
@@ -148,14 +159,6 @@ public class profe_screen extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("INCIDENCIAS");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jbtnSalirP.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbtnSalirP.setText("SALIR");
-        jbtnSalirP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnSalirPActionPerformed(evt);
-            }
-        });
 
         jmi_mas.setText("Acciones");
         jmi_mas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -192,11 +195,7 @@ public class profe_screen extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbtnSalirP, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -206,20 +205,12 @@ public class profe_screen extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addGap(0, 0, 0)
                 .addComponent(jsp_profesor, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbtnSalirP)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    // Boton salir
-    private void jbtnSalirPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSalirPActionPerformed
-        this.setVisible(false);
-        new main().setVisible(true);
-    }//GEN-LAST:event_jbtnSalirPActionPerformed
 
     // Opcion del Menu Bar para añadir una nueva incidencia
     private void jmi_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_addActionPerformed
@@ -239,7 +230,6 @@ public class profe_screen extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton jbtnSalirP;
     private javax.swing.JMenuBar jmb_profesor;
     private javax.swing.JMenuItem jmi_add;
     private javax.swing.JMenuItem jmi_helpProfe;

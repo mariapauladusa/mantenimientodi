@@ -116,10 +116,8 @@
                       <Component id="jbtn_urgencia" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jtxt_buscar" min="-2" pref="286" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                      <Component id="jbtn_actualizar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jbtn_salir" min="-2" pref="79" max="-2" attributes="0"/>
+                      <Component id="jbtn_actualizar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -138,7 +136,6 @@
                   <Component id="jbtn_estado" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jtxt_buscar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbtn_consultar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jbtn_salir" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbtn_actualizar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
@@ -178,17 +175,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jbtn_salir">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="18" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Salir"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtn_salirActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="jbtn_urgencia">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">

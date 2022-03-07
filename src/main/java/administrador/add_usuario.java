@@ -7,6 +7,8 @@ package administrador;
 
 import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.encriptarPwd;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,37 +25,46 @@ import profesor.profe_screen;
  * @author damA
  */
 public class add_usuario extends javax.swing.JDialog {
+
     // Conexion Base de Datos
     Conectar conectar = new Conectar();
     // Variables relacionadas con el id
     String usuario;
     String id;
-    
-    // COMPROBAR SI NECESIDO EL ID DEL USUARIO
 
+    // COMPROBAR SI NECESIDO EL ID DEL USUARIO
     /**
      * Creates new form add_usuario
      */
     public add_usuario(javax.swing.JDialog parent, boolean modal, String user) {
         super(parent, modal);
         initComponents();
-        
+
         conectar.getConexion();
-        
+
         usuario = user;
-        
+
         saberId();
-        
+
         rellenarRol();
         rellenarDepa();
-        
+
         icono();
-        
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        // X de la pantalla
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                ver_profesores screen = new ver_profesores(add_usuario.this, true, usuario);
+                screen.setVisible(true);
+            }
+        });
     }
-    
+
     // Metodo del icono
-    public void icono(){
+    public void icono() {
         ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
         this.setIconImage(img.getImage());
     }
@@ -81,7 +92,6 @@ public class add_usuario extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jcb_rol = new javax.swing.JComboBox<>();
         jcb_departamento = new javax.swing.JComboBox<>();
-        jbtn_volver = new javax.swing.JButton();
         jcbMostrarOcultar = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -129,14 +139,6 @@ public class add_usuario extends javax.swing.JDialog {
             }
         });
 
-        jbtn_volver.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbtn_volver.setText("Volver");
-        jbtn_volver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtn_volverActionPerformed(evt);
-            }
-        });
-
         jcbMostrarOcultar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jcbMostrarOcultar.setText("Ver");
         jcbMostrarOcultar.addActionListener(new java.awt.event.ActionListener() {
@@ -158,8 +160,6 @@ public class add_usuario extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbtn_volver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,9 +224,7 @@ public class add_usuario extends javax.swing.JDialog {
                     .addComponent(jLabel7)
                     .addComponent(jcb_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jbtn_volver))
+                .addComponent(jButton1)
                 .addGap(27, 27, 27))
         );
 
@@ -236,13 +234,13 @@ public class add_usuario extends javax.swing.JDialog {
 
     // Boton que llama al metodo para crear un nuevo usuario
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       crearUsuario();
-     
+        crearUsuario();
+
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     // JComboBox relleno con cada rol
     private void jcb_rolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_rolActionPerformed
-       rellenarRol();
+        rellenarRol();
     }//GEN-LAST:event_jcb_rolActionPerformed
 
     // JComboBox relleno con la informacion de cada departamento
@@ -250,20 +248,13 @@ public class add_usuario extends javax.swing.JDialog {
         rellenarDepa();
     }//GEN-LAST:event_jcb_departamentoActionPerformed
 
-    // Boton Volver
-    private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
-        this.setVisible(false);
-        ver_profesores screen = new ver_profesores(this, true, usuario);
-        screen.setVisible(true);
-    }//GEN-LAST:event_jbtn_volverActionPerformed
-    
     // JCheckBox para mostrar u ocultar la contraseña
     private void jcbMostrarOcultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMostrarOcultarActionPerformed
         // Si el JCheckBox esta seleccionado
         if (jcbMostrarOcultar.isSelected()) {
             // Muestro lo que haya introducido
-            jpass_usuario.setEchoChar((char)0);
-        }else{
+            jpass_usuario.setEchoChar((char) 0);
+        } else {
             // Si no esta seleccionado/con el tick mostrar lo introducido con *****
             jpass_usuario.setEchoChar('*');
         }
@@ -278,7 +269,6 @@ public class add_usuario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JButton jbtn_volver;
     private javax.swing.JCheckBox jcbMostrarOcultar;
     private javax.swing.JComboBox<String> jcb_departamento;
     private javax.swing.JComboBox<String> jcb_rol;
@@ -289,7 +279,7 @@ public class add_usuario extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     // Metodo para saber el id del usuario que se ha conectado
-    private void saberId() {       
+    private void saberId() {
         Connection conexion = conectar.getConexion();
 
         try {
@@ -301,60 +291,60 @@ public class add_usuario extends javax.swing.JDialog {
             while (rs.next()) {
                 id = rs.getString(1);
             }
-            
+
             conexion.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     // Rellenar ComboBox de Rol
     private void rellenarRol() {
         Connection conexion = conectar.getConexion();
-        
+
         try {
-            
+
             PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_rol, rol FROM fp_rol");
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                
+
                 jcb_rol.addItem(rs.getString("id_rol") + " - " + rs.getString("rol"));
             }
-            
+
             conexion.close();
-            
+
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     // Rellenar ComboBox con los departamento
     private void rellenarDepa() {
-         Connection conexion = conectar.getConexion();
-        
+        Connection conexion = conectar.getConexion();
+
         try {
-            
+
             PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_departamento, departamento FROM fp_departamento");
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                
+
                 jcb_departamento.addItem(rs.getString("id_departamento") + " - " + rs.getString("departamento"));
             }
-            
+
             conexion.close();
-            
+
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     // Insertar un nuevo usuario
-    private void crearUsuario() {       
+    private void crearUsuario() {
         String login = jtxt_nombre.getText();
         String pass = String.valueOf(encriptarPwd.encode(jpass_usuario.getText()));
         String nombre = jtxt_nombreCompleto.getText();
@@ -362,10 +352,10 @@ public class add_usuario extends javax.swing.JDialog {
         String activo = "1";
         String rol = (String) jcb_rol.getSelectedItem();
         String depa = (String) jcb_departamento.getSelectedItem();
-        
+
         String[] r = rol.toString().split(" - ");
         String rolis = r[0];
-        
+
         String[] d = depa.toString().split(" - ");
         String depas = d[0];
 
@@ -376,7 +366,7 @@ public class add_usuario extends javax.swing.JDialog {
             ps.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Usuario Creado");
-            
+
             conexion.close();
 
         } catch (SQLException ex) {
@@ -384,7 +374,5 @@ public class add_usuario extends javax.swing.JDialog {
         }
         dispose();
     }
-    
-    
 
 }

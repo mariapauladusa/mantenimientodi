@@ -6,6 +6,8 @@
 package administrador;
 
 import com.mycompany.mantenimiento_paula.Conectar;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +25,8 @@ import tecnico.tec_modifyIncidencia;
  * @author damA
  */
 public class modify_usuario extends javax.swing.JDialog {
-     // Conexion a la bbdd
+    // Conexion a la bbdd
+
     Conectar conectar = new Conectar();
     // Variable para el id del usuario
     String usuario;
@@ -37,25 +40,34 @@ public class modify_usuario extends javax.swing.JDialog {
     public modify_usuario(javax.swing.JDialog parent, boolean modal, String user, String idInci) {
         super(parent, modal);
         initComponents();
-        
+
         conectar.getConexion();
 
         usuario = user;
         idIn = idInci;
-        
+
         rellenarRol();
         rellenarDepa();
-        
+
         rellenarDatos();
-        
+
         saberId();
         icono();
-        
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        // X de la pantalla
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                ver_profesores screen = new ver_profesores(modify_usuario.this, true, usuario);
+                screen.setVisible(true);
+            }
+        });
     }
-    
-     // Metodo del icono
-    public void icono(){
+
+    // Metodo del icono
+    public void icono() {
         ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
         this.setIconImage(img.getImage());
     }
@@ -85,7 +97,6 @@ public class modify_usuario extends javax.swing.JDialog {
         jtxt_nombre = new javax.swing.JTextField();
         jlbl_rol = new javax.swing.JLabel();
         jlbl_departamento = new javax.swing.JLabel();
-        jbtn_volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -132,14 +143,6 @@ public class modify_usuario extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel7.setText("Departamento:");
 
-        jbtn_volver.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbtn_volver.setText("Volver");
-        jbtn_volver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtn_volverActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -153,8 +156,6 @@ public class modify_usuario extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbtn_volver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,9 +216,7 @@ public class modify_usuario extends javax.swing.JDialog {
                     .addComponent(jcb_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jbtn_volver))
+                .addComponent(jButton1)
                 .addGap(44, 44, 44))
         );
 
@@ -230,18 +229,12 @@ public class modify_usuario extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jcb_rolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_rolActionPerformed
-       rellenarRol();
+        rellenarRol();
     }//GEN-LAST:event_jcb_rolActionPerformed
 
     private void jcb_departamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_departamentoActionPerformed
         rellenarDepa();
     }//GEN-LAST:event_jcb_departamentoActionPerformed
-
-    private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
-        this.setVisible(false);
-        ver_profesores screen = new ver_profesores(this, true, usuario);
-        screen.setVisible(true);
-    }//GEN-LAST:event_jbtn_volverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -252,7 +245,6 @@ public class modify_usuario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JButton jbtn_volver;
     private javax.swing.JComboBox<String> jcb_departamento;
     private javax.swing.JComboBox<String> jcb_rol;
     private javax.swing.JLabel jlbl_departamento;
@@ -265,42 +257,42 @@ public class modify_usuario extends javax.swing.JDialog {
 
     private void rellenarRol() {
         Connection conexion = conectar.getConexion();
-        
+
         try {
-            
+
             PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_rol, rol FROM fp_rol");
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                
+
                 jcb_rol.addItem(rs.getString("id_rol") + " - " + rs.getString("rol"));
             }
-            
+
             conexion.close();
-            
+
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void rellenarDepa() {
-         Connection conexion = conectar.getConexion();
-        
+        Connection conexion = conectar.getConexion();
+
         try {
-            
+
             PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_departamento, departamento FROM fp_departamento");
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                
+
                 jcb_departamento.addItem(rs.getString("id_departamento") + " - " + rs.getString("departamento"));
             }
-            
+
             conexion.close();
-            
+
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -313,7 +305,7 @@ public class modify_usuario extends javax.swing.JDialog {
             PreparedStatement ps = conexion.prepareStatement("select p.id_profesor, p.login, p.password, p.nombre_completo, p.email, p.activo, r.rol, d.departamento\n"
                     + "from fp_profesor p inner join fp_rol r\n"
                     + "on p.id_rol = r.id_rol inner join fp_departamento d\n"
-                    + "on p.id_departamento = d.id_departamento where p.id_profesor = '"+idIn+"'");
+                    + "on p.id_departamento = d.id_departamento where p.id_profesor = '" + idIn + "'");
 
             ResultSet rs = ps.executeQuery();
 
@@ -335,7 +327,7 @@ public class modify_usuario extends javax.swing.JDialog {
     }
 
     private void saberId() {
-       Connection conexion = conectar.getConexion();
+        Connection conexion = conectar.getConexion();
 
         try {
 
@@ -354,14 +346,14 @@ public class modify_usuario extends javax.swing.JDialog {
     }
 
     private void modificarUsuario() {
-         String login = jtxt_nombre.getText();
+        String login = jtxt_nombre.getText();
         String pass = String.valueOf(jpass_usuario.getPassword());
         String nombre = jtxt_nombreCompleto.getText();
         String email = jtxt_email.getText();
         String activo = "1";
         String rol = (String) jcb_rol.getSelectedItem();
         String depa = (String) jcb_departamento.getSelectedItem();
-        
+
         String[] r = rol.toString().split(" - ");
         String rolis = r[0];
         String[] d = depa.toString().split(" - ");

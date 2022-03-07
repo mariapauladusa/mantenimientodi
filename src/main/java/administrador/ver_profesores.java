@@ -8,6 +8,8 @@ package administrador;
 import com.mycompany.mantenimiento_paula.Conectar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -65,8 +67,24 @@ public class ver_profesores extends javax.swing.JDialog {
         popmenu();
         saberId();
         icono();
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        // X de la pantalla
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                root_screen screen = new root_screen(ver_profesores.this, true, usuario);
+                screen.setVisible(true);
+            }
+        });
+
+    }
+
+    // Metodo del icono
+    public void icono() {
+        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
+        this.setIconImage(img.getImage());
     }
 
     // JPopUp Menu
@@ -103,6 +121,20 @@ public class ver_profesores extends javax.swing.JDialog {
 
     }
 
+    // Metodo para eliminar una incidencia del pop up menu
+    private void darBaja() {
+        Connection conexion = conectar.getConexion();
+        var selectedRow = jt_profesores.getValueAt(jt_profesores.getSelectedRow(), 0);
+        try {
+            PreparedStatement ps = conexion.prepareStatement("UPDATE fp_profesor SET activo = 0 where id_profesor = '" + selectedRow + "'");
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Usuario dado de baja");
+            conexion.close();
+        } catch (Exception e) {
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -115,7 +147,6 @@ public class ver_profesores extends javax.swing.JDialog {
         jppm = new javax.swing.JPopupMenu();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_profesores = new javax.swing.JTable();
-        jbtn_volver = new javax.swing.JButton();
         jbtn_add = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jbnt_inactivos = new javax.swing.JButton();
@@ -141,14 +172,6 @@ public class ver_profesores extends javax.swing.JDialog {
             }
         ));
         jScrollPane1.setViewportView(jt_profesores);
-
-        jbtn_volver.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbtn_volver.setText("Volver");
-        jbtn_volver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtn_volverActionPerformed(evt);
-            }
-        });
 
         jbtn_add.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbtn_add.setText("Nuevo Usuario");
@@ -225,10 +248,8 @@ public class ver_profesores extends javax.swing.JDialog {
                         .addComponent(jbnt_inactivos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtn_activos)
-                        .addGap(132, 132, 132)
-                        .addComponent(jbtn_insertar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtn_volver)))
+                        .addComponent(jbtn_insertar)))
                 .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -240,26 +261,17 @@ public class ver_profesores extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbtn_volver)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbtn_add)
-                        .addComponent(jbnt_inactivos)
-                        .addComponent(jbtn_activos)
-                        .addComponent(jbtn_insertar)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtn_add)
+                    .addComponent(jbnt_inactivos)
+                    .addComponent(jbtn_activos)
+                    .addComponent(jbtn_insertar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    // Boton para salir
-    private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
-        this.setVisible(false);
-        root_screen screen = new root_screen(this, true, usuario);
-        screen.setVisible(true);
-    }//GEN-LAST:event_jbtn_volverActionPerformed
 
     // Boton para mostrar la pantalla que permitira al administrador crear un nuevo usuario
     private void jbtn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_addActionPerformed
@@ -274,117 +286,10 @@ public class ver_profesores extends javax.swing.JDialog {
         verInactivos();
     }//GEN-LAST:event_jbnt_inactivosActionPerformed
 
-    // Boton que muestra en la tabla los usuarios activos, por defecto mostrara los usuarios activos
-    private void jbtn_activosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_activosActionPerformed
-        verProfesorado();
-    }//GEN-LAST:event_jbtn_activosActionPerformed
-
-    // Menu Item de MenuBar con la opcion de exportar los datos
-    private void jmi_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_exportarActionPerformed
-
-        Workbook wb = new XSSFWorkbook();
-
-        JFileChooser file = new JFileChooser();
-        int option = file.showSaveDialog(this);
-
-        FileFilter filter = new FileNameExtensionFilter("Excel file", "xlsx");
-        file.addChoosableFileFilter(filter);
-
-        String ruta = file.getSelectedFile().getAbsolutePath();
-
-        ruta = ruta + ".xls";
-        File datos = new File(ruta);
-
-        if (option == JFileChooser.APPROVE_OPTION) {
-
-            if (!datos.exists()) {
-                if (!ruta.contains(".xls")) {
-
-                    Exportar(datos, jt_profesores);
-                    JOptionPane.showMessageDialog(this, "Archivo exportado!");
-
-                } else {
-                    Exportar(datos, jt_profesores);
-                    JOptionPane.showMessageDialog(this, "Archivo exportado!");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "El archivo ya existe!");
-            }
-        }
-    }//GEN-LAST:event_jmi_exportarActionPerformed
-
-    // Menu Item de MenuBar con la opcion de importar los datos
-    private void jmi_importarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_importarActionPerformed
-
-        // FileChooser para que el usuario seleccione donde quiere guardar el archivo
-        JFileChooser file = new JFileChooser();
-        file.showOpenDialog(this);
-
-        String ruta = file.getSelectedFile().getAbsolutePath();
-
-        File datos = new File(ruta);
-        Importar(datos, jt_profesores);
-    }//GEN-LAST:event_jmi_importarActionPerformed
-
-    // Boton para insertar los datos de la tabla en la base de datos
-    private void jbtn_insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_insertarActionPerformed
-        DefaultTableModel model = (DefaultTableModel) jt_profesores.getModel();
-        if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "La tabla esta vacía.");
-        } else {
-            String id_profesor, login, password, nombre_completo, email, activo, id_rol, id_departamento;
-            try {
-                Connection conexion = conectar.getConexion();
-                for (int i = 0; i < model.getRowCount(); i++) {
-                    id_profesor = model.getValueAt(i, 0).toString();
-                    login = model.getValueAt(i, 1).toString();
-                    password = model.getValueAt(i, 2).toString();
-                    nombre_completo = model.getValueAt(i, 3).toString();
-                    email = model.getValueAt(i, 4).toString();
-                    activo = model.getValueAt(i, 5).toString();
-                    id_rol = model.getValueAt(i, 6).toString();
-                    id_departamento = model.getValueAt(i, 7).toString();
-
-                    String query = "insert into fp_profesor(id_profesor, login, password, nombre_completo, email, activo, id_rol, id_departamento)values(?,?,?,?,?,?,?,?)";
-                    PreparedStatement ps = conexion.prepareStatement(query);
-                    ps.setString(1, id_profesor);
-                    ps.setString(2, login);
-                    ps.setString(3, password);
-                    ps.setString(4, nombre_completo);
-                    ps.setString(5, email);
-                    ps.setString(6, activo);
-                    ps.setString(7, id_rol);
-                    ps.setString(7, id_departamento);
-                    
-                    ps.execute();
-                }
-                JOptionPane.showMessageDialog(this, "Datos introducidos!.");
-                model.setRowCount(0);
-            } catch (Exception e) {
-            }
-        }
-    }//GEN-LAST:event_jbtn_insertarActionPerformed
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbnt_inactivos;
-    private javax.swing.JButton jbtn_activos;
-    private javax.swing.JButton jbtn_add;
-    private javax.swing.JButton jbtn_insertar;
-    private javax.swing.JButton jbtn_volver;
-    private javax.swing.JMenuItem jmi_exportar;
-    private javax.swing.JMenuItem jmi_importar;
-    private javax.swing.JMenu jmi_proferoot;
-    private javax.swing.JPopupMenu jppm;
-    private javax.swing.JTable jt_profesores;
-    // End of variables declaration//GEN-END:variables
-
-    // Metodo para mostrar informacion acerca de los profesores en la tabla
-    private void verProfesorado() {
+    // Metodo para ver los usuarios que estan inactivos
+    public void verInactivos() {
         dtm.setNumRows(0);
-        dtm.setColumnIdentifiers(new String[]{"Id del profesor", "Nombre de Usuario", "Contraseña", "Nombre Completo", "Email", "Activo", "Rol", "Departamento"});
+        dtm.setColumnIdentifiers(new String[]{"Id del profesor", "Nombre de Usuario", "Contraseña", "Nombre Completo", "Email Técnica", "Activo", "Rol", "Departamento"});
         TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
         jt_profesores.setRowSorter(elQueOrdena);
 
@@ -396,7 +301,7 @@ public class ver_profesores extends javax.swing.JDialog {
             PreparedStatement ps = conexion.prepareStatement("select p.id_profesor, p.login, p.password, p.nombre_completo, p.email, p.activo, r.rol, d.departamento\n"
                     + "from fp_profesor p inner join fp_rol r\n"
                     + "on p.id_rol = r.id_rol inner join fp_departamento d\n"
-                    + "on p.id_departamento = d.id_departamento where p.activo = 1 ");
+                    + "on p.id_departamento = d.id_departamento where p.activo = 0 ");
 
             ResultSet rs = ps.executeQuery();
 
@@ -423,24 +328,84 @@ public class ver_profesores extends javax.swing.JDialog {
         }
     }
 
-    // Metodo para everiguar el id del usuario correspondiente
-    private void saberId() {
+    // Boton que muestra en la tabla los usuarios activos, por defecto mostrara los usuarios activos
+    private void jbtn_activosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_activosActionPerformed
+        verProfesorado();
+    }//GEN-LAST:event_jbtn_activosActionPerformed
+
+    // Metodo para mostrar informacion acerca de los profesores en la tabla
+    private void verProfesorado() {
+        dtm.setNumRows(0);
+        dtm.setColumnIdentifiers(new String[]{"Nombre de Usuario", "Contraseña", "Nombre Completo", "Email", "Activo", "Rol", "Departamento"});
+        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
+        jt_profesores.setRowSorter(elQueOrdena);
+
+        String[] a = new String[8];
+
         Connection conexion = conectar.getConexion();
 
         try {
-            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login= '" + usuario + "';");
+            PreparedStatement ps = conexion.prepareStatement("select p.login, p.password, p.nombre_completo, p.email, p.activo, r.rol, d.departamento\n"
+                    + "from fp_profesor p inner join fp_rol r\n"
+                    + "on p.id_rol = r.id_rol inner join fp_departamento d\n"
+                    + "on p.id_departamento = d.id_departamento where p.activo = 1 ");
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                id = rs.getString(1);
+
+                a[0] = rs.getString(1);
+                a[1] = rs.getString(2);
+                a[2] = rs.getString(3);
+                a[3] = rs.getString(4);
+                a[4] = rs.getString(5);
+                a[5] = rs.getString(6);
+                a[6] = rs.getString(7);
+
+                dtm.addRow(a);
             }
 
+            jt_profesores.setModel(dtm);
+
+            conexion.close();
+
         } catch (SQLException ex) {
-            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    Workbook book;
+    // Menu Item de MenuBar con la opcion de exportar los datos
+    private void jmi_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_exportarActionPerformed
+
+        Workbook wb = new XSSFWorkbook();
+
+        JFileChooser file = new JFileChooser();
+        int option = file.showSaveDialog(this);
+
+        FileFilter filter = new FileNameExtensionFilter("Excel file", "xls");
+        file.addChoosableFileFilter(filter);
+
+        String ruta = file.getSelectedFile().getAbsolutePath();
+
+        ruta = ruta + ".xls";
+        File datos = new File(ruta);
+
+        if (option == JFileChooser.APPROVE_OPTION) {
+
+            if (!datos.exists()) {
+                if (!ruta.contains(".xls")) {
+
+                    Exportar(datos, jt_profesores);
+                    JOptionPane.showMessageDialog(this, "Archivo exportado!");
+
+                } else {
+                    Exportar(datos, jt_profesores);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "El archivo ya existe!");
+            }
+        }
+    }//GEN-LAST:event_jmi_exportarActionPerformed
 
     // Metodo para exportar datos de la tabla en excel
     public String Exportar(File archivo, JTable tabla) {
@@ -458,6 +423,7 @@ public class ver_profesores extends javax.swing.JDialog {
         Sheet hoja = book.createSheet("Hoja1");
 
         try {
+
             for (int i = -1; i < NumeroFila; i++) {
 
                 Row fila = hoja.createRow(i + 1);
@@ -478,14 +444,34 @@ public class ver_profesores extends javax.swing.JDialog {
                     book.write(new FileOutputStream(archivo));
                 }
             }
-            JOptionPane.showMessageDialog(this, "Archivo exportado con exito!");
+            JOptionPane.showMessageDialog(this, "Archivo exportado!");
 
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, mensaje);
         }
-        JOptionPane.showMessageDialog(this, mensaje);
+
         return mensaje;
     }
+
+    Workbook book;
+
+    // Menu Item de MenuBar con la opcion de importar los datos
+    private void jmi_importarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_importarActionPerformed
+
+        // FileChooser para que el usuario seleccione donde quiere guardar el archivo
+        JFileChooser file = new JFileChooser();
+        int option = file.showOpenDialog(this);
+
+        String ruta = file.getSelectedFile().getAbsolutePath();
+
+        File datos = new File(ruta);
+
+        Importar(datos, jt_profesores);
+        JOptionPane.showMessageDialog(this, "Archivo importado!");
+
+
+    }//GEN-LAST:event_jmi_importarActionPerformed
 
     // Metodo para importar archivos excel a jtable
     public String Importar(File archivo, JTable tabla) {
@@ -568,66 +554,130 @@ public class ver_profesores extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(this, mensaje);
         return mensaje;
     }
+    
+   /* public void importExcelToJtableJava() {
 
-    // Metodo para ver los usuarios que estan inactivos
-    public void verInactivos() {
-        dtm.setNumRows(0);
-        dtm.setColumnIdentifiers(new String[]{"Id del profesor", "Nombre de Usuario", "Contraseña", "Nombre Completo", "Email Técnica", "Activo", "Rol", "Departamento"});
-        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
-        jt_profesores.setRowSorter(elQueOrdena);
+        DefaultTableModel modelo = new DefaultTableModel();
+        File excelFile;
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelImportToJTable = null;
+        JFileChooser excelFileChooser = new JFileChooser();
+        excelFileChooser.setDialogTitle("Select Excel File");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+        excelFileChooser.setFileFilter(fnef);
+        int excelChooser = excelFileChooser.showOpenDialog(null);
+        if (excelChooser == JFileChooser.APPROVE_OPTION) {
+            try {
+                excelFile = excelFileChooser.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelImportToJTable = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
 
-        String[] a = new String[8];
+                for (int row = 0; row < excelSheet.getLastRowNum(); row++) {
+                    XSSFRow excelRow = excelSheet.getRow(row);
 
+                    XSSFCell login = excelRow.getCell(0);
+                    XSSFCell passsword = excelRow.getCell(1);
+                    XSSFCell nombre_completo = excelRow.getCell(2);
+                    XSSFCell email = excelRow.getCell(3);
+                    XSSFCell activo = excelRow.getCell(4);
+                    XSSFCell id_rol = excelRow.getCell(5);
+                    XSSFCell id_departamento = excelRow.getCell(6);
+
+                   
+                    modelo.addRow(new Object[]{login, passsword, nombre_completo, email, activo, id_rol, id_departamento  });
+                }
+                JOptionPane.showMessageDialog(null, "Archivo Importado!");
+            } catch (IOException iOException) {
+                JOptionPane.showMessageDialog(null, iOException.getMessage());
+            } finally {
+                try {
+                    if (excelFIS != null) {
+                        excelFIS.close();
+                    }
+                    if (excelBIS != null) {
+                        excelBIS.close();
+                    }
+                    if (excelImportToJTable != null) {
+                        excelImportToJTable.cloneSheet(HEIGHT);
+                    }
+                } catch (IOException iOException) {
+                    JOptionPane.showMessageDialog(null, iOException.getMessage());
+                }
+            }
+        }
+    }*/
+
+    // Boton para insertar los datos de la tabla en la base de datos
+    private void jbtn_insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_insertarActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jt_profesores.getModel();
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "La tabla esta vacía.");
+        } else {
+            String login, password, nombre_completo, email, activo, id_rol, id_departamento;
+            try {
+                Connection conexion = conectar.getConexion();
+                for (int i = 0; i < model.getRowCount(); i++) {
+
+                    login = model.getValueAt(i, 0).toString();
+                    password = model.getValueAt(i, 1).toString();
+                    nombre_completo = model.getValueAt(i, 2).toString();
+                    email = model.getValueAt(i, 3).toString();
+                    activo = model.getValueAt(i, 4).toString();
+                    id_rol = model.getValueAt(i, 5).toString();
+                    id_departamento = model.getValueAt(i, 6).toString();
+
+                    String query = "insert into fp_profesor(id_profesor, login, password, nombre_completo, email, activo, id_rol, id_departamento)values(?,?,?,?,?,?,?,?)";
+                    PreparedStatement ps = conexion.prepareStatement(query);
+
+                    ps.setString(1, login);
+                    ps.setString(2, password);
+                    ps.setString(3, nombre_completo);
+                    ps.setString(4, email);
+                    ps.setString(5, activo);
+                    ps.setString(6, id_rol);
+                    ps.setString(7, id_departamento);
+
+                    ps.execute();
+                }
+                JOptionPane.showMessageDialog(this, "Datos introducidos!.");
+                model.setRowCount(0);
+            } catch (Exception e) {
+            }
+        }
+    }//GEN-LAST:event_jbtn_insertarActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbnt_inactivos;
+    private javax.swing.JButton jbtn_activos;
+    private javax.swing.JButton jbtn_add;
+    private javax.swing.JButton jbtn_insertar;
+    private javax.swing.JMenuItem jmi_exportar;
+    private javax.swing.JMenuItem jmi_importar;
+    private javax.swing.JMenu jmi_proferoot;
+    private javax.swing.JPopupMenu jppm;
+    private javax.swing.JTable jt_profesores;
+    // End of variables declaration//GEN-END:variables
+
+    // Metodo para everiguar el id del usuario correspondiente
+    private void saberId() {
         Connection conexion = conectar.getConexion();
 
         try {
-            PreparedStatement ps = conexion.prepareStatement("select p.id_profesor, p.login, p.password, p.nombre_completo, p.email, p.activo, r.rol, d.departamento\n"
-                    + "from fp_profesor p inner join fp_rol r\n"
-                    + "on p.id_rol = r.id_rol inner join fp_departamento d\n"
-                    + "on p.id_departamento = d.id_departamento where p.activo = 0 ");
-
+            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login= '" + usuario + "';");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-
-                a[0] = rs.getString(1);
-                a[1] = rs.getString(2);
-                a[2] = rs.getString(3);
-                a[3] = rs.getString(4);
-                a[4] = rs.getString(5);
-                a[5] = rs.getString(6);
-                a[6] = rs.getString(7);
-                a[7] = rs.getString(8);
-
-                dtm.addRow(a);
+                id = rs.getString(1);
             }
 
-            jt_profesores.setModel(dtm);
-
-            conexion.close();
-
         } catch (SQLException ex) {
-            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    // Metodo del icono
-    public void icono() {
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
-
-    // Metodo para eliminar una incidencia del pop up menu
-    private void darBaja() {
-        Connection conexion = conectar.getConexion();
-        var selectedRow = jt_profesores.getValueAt(jt_profesores.getSelectedRow(), 0);
-        try {
-            PreparedStatement ps = conexion.prepareStatement("UPDATE fp_profesor SET activo = 0 where id_profesor = '" + selectedRow + "'");
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Usuario dado de baja");
-            conexion.close();
-        } catch (Exception e) {
-            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
