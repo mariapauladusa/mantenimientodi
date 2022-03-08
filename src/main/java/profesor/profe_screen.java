@@ -6,12 +6,13 @@
 package profesor;
 
 import com.mycompany.mantenimiento_paula.Conectar;
-import com.mycompany.mantenimiento_paula.ayuda;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.swing.table.DefaultTableModel;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
@@ -55,7 +58,6 @@ public class profe_screen extends javax.swing.JDialog {
 
         saberId();
         verIncidencias();
-        icono();
         popmenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -65,52 +67,6 @@ public class profe_screen extends javax.swing.JDialog {
             public void windowClosing(WindowEvent e) {
                 dispose();
                 new main().setVisible(true);
-            }
-        });
-
-    }
-
-    profe_screen() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    // Metodo del icono
-    public void icono() {
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
-
-    // JPopUp Menu
-    private void popmenu() {
-
-        // Menu Item con Modificar Incidencia
-        JMenuItem modificar = new JMenuItem("Modificar incidencia");
-        jppm.add(modificar);
-        // Menu item con Eliminar Incidencia
-        JMenuItem borrar = new JMenuItem("Eliminar incidencia");
-        jppm.add(borrar);
-
-        jt_profesor.setComponentPopupMenu(jppm);
-
-        modificar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String idInci = (String) dtm.getValueAt(jt_profesor.getSelectedRow(), 0);
-
-                profe_modifyInci add = new profe_modifyInci(profe_screen.this, true, usuario, idInci);
-                add.setVisible(true);
-
-                verIncidencias();
-            }
-        });
-
-        borrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                deleteRow();
-                verIncidencias();
             }
         });
 
@@ -157,12 +113,17 @@ public class profe_screen extends javax.swing.JDialog {
         jLabel1.setText("INCIDENCIAS");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jbtn_ayuda.setText("Ayuda!");
+        jbtn_ayuda.setBackground(new java.awt.Color(0, 0, 204));
+        jbtn_ayuda.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jbtn_ayuda.setForeground(new java.awt.Color(0, 0, 204));
+        jbtn_ayuda.setText("?");
         jbtn_ayuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtn_ayudaActionPerformed(evt);
             }
         });
+
+        jmb_profesor.setForeground(new java.awt.Color(60, 63, 65));
 
         jmi_mas.setText("Acciones");
         jmi_mas.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
@@ -234,8 +195,7 @@ public class profe_screen extends javax.swing.JDialog {
 
     // Boton para mostrar ayuda
     private void jbtn_ayudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_ayudaActionPerformed
-        ayuda a = new ayuda();
-        a.cargarAyuda(jbtn_ayuda);
+        cargarAyuda(jbtn_ayuda);
     }//GEN-LAST:event_jbtn_ayudaActionPerformed
 
 
@@ -315,8 +275,63 @@ public class profe_screen extends javax.swing.JDialog {
             Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    // Metodo para cargar la ayuda
+    public void cargarAyuda(JButton b) {
+        try {
+            // Carga el fichero de ayuda
+            File fichero = new File("src\\main\\java\\help\\help_set.hs");
+            URL hsURL = fichero.toURI().toURL();
 
-    // Metodo para eliminar una incidencia
+            // Crea el HelpSet y el HelpBroker
+            HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+            HelpBroker hb = helpset.createHelpBroker();
+
+            hb.enableHelpOnButton(b, "aplicacion", helpset);
+            hb.enableHelpKey(this.getRootPane(), "aplicacion", helpset);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // JPopUp Menu
+    private void popmenu() {
+
+        // Menu Item con Modificar Incidencia
+        JMenuItem modificar = new JMenuItem("Modificar incidencia");
+        jppm.add(modificar);
+        // Menu item con Eliminar Incidencia
+        JMenuItem borrar = new JMenuItem("Eliminar incidencia");
+        jppm.add(borrar);
+
+        jt_profesor.setComponentPopupMenu(jppm);
+
+        modificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String idInci = (String) dtm.getValueAt(jt_profesor.getSelectedRow(), 0);
+
+                profe_modifyInci add = new profe_modifyInci(profe_screen.this, true, usuario, idInci);
+                add.setVisible(true);
+
+                verIncidencias();
+            }
+        });
+
+        borrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                deleteRow();
+                verIncidencias();
+            }
+        });
+
+    }
+
+    // Metodo para eliminar una incidencia en conjunto con el popupmenu
     private void deleteRow() {
         Connection conexion = conectar.getConexion();
 

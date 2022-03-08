@@ -39,17 +39,22 @@ public class loginTecnico extends javax.swing.JDialog {
      * Creates new form loginTecnico
      */
     public loginTecnico(java.awt.Frame parent, boolean modal) {
+        
         // Recogemos conexión
         conectar.getConexion();
+        
         // activo sera activo
         a = activo;       
+        
         initComponents();
+        
         //Metodo iconos
-        iconoPrograma();
         iconosLabel();
+        
         // Metodo para recoger activo
         saberActivo();
         
+        // Para entrar sin el boton de entrar solo con darle al enter
         jpassTecnico.addKeyListener(new KeyAdapter() {
 
             @Override
@@ -61,13 +66,6 @@ public class loginTecnico extends javax.swing.JDialog {
   
         });
 
-    }
-
-    // METODO PARA PONER ICONO AL PROGRAMA
-    public void iconoPrograma() {
-        // Imagen guardad en paquete resources
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
     }
 
     // Iconos para usuario y contraseña
@@ -238,10 +236,13 @@ public class loginTecnico extends javax.swing.JDialog {
     // Metodo para el login del técnico
     private void loginT() {
         Connection cn = conectar.getConexion();
+        
         PreparedStatement ps = null;
         ResultSet rs = null;
+        
         user = jtxtUsuarioT.getText();
         pass = String.valueOf(encriptarPwd.encode(jpassTecnico.getText()));
+        
         // Realiza correctamente la actividad de no permitir que el usuario entre en el programa si el usuario que introduce 
         //  no corresponde con su rol o si este esta inactivo
         int rol = 2;

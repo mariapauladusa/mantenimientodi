@@ -5,22 +5,23 @@
  */
 package tecnico;
 
-import administrador.add_usuario;
-import administrador.ver_profesores;
 import com.mycompany.mantenimiento_paula.Conectar;
-import com.mycompany.mantenimiento_paula.ayuda;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -33,26 +34,32 @@ import profesor.enviarCorreo;
  * @author damA
  */
 public class tec_screen extends javax.swing.JDialog {
+
     Conectar conectar = new Conectar();
+
     // Variable para guardar el id del usuario
     String usuario;
     String id;
+
     // Modelo de la tabla 
     DefaultTableModel dtm = new DefaultTableModel();
 
     /**
      * Creates new form screenTecnico
      */
-    public tec_screen(javax.swing.JDialog parent, boolean modal, String user) {        
-        conectar.getConexion();        
+    public tec_screen(javax.swing.JDialog parent, boolean modal, String user) {
+
+        conectar.getConexion();
+
         initComponents();
+
         usuario = user;
+
         saberId();
         verIncidencias();
-        icono();        
         popmenu();
-        
-         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         // X de la pantalla
         addWindowListener(new WindowAdapter() {
             @Override
@@ -62,60 +69,52 @@ public class tec_screen extends javax.swing.JDialog {
             }
         });
     }
-    
-    // Metodo del icono
-    public void icono() {
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
-    
+
     // JPopUp Menu
-    private void popmenu(){        
-       // Menu Item con Modificar Incidencia
-       JMenuItem modificar = new JMenuItem ("Modificar incidencia");
-       jppm.add(modificar);
-       // Menu item con Eliminar Incidencia
-       JMenuItem borrar = new JMenuItem ("Eliminar incidencia");
-       
-       jppm.add(borrar);       
-       jt_tecnico.setComponentPopupMenu(jppm);
-       
-       modificar.addActionListener(new ActionListener() { 
-           @Override
-           public void actionPerformed(ActionEvent e) {               
-               String idInci = (String) dtm.getValueAt(jt_tecnico.getSelectedRow(), 0);              
-               tec_modifyIncidencia add = new tec_modifyIncidencia(tec_screen.this, true, usuario, idInci);
-               add.setVisible(true);                
-               verIncidencias();
-           }
-       });
-       
-       borrar.addActionListener(new ActionListener() { 
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               deleteRow();             
-               verIncidencias();
-           }
-       });
-      
+    private void popmenu() {
+        // Menu Item con Modificar Incidencia
+        JMenuItem modificar = new JMenuItem("Modificar incidencia");
+        jppm.add(modificar);
+        // Menu item con Eliminar Incidencia
+        JMenuItem borrar = new JMenuItem("Eliminar incidencia");
+
+        jppm.add(borrar);
+        jt_tecnico.setComponentPopupMenu(jppm);
+
+        modificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String idInci = (String) dtm.getValueAt(jt_tecnico.getSelectedRow(), 0);
+                tec_modifyIncidencia add = new tec_modifyIncidencia(tec_screen.this, true, usuario, idInci);
+                add.setVisible(true);
+                verIncidencias();
+            }
+        });
+
+        borrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteRow();
+                verIncidencias();
+            }
+        });
+
     }
-    
+
     // Metodo para eliminar una incidencia del pop up menu
     private void deleteRow() {
-        Connection conexion = conectar.getConexion();        
-        var selectedRow = jt_tecnico.getValueAt(jt_tecnico.getSelectedRow(), 0);        
+        Connection conexion = conectar.getConexion();
+        var selectedRow = jt_tecnico.getValueAt(jt_tecnico.getSelectedRow(), 0);
         try {
-            PreparedStatement ps = conexion.prepareStatement("DELETE FROM man_incidencias WHERE id_incidencia = '"+selectedRow+"'");
-            ps.executeUpdate();            
-            JOptionPane.showMessageDialog(null, "Incidencia Eliminada");            
+            PreparedStatement ps = conexion.prepareStatement("DELETE FROM man_incidencias WHERE id_incidencia = '" + selectedRow + "'");
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Incidencia Eliminada");
             conexion.close();
-            
+
         } catch (Exception e) {
             Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -141,7 +140,6 @@ public class tec_screen extends javax.swing.JDialog {
         jmb_mas = new javax.swing.JMenu();
         jmi_correo = new javax.swing.JMenuItem();
         jmi_addInci = new javax.swing.JMenuItem();
-        jmi_helpTecnico = new javax.swing.JMenuItem();
 
         jLabel2.setText("jLabel2");
 
@@ -200,10 +198,18 @@ public class tec_screen extends javax.swing.JDialog {
             }
         });
 
-        jbtn_ayudaTec.setText("Ayuda!");
+        jbtn_ayudaTec.setBackground(new java.awt.Color(0, 0, 255));
+        jbtn_ayudaTec.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jbtn_ayudaTec.setForeground(new java.awt.Color(0, 0, 204));
+        jbtn_ayudaTec.setText("?");
+        jbtn_ayudaTec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_ayudaTecActionPerformed(evt);
+            }
+        });
 
         jmb_mas.setText("Acciones");
-        jmb_mas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jmb_mas.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
 
         jmi_correo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jmi_correo.setText("Enviar Correo");
@@ -222,15 +228,6 @@ public class tec_screen extends javax.swing.JDialog {
             }
         });
         jmb_mas.add(jmi_addInci);
-
-        jmi_helpTecnico.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jmi_helpTecnico.setText("Ayuda");
-        jmi_helpTecnico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_helpTecnicoActionPerformed(evt);
-            }
-        });
-        jmb_mas.add(jmi_helpTecnico);
 
         jmb_tecnico.add(jmb_mas);
 
@@ -264,7 +261,7 @@ public class tec_screen extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                .addComponent(jsp_profesor, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtn_urgencia)
@@ -282,8 +279,8 @@ public class tec_screen extends javax.swing.JDialog {
 
     // Item de menu para enviar correo
     private void jmi_correoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_correoActionPerformed
-       enviarCorreo e = new enviarCorreo(this, true);
-       e.setVisible(true);
+        enviarCorreo e = new enviarCorreo(this, true);
+        e.setVisible(true);
     }//GEN-LAST:event_jmi_correoActionPerformed
 
     // Item para crear una nueva incidencia
@@ -294,58 +291,13 @@ public class tec_screen extends javax.swing.JDialog {
         verIncidencias();
     }//GEN-LAST:event_jmi_addInciActionPerformed
 
-    // Boton para mostrar informacion segun el estado que el usuario escriba
-    private void jbtn_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_estadoActionPerformed
-       buscadorEstado();
-    }//GEN-LAST:event_jbtn_estadoActionPerformed
-
-    // Boton para mostrar informacion segun la urgencia que el usuario escriba
-    private void jbtn_urgenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_urgenciaActionPerformed
-        buscadorUrgencia();
-    }//GEN-LAST:event_jbtn_urgenciaActionPerformed
-
-    // Boton para consultar los tipos de estado o urgencia existentes
-    private void jbtn_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_consultarActionPerformed
-        tipos t = new tipos(this, true);
-        t.setVisible(true);
-    }//GEN-LAST:event_jbtn_consultarActionPerformed
-
-    // Boton para despues de buscar informacion vuelva a mostrar los datos principales en la tabla
-    private void jbtn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_actualizarActionPerformed
-        verIncidencias();
-    }//GEN-LAST:event_jbtn_actualizarActionPerformed
-
-    private void jmi_helpTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_helpTecnicoActionPerformed
-      ayuda a = new ayuda();
-      a.cargarAyuda(jbtn_ayudaTec);
-    }//GEN-LAST:event_jmi_helpTecnicoActionPerformed
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JButton jbtn_actualizar;
-    private javax.swing.JButton jbtn_ayudaTec;
-    private javax.swing.JButton jbtn_consultar;
-    private javax.swing.JButton jbtn_estado;
-    private javax.swing.JButton jbtn_urgencia;
-    private javax.swing.JMenu jmb_mas;
-    private javax.swing.JMenuBar jmb_tecnico;
-    private javax.swing.JMenuItem jmi_addInci;
-    private javax.swing.JMenuItem jmi_correo;
-    public static javax.swing.JMenuItem jmi_helpTecnico;
-    private javax.swing.JPopupMenu jppm;
-    private javax.swing.JScrollPane jsp_profesor;
-    private javax.swing.JTable jt_tecnico;
-    private javax.swing.JTextField jtxt_buscar;
-    // End of variables declaration//GEN-END:variables
-
-    // Metodo para mostrar las incidencias en el JTable
-    private void verIncidencias() {        
+    // Metodo para el boton de buscar segun estado
+    private void buscadorEstado() {
         dtm.setNumRows(0);
-        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});        
+        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});
         TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
-        jt_tecnico.setRowSorter(elQueOrdena);        
+        jt_tecnico.setRowSorter(elQueOrdena);
+        String buscar = jtxt_buscar.getText();
         String[] a = new String[12];
         Connection conexion = conectar.getConexion();
         try {
@@ -354,8 +306,9 @@ public class tec_screen extends javax.swing.JDialog {
                     + "on p.id_profesor = m.id_profesor_crea left join man_estado e \n"
                     + "on e.id_estado = m.id_estado left join man_ubicacion ub\n"
                     + "on ub.id_ubicacion = m.id_ubicacion left join man_urgencia ur\n"
-                    + "on ur.id_urgencia = m.nivel_urgencia\n");
-            
+                    + "on ur.id_urgencia = m.nivel_urgencia\n"
+                    + "where e.estado = '" + buscar + "' order by m.id_estado");
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 a[0] = rs.getString(1);
@@ -371,13 +324,157 @@ public class tec_screen extends javax.swing.JDialog {
                 a[10] = rs.getString(11);
                 a[11] = rs.getString(12);
                 dtm.addRow(a);
-            }                  
+            }
             jt_tecnico.setModel(dtm);
             conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    // Boton para mostrar informacion segun el estado que el usuario escriba
+    private void jbtn_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_estadoActionPerformed
+        buscadorEstado();
+    }//GEN-LAST:event_jbtn_estadoActionPerformed
+
+    // Metodo para el boton de buscar segun urgencia
+    private void buscadorUrgencia(){
+        dtm.setNumRows(0);
+        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});
+        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
+        jt_tecnico.setRowSorter(elQueOrdena);
+        String buscar = jtxt_buscar.getText();
+        String[] a = new String[12];
+        Connection conexion = conectar.getConexion();
+        try {
+            PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.desc_tecnica, m.horas, e.estado, m.fecha, m.fecha_ini_rep, m.fecha_fin_rep, ur.urgencia, ub.ubicacion, m.observaciones\n"
+                    + "from man_incidencias m left join fp_profesor p\n"
+                    + "on p.id_profesor = m.id_profesor_crea left join man_estado e \n"
+                    + "on e.id_estado = m.id_estado left join man_ubicacion ub\n"
+                    + "on ub.id_ubicacion = m.id_ubicacion left join man_urgencia ur\n"
+                    + "on ur.id_urgencia = m.nivel_urgencia\n"
+                    + "where ur.urgencia = '" + buscar + "' order by m.nivel_urgencia");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                a[0] = rs.getString(1);
+                a[1] = rs.getString(2);
+                a[2] = rs.getString(3);
+                a[3] = rs.getString(4);
+                a[4] = rs.getString(5);
+                a[5] = rs.getString(6);
+                a[6] = rs.getString(7);
+                a[7] = rs.getString(8);
+                a[8] = rs.getString(9);
+                a[9] = rs.getString(10);
+                a[10] = rs.getString(11);
+                a[11] = rs.getString(12);
+                dtm.addRow(a);
+            }
+            jt_tecnico.setModel(dtm);
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    // Boton para mostrar informacion segun la urgencia que el usuario escriba
+    private void jbtn_urgenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_urgenciaActionPerformed
+        buscadorUrgencia();
+    }//GEN-LAST:event_jbtn_urgenciaActionPerformed
+
+    // Boton para consultar los tipos de estado o urgencia existentes
+    private void jbtn_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_consultarActionPerformed
+        tipos t = new tipos(this, true);
+        t.setVisible(true);
+    }//GEN-LAST:event_jbtn_consultarActionPerformed
+
+    // Metodo para mostrar las incidencias en el JTable
+    private void verIncidencias() {
+        dtm.setNumRows(0);
+        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});
+        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
+        jt_tecnico.setRowSorter(elQueOrdena);
+        String[] a = new String[12];
+        Connection conexion = conectar.getConexion();
+        try {
+            PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.desc_tecnica, m.horas, e.estado, m.fecha, m.fecha_ini_rep, m.fecha_fin_rep, ur.urgencia, ub.ubicacion, m.observaciones\n"
+                    + "from man_incidencias m left join fp_profesor p\n"
+                    + "on p.id_profesor = m.id_profesor_crea left join man_estado e \n"
+                    + "on e.id_estado = m.id_estado left join man_ubicacion ub\n"
+                    + "on ub.id_ubicacion = m.id_ubicacion left join man_urgencia ur\n"
+                    + "on ur.id_urgencia = m.nivel_urgencia\n");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                a[0] = rs.getString(1);
+                a[1] = rs.getString(2);
+                a[2] = rs.getString(3);
+                a[3] = rs.getString(4);
+                a[4] = rs.getString(5);
+                a[5] = rs.getString(6);
+                a[6] = rs.getString(7);
+                a[7] = rs.getString(8);
+                a[8] = rs.getString(9);
+                a[9] = rs.getString(10);
+                a[10] = rs.getString(11);
+                a[11] = rs.getString(12);
+                dtm.addRow(a);
+            }
+            jt_tecnico.setModel(dtm);
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    // Boton para despues de buscar informacion vuelva a mostrar los datos principales en la tabla
+    private void jbtn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_actualizarActionPerformed
+        verIncidencias();
+    }//GEN-LAST:event_jbtn_actualizarActionPerformed
+
+    // Meotod para la ayuda
+    public void cargarAyuda(JButton b) {
+        try {
+            // Carga el fichero de ayuda
+            File fichero = new File("src\\main\\java\\help\\help_set.hs");
+            URL hsURL = fichero.toURI().toURL();
+
+            // Crea el HelpSet y el HelpBroker
+            HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+            HelpBroker hb = helpset.createHelpBroker();
+
+            hb.enableHelpOnButton(b, "aplicacion", helpset);
+            hb.enableHelpKey(this.getRootPane(), "aplicacion", helpset);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Boton para la ayuda
+    private void jbtn_ayudaTecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_ayudaTecActionPerformed
+        cargarAyuda(jbtn_ayudaTec);
+    }//GEN-LAST:event_jbtn_ayudaTecActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jbtn_actualizar;
+    private javax.swing.JButton jbtn_ayudaTec;
+    private javax.swing.JButton jbtn_consultar;
+    private javax.swing.JButton jbtn_estado;
+    private javax.swing.JButton jbtn_urgencia;
+    private javax.swing.JMenu jmb_mas;
+    private javax.swing.JMenuBar jmb_tecnico;
+    private javax.swing.JMenuItem jmi_addInci;
+    private javax.swing.JMenuItem jmi_correo;
+    private javax.swing.JPopupMenu jppm;
+    private javax.swing.JScrollPane jsp_profesor;
+    private javax.swing.JTable jt_tecnico;
+    private javax.swing.JTextField jtxt_buscar;
+    // End of variables declaration//GEN-END:variables
 
     // Metodo para everiguar el id del usuario correspondiente
     private void saberId() {
@@ -394,85 +491,4 @@ public class tec_screen extends javax.swing.JDialog {
         }
     }
 
-    // Metodo para el boton de buscar segun estado
-    private void buscadorEstado() {
-        dtm.setNumRows(0);
-        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});        
-        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
-        jt_tecnico.setRowSorter(elQueOrdena);        
-        String buscar = jtxt_buscar.getText();        
-        String[] a = new String[12];
-        Connection conexion = conectar.getConexion();
-        try {
-            PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.desc_tecnica, m.horas, e.estado, m.fecha, m.fecha_ini_rep, m.fecha_fin_rep, ur.urgencia, ub.ubicacion, m.observaciones\n"
-                    + "from man_incidencias m left join fp_profesor p\n"
-                    + "on p.id_profesor = m.id_profesor_crea left join man_estado e \n"
-                    + "on e.id_estado = m.id_estado left join man_ubicacion ub\n"
-                    + "on ub.id_ubicacion = m.id_ubicacion left join man_urgencia ur\n"
-                    + "on ur.id_urgencia = m.nivel_urgencia\n"
-                    + "where e.estado = '"+buscar+"' order by m.id_estado");
-            
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                a[0] = rs.getString(1);
-                a[1] = rs.getString(2);
-                a[2] = rs.getString(3);
-                a[3] = rs.getString(4);
-                a[4] = rs.getString(5);
-                a[5] = rs.getString(6);
-                a[6] = rs.getString(7);
-                a[7] = rs.getString(8);
-                a[8] = rs.getString(9);
-                a[9] = rs.getString(10);
-                a[10] = rs.getString(11);
-                a[11] = rs.getString(12);
-                dtm.addRow(a);
-            }                  
-            jt_tecnico.setModel(dtm);
-            conexion.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    // Metodo para el boton de buscar segun urgencia
-    private void buscadorUrgencia() {
-        dtm.setNumRows(0);
-        dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});        
-        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(dtm);
-        jt_tecnico.setRowSorter(elQueOrdena);        
-        String buscar = jtxt_buscar.getText();        
-        String[] a = new String[12];
-        Connection conexion = conectar.getConexion();
-        try {
-            PreparedStatement ps = conexion.prepareStatement("select m.id_incidencia, p.nombre_completo, m.descripcion, m.desc_tecnica, m.horas, e.estado, m.fecha, m.fecha_ini_rep, m.fecha_fin_rep, ur.urgencia, ub.ubicacion, m.observaciones\n"
-                    + "from man_incidencias m left join fp_profesor p\n"
-                    + "on p.id_profesor = m.id_profesor_crea left join man_estado e \n"
-                    + "on e.id_estado = m.id_estado left join man_ubicacion ub\n"
-                    + "on ub.id_ubicacion = m.id_ubicacion left join man_urgencia ur\n"
-                    + "on ur.id_urgencia = m.nivel_urgencia\n"
-                    + "where ur.urgencia = '"+buscar+"' order by m.nivel_urgencia");
-            
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                a[0] = rs.getString(1);
-                a[1] = rs.getString(2);
-                a[2] = rs.getString(3);
-                a[3] = rs.getString(4);
-                a[4] = rs.getString(5);
-                a[5] = rs.getString(6);
-                a[6] = rs.getString(7);
-                a[7] = rs.getString(8);
-                a[8] = rs.getString(9);
-                a[9] = rs.getString(10);
-                a[10] = rs.getString(11);
-                a[11] = rs.getString(12);
-                dtm.addRow(a);
-            }                  
-            jt_tecnico.setModel(dtm);
-            conexion.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(tec_screen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

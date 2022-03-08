@@ -28,7 +28,7 @@ public class main extends javax.swing.JFrame {
     public main() {
         initComponents();
         // Icono del programa
-        iconoPrograma();
+        icono();
     }
     
     
@@ -115,7 +115,7 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Metodo para el icono del programa
-    public void iconoPrograma(){
+    public void icono(){
         ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
         this.setIconImage(img.getImage());
     }

@@ -6,19 +6,23 @@ package administrador;
 
 import profesor.profe_screen;
 import com.mycompany.mantenimiento_paula.Conectar;
-import com.mycompany.mantenimiento_paula.ayuda;
 import com.mycompany.mantenimiento_paula.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -48,13 +52,20 @@ public class root_screen extends javax.swing.JDialog {
      * Creates new form screenRoot
      */
     public root_screen(javax.swing.JDialog parent, boolean modal, String user) {
+        
         conectar.getConexion();
+        
         initComponents();
+        // Recoger el usuario
         usuario = user;
+        // Recoger el id
         saberId();
+        
         verIncidencias();
+        
         popmenu();
-        icono();
+        
+        // Modificar x de la pantalla
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         // X de la pantalla
         addWindowListener(new WindowAdapter() {
@@ -64,6 +75,27 @@ public class root_screen extends javax.swing.JDialog {
                 new main().setVisible(true);
             }
         });
+    }
+    
+    // Metodo para cargar la ayuda
+    public void cargarAyuda(JButton b) {
+        try {
+            // Carga el fichero de ayuda
+            File fichero = new File("src\\main\\java\\help\\help_set.hs");
+            URL hsURL = fichero.toURI().toURL();
+
+            // Crea el HelpSet y el HelpBroker
+            HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+            HelpBroker hb = helpset.createHelpBroker();
+
+
+            hb.enableHelpOnButton(b, "aplicacion", helpset);
+            hb.enableHelpKey(this.getRootPane(), "aplicacion", helpset);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -91,7 +123,6 @@ public class root_screen extends javax.swing.JDialog {
         jmi_incidencia = new javax.swing.JMenuItem();
         jmi_profesores = new javax.swing.JMenuItem();
         jmi_estadistica = new javax.swing.JMenuItem();
-        jmi_helpRoot = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("screenRoot"); // NOI18N
@@ -148,10 +179,19 @@ public class root_screen extends javax.swing.JDialog {
             }
         });
 
-        jbtn_ayudaroot.setText("Ayuda!");
+        jbtn_ayudaroot.setBackground(new java.awt.Color(0, 0, 204));
+        jbtn_ayudaroot.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jbtn_ayudaroot.setForeground(new java.awt.Color(0, 0, 204));
+        jbtn_ayudaroot.setText("?");
+        jbtn_ayudaroot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_ayudarootActionPerformed(evt);
+            }
+        });
 
+        jmenuroot.setBorder(null);
         jmenuroot.setText("Acciones");
-        jmenuroot.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jmenuroot.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
 
         jmi_correo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jmi_correo.setText("Enviar Correo");
@@ -189,15 +229,6 @@ public class root_screen extends javax.swing.JDialog {
         });
         jmenuroot.add(jmi_estadistica);
 
-        jmi_helpRoot.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jmi_helpRoot.setText("Ayuda");
-        jmi_helpRoot.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_helpRootActionPerformed(evt);
-            }
-        });
-        jmenuroot.add(jmi_helpRoot);
-
         jMenuBar1.add(jmenuroot);
 
         setJMenuBar(jMenuBar1);
@@ -230,7 +261,7 @@ public class root_screen extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtn_urgencia)
@@ -294,13 +325,7 @@ public class root_screen extends javax.swing.JDialog {
         }
     }
 
-    // Metodo del icono
-    public void icono() {
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
-
-    // MOSTRAR INCIDENCIAS EN EL JTABLE
+    // Mostrar las incidencias en el jtable
     public void verIncidencias() {
         dtm.setNumRows(0);
         dtm.setColumnIdentifiers(new String[]{"Id Incidencia", "Nombre", "Descripción", "Decripción Técnica", "Horas", "Estado", "Fecha", "Inicio", "Final", "Urgencia", "Ubicación", "Observaciones"});
@@ -394,11 +419,9 @@ public class root_screen extends javax.swing.JDialog {
         screen.setVisible(true);
     }//GEN-LAST:event_jmi_estadisticaActionPerformed
 
-    // Java Help
-    private void jmi_helpRootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_helpRootActionPerformed
-        ayuda a = new ayuda();
-        a.cargarAyuda(jbtn_ayudaroot);
-    }//GEN-LAST:event_jmi_helpRootActionPerformed
+    private void jbtn_ayudarootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_ayudarootActionPerformed
+       cargarAyuda(jbtn_ayudaroot);
+    }//GEN-LAST:event_jbtn_ayudarootActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -412,7 +435,6 @@ public class root_screen extends javax.swing.JDialog {
     private javax.swing.JMenu jmenuroot;
     private javax.swing.JMenuItem jmi_correo;
     private javax.swing.JMenuItem jmi_estadistica;
-    public static javax.swing.JMenuItem jmi_helpRoot;
     private javax.swing.JMenuItem jmi_incidencia;
     private javax.swing.JMenuItem jmi_profesores;
     private javax.swing.JPopupMenu jppm;

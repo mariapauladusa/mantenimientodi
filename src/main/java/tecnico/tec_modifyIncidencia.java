@@ -39,6 +39,7 @@ public class tec_modifyIncidencia extends javax.swing.JDialog {
      * Creates new form modify_incidencia_tec
      */
     public tec_modifyIncidencia(javax.swing.JDialog parent, boolean modal, String user, String idInci) {
+        
         super(parent, modal);
 
         conectar.getConexion();
@@ -48,7 +49,6 @@ public class tec_modifyIncidencia extends javax.swing.JDialog {
 
         initComponents();
 
-        icono();
         saberId();
 
         rellenar_urg();
@@ -331,83 +331,6 @@ public class tec_modifyIncidencia extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    // Boton guardar
-    private void jbtn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_guardarActionPerformed
-        modificarIncidencia();
-    }//GEN-LAST:event_jbtn_guardarActionPerformed
-
-    // Combo Box de estados
-    private void jcbo_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_estadoActionPerformed
-        rellenar_es();
-    }//GEN-LAST:event_jcbo_estadoActionPerformed
-
-    // Combo Box de nivel de urgencia
-    private void jcb_urgenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_urgenciaActionPerformed
-        rellenar_urg();
-    }//GEN-LAST:event_jcb_urgenciaActionPerformed
-
-    // Combo box de ubicaciones
-    private void jcbo_ubisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubisActionPerformed
-        rellenar_ubis();
-    }//GEN-LAST:event_jcbo_ubisActionPerformed
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton jbtn_guardar;
-    private javax.swing.JComboBox<String> jcb_urgencia;
-    private javax.swing.JComboBox<String> jcbo_estado;
-    private javax.swing.JComboBox<String> jcbo_ubis;
-    private javax.swing.JLabel jlbl_estado;
-    private javax.swing.JLabel jlbl_ubis;
-    private javax.swing.JLabel jlbl_urg;
-    private javax.swing.JTextField jtxt_fecha;
-    private javax.swing.JTextField jtxt_fechafin;
-    private javax.swing.JTextField jtxt_fechaini;
-    private javax.swing.JTextField jtxt_horas;
-    private javax.swing.JTextArea jtxta_descrTec;
-    private javax.swing.JTextArea jtxta_descripcion;
-    private javax.swing.JTextArea jtxta_observaciones;
-    // End of variables declaration//GEN-END:variables
-
-    // Metodo para poner icono al programa
-    private void icono() {
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
-
-    // Metodo para averiguar el id del usuario
-    private void saberId() {
-        Connection conexion = conectar.getConexion();
-
-        try {
-
-            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login = '" + usuario + "';");
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                id = rs.getString(1);
-            }
-
-            conexion.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(tec_modifyIncidencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     // Metodo para modificar una incidencia
     private void modificarIncidencia() {
         String descripcion = jtxta_descripcion.getText();
@@ -448,6 +371,11 @@ public class tec_modifyIncidencia extends javax.swing.JDialog {
 
         dispose();
     }
+    
+    // Boton guardar
+    private void jbtn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_guardarActionPerformed
+        modificarIncidencia();
+    }//GEN-LAST:event_jbtn_guardarActionPerformed
 
     // Metodo para rellenar con datos el combo box de estado
     private void rellenar_es() {
@@ -470,6 +398,11 @@ public class tec_modifyIncidencia extends javax.swing.JDialog {
             Logger.getLogger(tec_modifyIncidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    // Combo Box de estados
+    private void jcbo_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_estadoActionPerformed
+        rellenar_es();
+    }//GEN-LAST:event_jcbo_estadoActionPerformed
 
     // Metodo para rellenar con datos el combo boc de urgencias
     private void rellenar_urg() {
@@ -492,6 +425,11 @@ public class tec_modifyIncidencia extends javax.swing.JDialog {
             Logger.getLogger(tec_modifyIncidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    // Combo Box de nivel de urgencia
+    private void jcb_urgenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_urgenciaActionPerformed
+        rellenar_urg();
+    }//GEN-LAST:event_jcb_urgenciaActionPerformed
 
     // Metodo para rellenar con datos el combo box de ubicaciones
     private void rellenar_ubis() {
@@ -511,6 +449,62 @@ public class tec_modifyIncidencia extends javax.swing.JDialog {
 
         } catch (SQLException ex) {
 
+            Logger.getLogger(tec_modifyIncidencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    // Combo box de ubicaciones
+    private void jcbo_ubisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubisActionPerformed
+        rellenar_ubis();
+    }//GEN-LAST:event_jcbo_ubisActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton jbtn_guardar;
+    private javax.swing.JComboBox<String> jcb_urgencia;
+    private javax.swing.JComboBox<String> jcbo_estado;
+    private javax.swing.JComboBox<String> jcbo_ubis;
+    private javax.swing.JLabel jlbl_estado;
+    private javax.swing.JLabel jlbl_ubis;
+    private javax.swing.JLabel jlbl_urg;
+    private javax.swing.JTextField jtxt_fecha;
+    private javax.swing.JTextField jtxt_fechafin;
+    private javax.swing.JTextField jtxt_fechaini;
+    private javax.swing.JTextField jtxt_horas;
+    private javax.swing.JTextArea jtxta_descrTec;
+    private javax.swing.JTextArea jtxta_descripcion;
+    private javax.swing.JTextArea jtxta_observaciones;
+    // End of variables declaration//GEN-END:variables
+
+    // Metodo para averiguar el id del usuario
+    private void saberId() {
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login = '" + usuario + "';");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                id = rs.getString(1);
+            }
+
+            conexion.close();
+
+        } catch (SQLException ex) {
             Logger.getLogger(tec_modifyIncidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

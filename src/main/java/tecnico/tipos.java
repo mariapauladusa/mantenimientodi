@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class tipos extends javax.swing.JDialog {
 
     Conectar conectar = new Conectar();
+    
     // Modelo de la tabla 
     DefaultTableModel dtm = new DefaultTableModel();
 
@@ -28,11 +29,15 @@ public class tipos extends javax.swing.JDialog {
      * Creates new form tiposUrEs
      */
     public tipos(javax.swing.JDialog parent, boolean modal) {
+        
         super(parent, modal);
+        
         initComponents();
+        
         conectar.getConexion();
+        
         mostrarTipos();
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        
     }
 
     /**

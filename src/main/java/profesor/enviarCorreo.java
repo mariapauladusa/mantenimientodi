@@ -24,7 +24,6 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -46,57 +45,10 @@ public class enviarCorreo extends javax.swing.JDialog {
     public enviarCorreo(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        verProfesores();
-        icono();  
+        verProfesores(); 
         
     }
-    
-    // Metodo para enviar un correo
-    private void enviarUnCorreo(String correo, String contra) {
-        
-        Properties propiedad = new Properties();
-        
-        propiedad.put("mail.smtp.host", "smtp.gmail.com");
-        propiedad.put("mail.smtp.starttls.enable", "true");
-        propiedad.put("mail.smtp.port", 587);
-        propiedad.put("mail.smtp.auth", "true");
 
-        Session sesion = Session.getDefaultInstance(propiedad);
-
-        String destinatario = jtxt_destinatario.getText();
-        String asunto = jtxt_asunto.getText();
-        String mensaje = jtxta_mensaje.getText();
-        pass = String.valueOf(jpass_contra.getPassword());
-
-        MimeMessage mail = new MimeMessage(sesion);
-
-        try {
-
-            mail.setFrom(new InternetAddress(correo));
-            mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
-            mail.setSubject(asunto);
-            mail.setText(mensaje);
-
-            Transport transporte = sesion.getTransport("smtp");
-            transporte.connect(correo, pass);
-            transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
-            transporte.close();
-
-            JOptionPane.showMessageDialog(null, "Correo enviado");
-
-        } catch (AddressException ex) {
-            ex.printStackTrace();
-            
-        } catch (MessagingException ex) {
-            Logger.getLogger(enviarCorreo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    // Metodo para el icono del programa
-    public void icono(){
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -298,6 +250,68 @@ public class enviarCorreo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton jbtn_correo;
+    private javax.swing.JPasswordField jpass_contra;
+    private javax.swing.JTable jt_profesores;
+    private javax.swing.JTextField jtxt_asunto;
+    private javax.swing.JTextField jtxt_correoUsuario;
+    private javax.swing.JTextField jtxt_destinatario;
+    private javax.swing.JTextArea jtxta_mensaje;
+    // End of variables declaration//GEN-END:variables
+    
+    // Metodo para enviar un correo
+    private void enviarUnCorreo(String correo, String contra) {
+        
+        Properties propiedad = new Properties();
+        
+        propiedad.put("mail.smtp.host", "smtp.gmail.com");
+        propiedad.put("mail.smtp.starttls.enable", "true");
+        propiedad.put("mail.smtp.port", 587);
+        propiedad.put("mail.smtp.auth", "true");
+
+        Session sesion = Session.getDefaultInstance(propiedad);
+
+        String destinatario = jtxt_destinatario.getText();
+        String asunto = jtxt_asunto.getText();
+        String mensaje = jtxta_mensaje.getText();
+        pass = String.valueOf(jpass_contra.getPassword());
+
+        MimeMessage mail = new MimeMessage(sesion);
+
+        try {
+
+            mail.setFrom(new InternetAddress(correo));
+            mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+            mail.setSubject(asunto);
+            mail.setText(mensaje);
+
+            Transport transporte = sesion.getTransport("smtp");
+            transporte.connect(correo, pass);
+            transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+            transporte.close();
+
+            JOptionPane.showMessageDialog(null, "Correo enviado");
+
+        } catch (AddressException ex) {
+            ex.printStackTrace();
+            
+        } catch (MessagingException ex) {
+            Logger.getLogger(enviarCorreo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     // Metod para hacer la consulta para ver todos los profesores
     public void verProfesores() {
 
@@ -342,26 +356,4 @@ public class enviarCorreo extends javax.swing.JDialog {
         }
 
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JButton jbtn_correo;
-    private javax.swing.JPasswordField jpass_contra;
-    private javax.swing.JTable jt_profesores;
-    private javax.swing.JTextField jtxt_asunto;
-    private javax.swing.JTextField jtxt_correoUsuario;
-    private javax.swing.JTextField jtxt_destinatario;
-    private javax.swing.JTextArea jtxta_mensaje;
-    // End of variables declaration//GEN-END:variables
-
 }

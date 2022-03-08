@@ -5,7 +5,6 @@
  */
 package login;
 
-import administrador.add_usuario;
 import com.mycompany.mantenimiento_paula.Conectar;
 import com.mycompany.mantenimiento_paula.main;
 import java.sql.Connection;
@@ -39,17 +38,22 @@ public class loginRoot extends javax.swing.JDialog {
     /**
      * Creates new form jdlr
      */
-    public loginRoot(java.awt.Frame parent, boolean modal) {        
-        conectar.getConexion();        
+    public loginRoot(java.awt.Frame parent, boolean modal) {    
+        
+        conectar.getConexion();     
+        
         initComponents();
+        
         // activo sera activo
         a = activo;
+        
         // Iconos del programa
-        iconoPrograma();
         iconosLabel();
+        
          // Metodo para recoger activo
         saberActivo(); 
         
+        // Para entrar con el enter con el teclado
         jpassAdmin.addKeyListener(new KeyAdapter() {
 
             @Override
@@ -61,14 +65,7 @@ public class loginRoot extends javax.swing.JDialog {
   
         });
     }
-    
-    // Metodo para el icono del programa
-    public void iconoPrograma(){
-        // Imagen guardada en una carpeta llamada resoures en el programa
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
-     
+ 
     // Iconos que utilizo en label2 y 3 para usuario y contraseña
     public void iconosLabel(){
         // Imagenes guardadas en resources, las pongo en cada label correspondiente
@@ -180,14 +177,11 @@ public class loginRoot extends javax.swing.JDialog {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jbtnEntrarP))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jbtnVolverP)))
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnVolverP)
+                    .addComponent(jbtnEntrarP))
+                .addGap(14, 14, 14))
         );
 
         pack();

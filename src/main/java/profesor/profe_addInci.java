@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,6 +30,7 @@ public class profe_addInci extends javax.swing.JDialog {
     public profe_addInci(javax.swing.JDialog parent, boolean modal, String user) {
 
         super(parent, modal);
+        
         conectar.getConexion();
 
         initComponents();
@@ -38,7 +38,6 @@ public class profe_addInci extends javax.swing.JDialog {
         usuario = user;
 
         saberId();
-        icono();
         rellenarBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -53,13 +52,7 @@ public class profe_addInci extends javax.swing.JDialog {
         });
 
     }
-
-    // Icono del programa
-    public void icono() {
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -184,12 +177,6 @@ public class profe_addInci extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    // JComboBox para mostrar las difernetes ubicaciones existentes en man_ubicaciones
-    private void jcbo_ubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubsActionPerformed
-
-        rellenarBox();
-    }//GEN-LAST:event_jcbo_ubsActionPerformed
-
     // Metodo para rellenar el combo box con la informacion de la base de datos
     private void rellenarBox() {
         Connection conexion = conectar.getConexion();
@@ -211,7 +198,38 @@ public class profe_addInci extends javax.swing.JDialog {
             Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    // JComboBox para mostrar las difernetes ubicaciones existentes en man_ubicaciones
+    private void jcbo_ubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubsActionPerformed
+        rellenarBox();
+    }//GEN-LAST:event_jcbo_ubsActionPerformed
 
+    // Metodo para insertar una incidencia en la base de datos
+    public void insertarIncidencia() {
+
+        String descripcion = jtxta_descr.getText();
+        String fecha = jtxt_fecha.getText();
+        String ubicacion = (String) jcbo_ubs.getSelectedItem();
+        String observaciones = jtxta_obsv.getText();
+        String[] s = ubicacion.toString().split(" - ");
+        String ubis = s[0];
+
+        Connection conexion = conectar.getConexion();
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement("INSERT INTO man_incidencias(id_profesor_crea, descripcion, fecha, id_ubicacion, observaciones) VALUES('" + id + "','" + descripcion + "','" + fecha + "','" + ubis + "','" + observaciones + "')");
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Datos insertados.");
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dispose();
+    }
+    
     // Boton Crear 
     private void jbtn_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_crearActionPerformed
         insertarIncidencia();
@@ -254,29 +272,4 @@ public class profe_addInci extends javax.swing.JDialog {
         }
     }
 
-    // Metodo para insertar una incidencia en la base de datos
-    public void insertarIncidencia() {
-
-        String descripcion = jtxta_descr.getText();
-        String fecha = jtxt_fecha.getText();
-        String ubicacion = (String) jcbo_ubs.getSelectedItem();
-        String observaciones = jtxta_obsv.getText();
-        String[] s = ubicacion.toString().split(" - ");
-        String ubis = s[0];
-
-        Connection conexion = conectar.getConexion();
-
-        try {
-            PreparedStatement ps = conexion.prepareStatement("INSERT INTO man_incidencias(id_profesor_crea, descripcion, fecha, id_ubicacion, observaciones) VALUES('" + id + "','" + descripcion + "','" + fecha + "','" + ubis + "','" + observaciones + "')");
-            ps.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Datos insertados.");
-
-            conexion.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        dispose();
-    }
 }

@@ -5,8 +5,6 @@
  */
 package tecnico;
 
-import administrador.add_usuario;
-import administrador.ver_profesores;
 import com.mycompany.mantenimiento_paula.Conectar;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -48,8 +46,6 @@ public class tec_addIncidencia extends javax.swing.JDialog {
         rellenar_ubicaciones();
         rellenar_estado();
         rellenar_urgencia();
-
-        icono();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         // X de la pantalla
@@ -327,18 +323,127 @@ public class tec_addIncidencia extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // Metodo para insertar incidencia en la base de datos
+    private void insertarIncidencia() {
+        String descripcion = jtxta_descripcion.getText();
+        String descrTecnico = jtxta_descrTec.getText();
+        String horas = jtxt_horas.getText();
+        String estado = (String) jcbo_estado.getSelectedItem();
+        String fecha = jtxt_fecha.getText();
+        String f_ini = jtxt_fechaini.getText();
+        String f_fin = jtxt_fechafin.getText();
+        String urgencia = (String) jcb_urgencia.getSelectedItem();
+        String ubicacion = (String) jcbo_ubis.getSelectedItem();
+        String observaciones = jtxta_observaciones.getText();
+
+        String[] u = ubicacion.toString().split(" - ");
+        String ubis = u[0];
+
+        String[] e = estado.toString().split(" - ");
+        String es = e[0];
+
+        String[] ur = urgencia.toString().split(" - ");
+        String urg = ur[0];
+
+        Connection conexion = conectar.getConexion();
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement("INSERT INTO man_incidencias(id_profesor_crea, descripcion, desc_tecnica, horas, estado, fecha, fecha_ini_rep, fecha_fin_rep, nivel_urgencia id_ubicacion, observaciones) "
+                    + "VALUES('" + id + "','" + descripcion + "','" + descrTecnico + "','" + horas + "','" + es + "'," + fecha + "','" + f_ini + "','" + f_fin + "','" + urg + "','" + ubis + "','" + observaciones + "')");
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Datos insertados.");
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dispose();
+    }
+    
+    // Boton para guardar
     private void jbtn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_guardarActionPerformed
         insertarIncidencia();
     }//GEN-LAST:event_jbtn_guardarActionPerformed
 
+    // Metodo para rellenar con la informacion de diferentes tipo de ubicaciones
+    private void rellenar_ubicaciones() {
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_ubicacion, ubicacion FROM man_ubicacion");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                jcbo_ubis.addItem(rs.getString("id_ubicacion") + " - " + rs.getString("ubicacion"));
+            }
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    // Combo Box para las ubicaciones
     private void jcbo_ubisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubisActionPerformed
         rellenar_ubicaciones();
     }//GEN-LAST:event_jcbo_ubisActionPerformed
 
+    // Metodo para rellenar con la informacion de diferentes tipo de estados
+    private void rellenar_estado() {
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_estado, estado FROM man_estado");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                jcbo_estado.addItem(rs.getString("id_estado") + " - " + rs.getString("estado"));
+            }
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    // Combo Box para los estados
     private void jcbo_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_estadoActionPerformed
         rellenar_estado();
     }//GEN-LAST:event_jcbo_estadoActionPerformed
 
+    // Metodo para rellenar con la informacion de los diferentes tipos de urgencias
+    private void rellenar_urgencia() {
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_urgencia, urgencia FROM man_urgencia");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                jcb_urgencia.addItem(rs.getString("id_urgencia") + " - " + rs.getString("urgencia"));
+            }
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    // Combo Box para las urgencias
     private void jcb_urgenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_urgenciaActionPerformed
         rellenar_urgencia();
     }//GEN-LAST:event_jcb_urgenciaActionPerformed
@@ -395,114 +500,4 @@ public class tec_addIncidencia extends javax.swing.JDialog {
         }
     }
 
-    // Metodo para poner icono al programa en esta ventana
-    private void icono() {
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
-
-    // Metodo para insertar incidencia en la base de datos
-    private void insertarIncidencia() {
-        String descripcion = jtxta_descripcion.getText();
-        String descrTecnico = jtxta_descrTec.getText();
-        String horas = jtxt_horas.getText();
-        String estado = (String) jcbo_estado.getSelectedItem();
-        String fecha = jtxt_fecha.getText();
-        String f_ini = jtxt_fechaini.getText();
-        String f_fin = jtxt_fechafin.getText();
-        String urgencia = (String) jcb_urgencia.getSelectedItem();
-        String ubicacion = (String) jcbo_ubis.getSelectedItem();
-        String observaciones = jtxta_observaciones.getText();
-
-        String[] u = ubicacion.toString().split(" - ");
-        String ubis = u[0];
-
-        String[] e = estado.toString().split(" - ");
-        String es = e[0];
-
-        String[] ur = urgencia.toString().split(" - ");
-        String urg = ur[0];
-
-        Connection conexion = conectar.getConexion();
-
-        try {
-            PreparedStatement ps = conexion.prepareStatement("INSERT INTO man_incidencias(id_profesor_crea, descripcion, desc_tecnica, horas, estado, fecha, fecha_ini_rep, fecha_fin_rep, nivel_urgencia id_ubicacion, observaciones) "
-                    + "VALUES('" + id + "','" + descripcion + "','" + descrTecnico + "','" + horas + "','" + es + "'," + fecha + "','" + f_ini + "','" + f_fin + "','" + urg + "','" + ubis + "','" + observaciones + "')");
-            ps.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Datos insertados.");
-
-            conexion.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        dispose();
-    }
-
-    // Metodo para rellenar con la informacion de diferentes tipo de ubicaciones
-    private void rellenar_ubicaciones() {
-        Connection conexion = conectar.getConexion();
-
-        try {
-
-            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_ubicacion, ubicacion FROM man_ubicacion");
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                jcbo_ubis.addItem(rs.getString("id_ubicacion") + " - " + rs.getString("ubicacion"));
-            }
-
-            conexion.close();
-
-        } catch (SQLException ex) {
-
-            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    // Metodo para rellenar con la informacion de diferentes tipo de estados
-    private void rellenar_estado() {
-        Connection conexion = conectar.getConexion();
-
-        try {
-
-            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_estado, estado FROM man_estado");
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                jcbo_estado.addItem(rs.getString("id_estado") + " - " + rs.getString("estado"));
-            }
-
-            conexion.close();
-
-        } catch (SQLException ex) {
-
-            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    // Metodo para rellenar con la informacion de los diferentes tipos de urgencias
-    private void rellenar_urgencia() {
-        Connection conexion = conectar.getConexion();
-
-        try {
-
-            PreparedStatement ps = conexion.prepareStatement("SELECT distinct id_urgencia, urgencia FROM man_urgencia");
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                jcb_urgencia.addItem(rs.getString("id_urgencia") + " - " + rs.getString("urgencia"));
-            }
-
-            conexion.close();
-
-        } catch (SQLException ex) {
-
-            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

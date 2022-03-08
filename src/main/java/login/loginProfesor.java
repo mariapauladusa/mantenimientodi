@@ -37,17 +37,22 @@ public class loginProfesor extends javax.swing.JDialog {
     /**
      * Creates new form jd_login_profesor
      */
-    public loginProfesor(java.awt.Frame parent, boolean modal) {       
+    public loginProfesor(java.awt.Frame parent, boolean modal) { 
+        
         conectar.getConexion();
+        
         // activo sera activo
-        a = activo;        
+        a = activo;   
+        
         initComponents();
+        
         // Metodo iconos
         iconosLabel();
-        iconoPrograma();
+        
         // Metodo para recoger activo
         saberActivo();
         
+        // Para entrar con enter del teclado
         jpassProfesor.addKeyListener(new KeyAdapter() {
 
             @Override
@@ -60,12 +65,6 @@ public class loginProfesor extends javax.swing.JDialog {
         });
     }
     
-    // Metodo para el icono del programa
-    public void iconoPrograma(){
-       ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-       this.setIconImage(img.getImage());
-    }
-    
     // Método para los iconos de usuario y contraseña
     public void iconosLabel(){
         jLabel2.setIcon(new ImageIcon("src\\main\\java\\resources\\usuario.png"));
@@ -74,12 +73,13 @@ public class loginProfesor extends javax.swing.JDialog {
 
     // Metod para el login del profesor
     public void loginProfesor(){       
+        
         // Conexión a la base de datos
-        Connection cn = conectar.getConexion();          
+        Connection cn = conectar.getConexion();
+        
         // Recojo valor de txt user y jpass
         user = jtxtUsuarioP.getText();
         pass = String.valueOf(encriptarPwd.encode(jpassProfesor.getText()));
-        
         
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -230,11 +230,11 @@ public class loginProfesor extends javax.swing.JDialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jcbMostrarOcultar, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jpassProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnVolverP)
                     .addComponent(jbtnEntrarP))
-                .addGap(0, 29, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         pack();

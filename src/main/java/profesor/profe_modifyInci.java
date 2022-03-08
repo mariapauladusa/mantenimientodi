@@ -48,13 +48,12 @@ public class profe_modifyInci extends javax.swing.JDialog {
         idIn = idInci;
 
         saberId();
-        icono();
 
         rellenarBox();
         rellenarDatos();
 
+        // Modifico lo que hace el cerrar de la pantalla
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        // X de la pantalla
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -63,62 +62,6 @@ public class profe_modifyInci extends javax.swing.JDialog {
                 screen.setVisible(true);
             }
         });
-    }
-
-    // Icono del programa
-    public void icono() {
-        ImageIcon img = new ImageIcon("src\\main\\java\\resources\\icon.png");
-        this.setIconImage(img.getImage());
-    }
-
-    // Metodo para saber el id del usuario correspondiente
-    private void saberId() {
-        Connection conexion = conectar.getConexion();
-
-        try {
-
-            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login = '" + usuario + "';");
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                id = rs.getString(1);
-            }
-
-            conexion.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    // Metodo para modificar una incidencia
-    public void modificarIncidencia() {
-
-        String descripcion = jtxta_descr.getText();
-        String fecha = jtxt_fecha.getText();
-        String ubicacion = (String) jcbo_ubs.getSelectedItem();
-        String observaciones = jtxta_obsv.getText();
-
-        String[] s = ubicacion.toString().split(" - ");
-        String ubi = s[0];
-
-        Connection conexion = conectar.getConexion();
-
-        try {
-
-            PreparedStatement ps = conexion.prepareStatement("UPDATE man_incidencias set id_incidencia='" + idIn + "',descripcion='" + descripcion + "',fecha='" + fecha + "',id_ubicacion='" + ubi + "',observaciones='" + observaciones + "' where id_incidencia = '" + idIn + "'");
-            ps.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Datos insertados.");
-
-            conexion.close();
-
-        } catch (SQLException ex) {
-
-            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        dispose();
     }
 
     /**
@@ -254,15 +197,42 @@ public class profe_modifyInci extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // Metodo para modificar una incidencia
+    public void modificarIncidencia() {
+
+        String descripcion = jtxta_descr.getText();
+        String fecha = jtxt_fecha.getText();
+        String ubicacion = (String) jcbo_ubs.getSelectedItem();
+        String observaciones = jtxta_obsv.getText();
+
+        String[] s = ubicacion.toString().split(" - ");
+        String ubi = s[0];
+
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("UPDATE man_incidencias set id_incidencia='" + idIn + "',descripcion='" + descripcion + "',fecha='" + fecha + "',id_ubicacion='" + ubi + "',observaciones='" + observaciones + "' where id_incidencia = '" + idIn + "'");
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Datos insertados.");
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        dispose();
+    }
+
     // Boton crear
     private void jbtn_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_crearActionPerformed
         modificarIncidencia();
     }//GEN-LAST:event_jbtn_crearActionPerformed
 
-    private void jcbo_ubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubsActionPerformed
-        rellenarBox();
-    }//GEN-LAST:event_jcbo_ubsActionPerformed
-
+    // Metodo para rellenar el combo box
     private void rellenarBox() {
         Connection conexion = conectar.getConexion();
 
@@ -281,6 +251,12 @@ public class profe_modifyInci extends javax.swing.JDialog {
             Logger.getLogger(profe_addInci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    // Combo Box
+    private void jcbo_ubsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbo_ubsActionPerformed
+        rellenarBox();
+    }//GEN-LAST:event_jcbo_ubsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -317,6 +293,26 @@ public class profe_modifyInci extends javax.swing.JDialog {
                 jtxt_fecha.setText(rs.getString(4));
                 jlbl_ubis.setText("La ubicación anterior era: " + rs.getString(5));
                 jtxta_obsv.setText(rs.getString(6));
+            }
+
+            conexion.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(profe_screen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    // Metodo para saber el id del usuario correspondiente
+    private void saberId() {
+        Connection conexion = conectar.getConexion();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement("select id_profesor from fp_profesor where login = '" + usuario + "';");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                id = rs.getString(1);
             }
 
             conexion.close();
